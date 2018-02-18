@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Xuma
+Comment=Xuma P2P Cryptocurrency
+Comment[fr]=Xuma, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Xuma, eşten eşe kriptografik sanal para birimi
+Exec=xuma-qt %u
+Terminal=false
+Type=Application
+Icon=xuma128
+MimeType=x-scheme-handler/xuma;
+Categories=Office;Finance;

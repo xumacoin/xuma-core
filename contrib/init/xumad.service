@@ -1,0 +1,26 @@
+[Unit]
+Description=Xuma's distributed currency daemon
+After=network.target
+
+[Service]
+User=xuma
+Group=xuma
+
+Type=forking
+PIDFile=/var/lib/xumad/xumad.pid
+
+ExecStart=/usr/bin/xumad -daemon -pid=/var/lib/xumad/xumad.pid \
+          -conf=/etc/xuma/xuma.conf -datadir=/var/lib/xumad
+
+ExecStop=-/usr/bin/xuma-cli -conf=/etc/xuma/xuma.conf \
+         -datadir=/var/lib/xumad stop
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

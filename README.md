@@ -1,9 +1,11 @@
+[![Build Status](https://travis-ci.org/xumacoin/xuma-core.svg?branch=master)](https://travis-ci.org/xumacoin/xuma-core) [![GitHub Version](https://badge.fury.io/gh/xumacoin%2Fxuma-core.svg)](https://badge.fury.io/gh/xumacoin/xuma-core)
+
 Xuma is a universal 3rd generation cryptocurrency that combines the best features of different coins
 in order to create an excellent new digital payment and storage asset.
 
 Anonymized transactions using coin mixing technology. 1-Second-Transactions. Network stability with masternodes, each is secured with a collateral of 10,000 XMX. 100% Governance.
 
-For further information visit us at [xumacoin.org](https://www.xumacoin.org/) or visit our ANN thread at [BitcoinTalk](https://bitcointalk.org/index.php?topic=0000000.0)
+For further information visit us at [xumacoin.org](http://www.xumacoin.org/) or visit our ANN thread at [BitcoinTalk](https://bitcointalk.org/index.php?topic=0000000.0)
 
 # Coin Specs
 

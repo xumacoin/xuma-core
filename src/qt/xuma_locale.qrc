@@ -1,0 +1,20 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="bg">locale/xuma_bg.qm</file>
+        <file alias="de">locale/xuma_de.qm</file>
+        <file alias="en">locale/xuma_en.qm</file>
+        <file alias="es">locale/xuma_es.qm</file>
+        <file alias="fi">locale/xuma_fi.qm</file>
+        <file alias="fr">locale/xuma_fr.qm</file>
+        <file alias="it">locale/xuma_it.qm</file>
+        <file alias="ja">locale/xuma_ja.qm</file>
+        <file alias="pl">locale/xuma_pl.qm</file>
+        <file alias="pt">locale/xuma_pt.qm</file>
+        <file alias="ru">locale/xuma_ru.qm</file>
+        <file alias="sk">locale/xuma_sk.qm</file>
+        <file alias="sv">locale/xuma_sv.qm</file>
+        <file alias="vi">locale/xuma_vi.qm</file>
+        <file alias="zh_CN">locale/xuma_zh_CN.qm</file>
+        <file alias="zh_TW">locale/xuma_zh_TW.qm</file>
+    </qresource>
+</RCC>
