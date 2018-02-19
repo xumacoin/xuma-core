@@ -29,7 +29,7 @@ Drag Xuma-Qt to your applications folder, and then run Xuma-Qt.
 
 * See the documentation at the [Xuma Wiki](https://en.bitcoin.it/wiki/Main_Page) ***TODO***
 for help and more information.
-* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=0000000.0).
+* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=2976421).
 * Join our Discord server [Xuma Discord](https://discord.gg/DHYsG6j).
 
 Building
@@ -58,7 +58,7 @@ The Xuma repo's [root README](https://github.com/xumacoin/xuma-core/blob/master/
 
 ### Resources
 
-* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=0000000.0).
+* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=2976421).
 * Join the [Xuma Discord](https://discord.gg/DHYsG6j) 
 
 ### Miscellaneous

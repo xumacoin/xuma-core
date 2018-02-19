@@ -5,7 +5,7 @@ in order to create an excellent new digital payment and storage asset.
 
 Anonymized transactions using coin mixing technology. 1-Second-Transactions. Network stability with masternodes, each is secured with a collateral of 10,000 XMX. 100% Governance.
 
-For further information visit us at [xumacoin.org](http://www.xumacoin.org/) or visit our ANN thread at [BitcoinTalk](https://bitcointalk.org/index.php?topic=0000000.0)
+For further information visit us at [xumacoin.org](http://www.xumacoin.org/) or visit our ANN thread at [BitcoinTalk](https://bitcointalk.org/index.php?topic=2976421)
 
 # Coin Specs
 
