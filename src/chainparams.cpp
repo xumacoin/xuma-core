@@ -136,7 +136,7 @@ public:
         nMinerThreads = 0;
         nTargetTimespan = 5 * 60; // Xuma: 5 minutes
         nTargetSpacing = 1 * 60;  // Xuma: 1 minute
-        nLastPOWBlock = 475200;
+        nLastPOWBlock = 299999;
         nMaturity = 120;
         nMasternodeCountDrift = 20;
 		nMasternodeColleteralLimxDev = 10000; //Params().MasternodeColleteralLimxDev()
@@ -225,8 +225,8 @@ public:
         nRejectBlockOutdatedMajority = 75;
         nToCheckBlockUpgradeMajority = 100;
         nMinerThreads = 0;
-        nTargetTimespan = 5 * 60; // Xuma: 5 minutes
-        nTargetSpacing = 1 * 60;  // Xuma: 1 minute
+        nTargetTimespan = 10; // Xuma: 10 seconds
+        nTargetSpacing = 10;  // Xuma: 10 seconds
         nLastPOWBlock = 200;
         nMaturity = 15;
         nModifierUpdateBlock = 51197; //approx Mon, 17 Apr 2017 04:00:00 GMT

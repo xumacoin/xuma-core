@@ -10,14 +10,14 @@ For further information visit us at [xumacoin.org](http://www.xumacoin.org/) or 
 # Coin Specs
 
  - PoW Algorithm: Quark
- - Premine: (#1 Block) 120,001 XMX (0.20% of PoW) For 12 masternodes to secure the network.
- - PoW Blocks: 2 - 475200
- - PoS Blocks: Starting from 475201
+ - Premine: (#1 Block) 120,001 XMX (0.21% of PoW) For 12 masternodes to secure the network.
+ - PoW Blocks: 2 - 299,999
+ - PoS Blocks: Starting from 300,000
  - Block Time: 60 Seconds
- - PoW Max Coin Output/Supply: 57,879,300
- - PoW Ending: ~ ca. 330 Days (Estimated: January 2019)
+ - PoW Max Coin Output/Supply: 41,369,651
+ - PoW Ending: ~ ca. 180 Days (Estimated: August 2018)
  - Masternode Requirements: 10,000 XMX
- - Maturity: 110 Confirmations
+ - Maturity: 120 Confirmations
  - Prefix: Xuma adresses start with the capital letter "X"
 
 # PoW Reward Distribution
@@ -26,12 +26,9 @@ Proof of Work block rewards.
 
 <table>
 <tr><th>Block Height</th><th>Reward Amount</th><th>Masternodes</th><th>Miners</th></tr>
-<tr><td>Block 2 - 86400</td><td>200 XMX</td><td>Masternodes 20%</td><td>Miners 80%</td></tr>
-<tr><td>Block 86401 - 151200</td><td>150 XMX</td><td>Masternodes 25%</td><td>Miners 75%</td></tr>
-<tr><td>Block 151201 - 302400</td><td>125 XMX</td><td>Masternodes 30%</td><td>Miners 70%</td></tr>
-<tr><td>Block 302401 - 345600</td><td>100 XMX</td><td>Masternodes 35%</td><td>Miners 65%</td></tr>
-<tr><td>Block 345601 - 388800</td><td>75 XMX</td><td>Masternodes 40%</td><td>Miners 60%</td></tr>
-<tr><td>Block 388801 - 475200</td><td>50 XMX</td><td>Masternodes 40%</td><td>Miners 60%</td></tr>
+<tr><td>Block 2 - 40,999</td><td>200 XMX</td><td>Masternodes 20%</td><td>Miners 80%</td></tr>
+<tr><td>Block 41,000 - 88,999</td><td>200 XMX</td><td>Masternodes 75%</td><td>Miners 25%</td></tr>
+<tr><td>Block 89,000 - 299,999</td><td>150 XMX</td><td>Masternodes 75%</td><td>Miners 25%</td></tr>
 </table>
 
 # PoS Block Rewards
@@ -39,11 +36,12 @@ Proof of Work block rewards.
 Proof of Stake will automatically be enabled at block 475201.
 
 <table>
-<tr><th>Block Height</th><th>Reward Amount</th>                  
-<tr><td>Block 475201 - 518400</td><td>50 XMX</td></tr>
-<tr><td>Block 518401 - 561600</td><td>25 XMX</td></tr>
-<tr><td>Block 561601 - 604800</td><td>10 XMX</td></tr>
-<tr><td>Block 604801 - infinite</td><td>5 XMX</td></tr>
+<tr><th>Block Height</th><th>Reward Amount</th></tr>
+<tr><td>Block 300,000 - 399,999</td><td>100 XMX</td></tr>
+<tr><td>Block 400,000 - 459,999</td><td>50 XMX</td></tr>
+<tr><td>Block 460,000 - 519,999</td><td>25 XMX</td></tr>
+<tr><td>Block 520,000 - 579,999</td><td>15 XMX</td></tr>
+<tr><td>Block 580,000 - infinite</td><td>7 XMX</td></tr>
 </table>
 
 Masternode and staker rewards with PoS:

@@ -13,7 +13,7 @@
 
 BOOST_AUTO_TEST_SUITE(main_tests)
 
-CAmount nMoneySupplyPoWEnd = 57879300 * COIN;
+CAmount nMoneySupplyPoWEnd = 41769651 * COIN;
 
 BOOST_AUTO_TEST_CASE(subsidy_limit_test)
 {
@@ -21,41 +21,24 @@ BOOST_AUTO_TEST_CASE(subsidy_limit_test)
     for (int nHeight = 0; nHeight < 1; nHeight += 1) {
         /* premine in block 1 */
         CAmount nSubsidy = GetBlockValue(nHeight);
-        BOOST_CHECK(nSubsidy <= 200002 * COIN);
+        BOOST_CHECK(nSubsidy <= 120001 * COIN);
         nSum += nSubsidy;
     }
-
-    for (int nHeight = 1; nHeight < 86400; nHeight += 1) {
+    for (int nHeight = 1; nHeight < 40999; nHeight += 1) {
         CAmount nSubsidy = GetBlockValue(nHeight);
         BOOST_CHECK(nSubsidy <= 200 * COIN);
         nSum += nSubsidy;
     }
-    for (int nHeight = 86400; nHeight < 151200; nHeight += 1) {
+    for (int nHeight = 40999; nHeight < 88999; nHeight += 1) {
+        CAmount nSubsidy = GetBlockValue(nHeight);
+        BOOST_CHECK(nSubsidy <= 200 * COIN);
+        nSum += nSubsidy;
+    }
+    for (int nHeight = 88999; nHeight < 299999; nHeight += 1) {
         CAmount nSubsidy = GetBlockValue(nHeight);
         BOOST_CHECK(nSubsidy <= 150 * COIN);
         nSum += nSubsidy;
     }
-    for (int nHeight = 151200; nHeight < 302400; nHeight += 1) {
-        CAmount nSubsidy = GetBlockValue(nHeight);
-        BOOST_CHECK(nSubsidy <= 125 * COIN);
-        nSum += nSubsidy;
-    }
-    for (int nHeight = 302400; nHeight < 345600; nHeight += 1) {
-        CAmount nSubsidy = GetBlockValue(nHeight);
-        BOOST_CHECK(nSubsidy <= 100 * COIN);
-        nSum += nSubsidy;
-    }
-    for (int nHeight = 345600; nHeight < 388800; nHeight += 1) {
-        CAmount nSubsidy = GetBlockValue(nHeight);
-        BOOST_CHECK(nSubsidy <= 75 * COIN);
-        nSum += nSubsidy;
-    }
-    for (int nHeight = 388800; nHeight < 475200; nHeight += 1) {
-        CAmount nSubsidy = GetBlockValue(nHeight);
-        BOOST_CHECK(nSubsidy <= 50 * COIN);
-        nSum += nSubsidy;
-    }
-
 	BOOST_CHECK(nSum > 0 && nSum <= nMoneySupplyPoWEnd);
 }
 

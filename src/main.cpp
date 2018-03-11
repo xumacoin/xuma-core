@@ -1623,36 +1623,35 @@ int64_t GetBlockValue(int nHeight)
 {
  
     if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (nHeight < 200 && nHeight > 0)
+        if (nHeight < Params().LAST_POW_BLOCK()) {
             return 10000 * COIN;
+        } else {
+            return 100 * COIN;
+        }
     }
-	
+
 	if (nHeight == 0) return 120001 * COIN;
 
 	int64_t nSubsidy = 0;
-	
-	if(nHeight <= 86400 && nHeight > 0) {
+
+	if(nHeight > 0 && nHeight <= 40999) {
         nSubsidy = 200 * COIN;
-	} else if (nHeight > 86400 && nHeight <= 151200) {
+	} else if (nHeight > 40999 && nHeight <= 88999) {
+		nSubsidy = 200 * COIN;
+	} else if (nHeight > 88999 && nHeight <= 299999) { // 299999 => LAST POW BLOCK
 		nSubsidy = 150 * COIN;
-	} else if (nHeight > 151200 && nHeight <= 302400) {
-		nSubsidy = 125 * COIN;
-	} else if (nHeight > 302400 && nHeight <= 345600) {
+	} else if (nHeight > 299999 && nHeight <= 399999) { // 300000 => FIRST POS BLOCK
 		nSubsidy = 100 * COIN;
-	} else if (nHeight > 345600 && nHeight <= 388800) {
-		nSubsidy = 75 * COIN;
-	} else if (nHeight > 388800 && nHeight <= 475200) { // 475200 => LAST POW BLOCK
+	} else if (nHeight > 399999 && nHeight <= 459999) {
 		nSubsidy = 50 * COIN;
-	} else if (nHeight > 475200 && nHeight <= 518400) { // 475201 => FIRST POS BLOCK
-		nSubsidy = 50 * COIN;
-	} else if (nHeight > 518400 && nHeight <= 561600) {
+	} else if (nHeight > 459999 && nHeight <= 519999) {
 		nSubsidy = 25 * COIN;
-	} else if (nHeight > 561600 && nHeight <= 604800) {
-		nSubsidy = 10 * COIN;
-	} else if (nHeight > 604800) {
-		nSubsidy = 5 * COIN;
+	} else if (nHeight > 519999 && nHeight <= 579999) {
+		nSubsidy = 15 * COIN;
+	} else if (nHeight > 579999) {
+		nSubsidy = 7 * COIN;
 	}
-	
+
     return nSubsidy;
 
 }
@@ -1660,50 +1659,44 @@ int64_t GetBlockValue(int nHeight)
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount)
 {
 
-
     if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (nHeight < 200)
+        if (nHeight < Params().LAST_POW_BLOCK()) {
             return 0;
+        } else {
+            return blockValue / 100 * 10;
+        }
     }
 	
 	int64_t ret = 0;
-	
-	if(nHeight <= 86400 && nHeight > 0) {
+
+	if(nHeight > 0 && nHeight <= 40999) {
         ret = blockValue / 100 * 20;
-	} else if (nHeight > 86400 && nHeight <= 151200) {
-        ret = blockValue / 100 * 25;
-	} else if (nHeight > 151200 && nHeight <= 302400) {
-        ret = blockValue / 100 * 30;
-	} else if (nHeight > 302400 && nHeight <= 345600) {
-        ret = blockValue / 100 * 35;
-	} else if (nHeight > 345600 && nHeight <= 388800) {
-        ret = blockValue / 100 * 40;
-	} else if (nHeight > 388800 && nHeight <= 475200) {
-        ret = blockValue / 100 * 40;
-	} else if (nHeight > 475200) {
-		
+	} else if (nHeight > 40999 && nHeight <= 88999) {
+        ret = blockValue / 100 * 75;
+	} else if (nHeight > 88999 && nHeight <= 299999) {
+        ret = blockValue / 100 * 75;
+	} else if (nHeight > 299999) {
 		int64_t nMoneySupply = chainActive.Tip()->nMoneySupply;
-		
+
 		if(nMasternodeCount < 1) {
 			nMasternodeCount = mnodeman.stable_size();
 		}
-		
+
 		int64_t mNodeCoins = nMasternodeCount * 10000 * COIN;
-		
+
 		if (mNodeCoins == 0) {
             ret = 0;
 		} else {
 			double lockedCoinValue = mNodeCoins / nMoneySupply;
-			
-			
+
 			double masternodeMultiplier = 1 - lockedCoinValue;
-			
+
 			if(masternodeMultiplier < .1) {
 				masternodeMultiplier = .1;
 			} else if(masternodeMultiplier > .9) {
 				masternodeMultiplier = .9;
 			}
-			
+
 			LogPrintf("[LIBRA] Adjusting Libra at height %d with %d masternodes (%d % locked Xuma) and %d Xuma supply at %ld\n", nHeight, nMasternodeCount, lockedCoinValue*100, nMoneySupply, GetTime());
 			LogPrintf("[LIBRA] Masternode: %d\n", masternodeMultiplier*100);
 			LogPrintf("[LIBRA] Staker: %d\n", (1 - masternodeMultiplier)*100);
