@@ -15,12 +15,12 @@ Budgets go through a series of stages before being paid:
 Prepare collateral transaction
 ------------------------------
 
-mnbudget prepare \<proposal-name\> \<url\> \<payment_count\> \<block_start\> \<xuma_address\> \<monthly_payment_xuma\> [use_ix(true|false)]
+mnbudget prepare <proposal-name> <url> <payment_count> <block_start> <xuma_address> <monthly_payment_xmx>
 
 Example:
 
 ```
-mnbudget prepare cool-project http://www.cool-project/one.json 12 100000 y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7 1200 true
+mnbudget prepare cool-project http://www.cool-project/one.json 12 100000 XLd5zb7KJewkBNH7xb94r9WHUVrxKiXLcS 1200
 ```
 
 Output: `464a0eb70ea91c94295214df48c47baa72b3876cfb658744aaf863c7b5bf1ff0` - This is the collateral hash, copy this output for the next step
@@ -32,12 +32,12 @@ In this transaction we prepare collateral for "_cool-project_". This proposal wi
 Submit proposal to network
 --------------------------
 
-mnbudget submit \<proposal-name\> \<url\> \<payment_count\> \<block_start\> \<xuma_address\> \<monthly_payment_xuma\> \<collateral_hash\>
+mnbudget submit <proposal-name> <url> <payment_count> <block_start> <xuma_address> <monthly_payment_xmx> <collateral_hash>
 
 Example:
 
 ```
-mnbudget submit cool-project http://www.cool-project/one.json 12 100000 y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7 1200 464a0eb70ea91c94295214df48c47baa72b3876cfb658744aaf863c7b5bf1ff0
+mnbudget submit cool-project http://www.cool-project/one.json 12 100000 XLd5zb7KJewkBNH7xb94r9WHUVrxKiXLcS 1200 464a0eb70ea91c94295214df48c47baa72b3876cfb658744aaf863c7b5bf1ff0
 ```
 
 Output: `a2b29778ae82e45a973a94309ffa6aa2e2388b8f95b39ab3739f0078835f0491` - This is your proposal hash, which other nodes will use to vote on it
@@ -47,7 +47,7 @@ Lobby for votes
 
 Double check your information:
 
-mnbudget getinfo \<proposal-name\>
+mnbudget getinfo <proposal-name>
 
 Example:
 
@@ -67,7 +67,7 @@ Output:
     "BlockEnd" : 100625,
     "TotalPaymentCount" : 12,
     "RemainingPaymentCount" : 12,
-    "PaymentAddress" : "y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7",
+    "PaymentAddress" : "XLd5zb7KJewkBNH7xb94r9WHUVrxKiXLcS",
     "Ratio" : 0.00000000,
     "Yeas" : 0,
     "Nays" : 0,
@@ -81,7 +81,7 @@ Output:
 
 If everything looks correct, you can ask for votes from other masternodes. To vote on a proposal, load a wallet with _masternode.conf_ file. You do not need to access your cold wallet to vote for proposals.
 
-mnbudget vote \<proposal_hash\> [yes|no]
+mnbudget vote <proposal_hash> [yes|no]
 
 Example:
 
@@ -114,7 +114,7 @@ Output:
 	    "BlockEnd" : 100625,
 	    "TotalPaymentCount" : 12,
 	    "RemainingPaymentCount" : 12,
-	    "PaymentAddress" : "y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7",
+	    "PaymentAddress" : "XLd5zb7KJewkBNH7xb94r9WHUVrxKiXLcS",
 	    "Ratio" : 1.00000000,
 	    "Yeas" : 33,
 	    "Nays" : 0,
