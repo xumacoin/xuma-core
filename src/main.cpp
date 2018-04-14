@@ -1658,13 +1658,8 @@ int64_t GetBlockValue(int nHeight)
 
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount)
 {
-
     if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (nHeight < Params().LAST_POW_BLOCK()) {
-            return 0;
-        } else {
-            return blockValue / 100 * 10;
-        }
+        return blockValue / 100 * 10;
     }
 	
 	int64_t ret = 0;
@@ -5427,17 +5422,16 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
 //       it was the one which was commented out
 int ActiveProtocol()
 {
-
-/*
     if (IsSporkActive(SPORK_14_NEW_PROTOCOL_ENFORCEMENT)) {
         return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
     }
     return MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT;
-*/
 
+/*
     if (IsSporkActive(SPORK_15_NEW_PROTOCOL_ENFORCEMENT_2))
         return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
     return MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT;
+*/
 }
 
 // requires LOCK(cs_vRecvMsg)

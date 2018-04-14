@@ -95,6 +95,7 @@ public:
     std::string DarksendPoolDummyAddress() const { return strDarksendPoolDummyAddress; }
     int64_t StartMasternodePayments() const { return nStartMasternodePayments; }
     CBaseChainParams::Network NetworkID() const { return networkID; }
+    std::string GetDeveloperFeePayee() const { return strDeveloperFeePayee; }
 
 protected:
     CChainParams() {}
@@ -139,6 +140,7 @@ protected:
     std::string strSporkKey;
     std::string strDarksendPoolDummyAddress;
     int64_t nStartMasternodePayments;
+    std::string strDeveloperFeePayee;
 };
 
 /** 

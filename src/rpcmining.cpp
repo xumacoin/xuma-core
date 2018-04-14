@@ -586,6 +586,8 @@ Value getblocktemplate(const Array& params, bool fHelp)
     result.push_back(Pair("masternode_payments", pblock->nTime > Params().StartMasternodePayments()));
     result.push_back(Pair("enforce_masternode_payments", true));
 
+	result.push_back(Pair("developerfee_amount", (int64_t)pblock->vtx[0].vout[2].nValue));
+	result.push_back(Pair("developerfee_wallet", Params().GetDeveloperFeePayee()));
     return result;
 }
 
