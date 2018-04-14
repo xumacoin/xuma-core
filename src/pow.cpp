@@ -109,9 +109,9 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
         bnNew = Params().ProofOfWorkLimit();
     }
 
-	LogPrintf("GetNextWorkRequired RETARGET\n");
-    LogPrintf("nActualTimespan = %d\n", nActualTimespan);
-    LogPrintf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.ToString());
+	//LogPrintf("GetNextWorkRequired RETARGET\n");
+    //LogPrintf("nActualTimespan = %d\n", nActualTimespan);
+    //LogPrintf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.ToString());
 	
     return bnNew.GetCompact();
 }

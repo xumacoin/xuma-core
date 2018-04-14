@@ -33,7 +33,7 @@ int GetBudgetPaymentCycleBlocks()
     if (Params().NetworkID() == CBaseChainParams::MAIN) return 43200;
     //for testing purposes
 
-    return 144; //ten times per day
+    return 14; // every 14 blocks
 }
 
 bool IsBudgetCollateralValid(uint256 nTxCollateralHash, uint256 nExpectedHash, std::string& strError, int64_t& nTime, int& nConf)
