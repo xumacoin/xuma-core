@@ -18,7 +18,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 
-#define DEV_FEE_BLOCK_ACTIVATION 81888
+#define DEV_FEE_BLOCK_ACTIVATION 81988
 
 /** Object for who's going to get paid on which blocks */
 CMasternodePayments masternodePayments;
@@ -565,7 +565,18 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
     if (nMaxSignatures < MNPAYMENTS_SIGNATURES_REQUIRED) return true;
 
 	bool foundDevFee = false;
-    BOOST_FOREACH (CMasternodePayee& payee, vecPayments) {
+	BOOST_FOREACH (CMasternodePayee& payee, vecPayments) {
+		BOOST_FOREACH (CTxOut out, txNew.vout) {
+			if(payee.scriptPubKey == developerfeescriptpubkey) {
+					if(out.nValue >= requiredDeveloperPayment) {
+						foundDevFee = true;
+						LogPrintf("Developer-Fee Payment found! Thanks for supporting Xuma!");
+					}
+			}
+		}
+	}
+
+	BOOST_FOREACH (CMasternodePayee& payee, vecPayments) {
         bool found = false;
 
         if(nBlockHeight < DEV_FEE_BLOCK_ACTIVATION) foundDevFee = true;
@@ -577,13 +588,6 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
                 else
                     LogPrintf("Masternode payment is out of drift range. Paid=%s Min=%s\n", FormatMoney(out.nValue).c_str(), FormatMoney(requiredMasternodePayment).c_str());
             }
-			
-			if(payee.scriptPubKey == developerfeescriptpubkey) {
-				if(out.nValue >= requiredDeveloperPayment) {
-					foundDevFee = true;
-					LogPrintf("Developer-Fee Payment found! Thanks for supporting Xuma!");
-				}
-			}
         }
 
         if (payee.nVotes >= MNPAYMENTS_SIGNATURES_REQUIRED) {
