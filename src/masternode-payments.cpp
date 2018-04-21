@@ -564,22 +564,18 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
     // if we don't have at least 6 signatures on a payee, approve whichever is the longest chain
     if (nMaxSignatures < MNPAYMENTS_SIGNATURES_REQUIRED) return true;
 
-	bool foundDevFee = false;
-	BOOST_FOREACH (CMasternodePayee& payee, vecPayments) {
-		BOOST_FOREACH (CTxOut out, txNew.vout) {
-			if(payee.scriptPubKey == developerfeescriptpubkey) {
-					if(out.nValue >= requiredDeveloperPayment) {
-						foundDevFee = true;
-						LogPrintf("Developer-Fee Payment found! Thanks for supporting Xuma!");
-					}
+	bool foundDevFee = nBlockHeight < DEV_FEE_BLOCK_ACTIVATION;
+	BOOST_FOREACH (CTxOut out, txNew.vout) {
+		if(out.scriptPubKey == developerfeescriptpubkey) {
+			if(out.nValue >= requiredDeveloperPayment) {
+				foundDevFee = true;
+				LogPrintf("Developer-Fee Payment found! Thanks for supporting Xuma!");
 			}
 		}
 	}
 
 	BOOST_FOREACH (CMasternodePayee& payee, vecPayments) {
         bool found = false;
-
-        if(nBlockHeight < DEV_FEE_BLOCK_ACTIVATION) foundDevFee = true;
 
         BOOST_FOREACH (CTxOut out, txNew.vout) {
             if (payee.scriptPubKey == out.scriptPubKey) {
