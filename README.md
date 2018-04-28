@@ -10,11 +10,11 @@ For further information visit us at [xumacoin.org](http://www.xumacoin.org/) or 
 # Coin Specs
 
  - PoW Algorithm: Quark
- - Premine: (#1 Block) 120,001 XMX (0.21% of PoW) For 12 masternodes to secure the network.
+ - Premine: (#1 Block) 120,001 XMX (0.19% of PoW) For 12 masternodes to secure the network.
  - PoW Blocks: 2 - 299,999
  - PoS Blocks: Starting from 300,000
  - Block Time: 60 Seconds
- - PoW Max Coin Output/Supply: 41,369,651
+ - PoW Max Coin Output/Supply: 49,448,850
  - PoW Ending: ~ ca. 180 Days (Estimated: August 2018)
  - Masternode Requirements: 10,000 XMX
  - Maturity: 120 Confirmations
@@ -25,10 +25,11 @@ For further information visit us at [xumacoin.org](http://www.xumacoin.org/) or 
 Proof of Work block rewards.
 
 <table>
-<tr><th>Block Height</th><th>Reward Amount</th><th>Masternodes</th><th>Miners</th></tr>
-<tr><td>Block 2 - 40,999</td><td>200 XMX</td><td>Masternodes 20%</td><td>Miners 80%</td></tr>
-<tr><td>Block 41,000 - 88,999</td><td>200 XMX</td><td>Masternodes 75%</td><td>Miners 25%</td></tr>
-<tr><td>Block 89,000 - 299,999</td><td>150 XMX</td><td>Masternodes 75%</td><td>Miners 25%</td></tr>
+<tr><th>Block Height</th><th>Reward Amount</th><th>Masternodes</th><th>Miners</th><th>Governance</th></tr>
+<tr><td>Block 2 - 40,999</td><td>200 XMX</td><td>20%</td><td>80%</td><td>10%</td></tr>
+<tr><td>Block 41,000 - 81,889</td><td>200 XMX</td><td>75%</td><td>25%</td><td>10%</td></tr>
+<tr><td>Block 81,890 - 88,999</td><td>200 XMX</td><td>67.5%</td><td>22.5%</td><td>10%</td></tr>
+<tr><td>Block 89,000 - 299,999</td><td>150 XMX</td><td>67.5%</td><td>22.5%</td><td>10%</td></tr>
 </table>
 
 # PoS Block Rewards
