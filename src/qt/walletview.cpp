@@ -80,7 +80,7 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
 
     addWidget(overviewPage);
 	////AAAA
-	addWidget(coinmix);
+    //addWidget(coinmix);
     addWidget(transactionsPage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
