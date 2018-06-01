@@ -651,7 +651,7 @@
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>95</height>
+        <height>118</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
@@ -1385,22 +1385,6 @@
         <number>3</number>
        </property>
        <item>
-        <widget class="QCheckBox" name="checkUseDarksend">
-         <property name="minimumSize">
-          <size>
-           <width>95</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Darksend</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="checkInstantX">
          <property name="enabled">
           <bool>true</bool>
@@ -1466,7 +1450,7 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="groupFee"/>
   <buttongroup name="groupCustomFee"/>
+  <buttongroup name="groupFee"/>
  </buttongroups>
 </ui>

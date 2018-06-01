@@ -11,7 +11,8 @@
 
 #include "bitcoinunits.h"
 #include "guiutil.h"
-#include "Darksend.h"
+// Removing Darksend - BJK
+// #include "Darksend.h"
 #include "optionsmodel.h"
 
 #include "main.h" // for MAX_SCRIPTCHECK_THREADS
@@ -213,9 +214,12 @@ void OptionsDialog::setMapper()
 
 
     /* Darksend Rounds */
+    /* Removing Darksend - BJK
     mapper->addMapping(ui->DarksendRounds, OptionsModel::DarksendRounds);
     mapper->addMapping(ui->anonymizeAmount, OptionsModel::AnonymizeAmount);
+    */
     mapper->addMapping(ui->showMasternodesTab, OptionsModel::ShowMasternodesTab);
+    
 }
 
 void OptionsDialog::enableOkButton()
@@ -255,8 +259,10 @@ void OptionsDialog::on_resetButton_clicked()
 void OptionsDialog::on_okButton_clicked()
 {
     mapper->submit();
+    /* Removing Darksend - BJK
     DarKsendPool.cachedNumBlocks = std::numeric_limits<int>::max();
     pwalletMain->MarkDirty();
+    */
     accept();
 }
 

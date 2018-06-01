@@ -18,7 +18,8 @@
 
 #include "coincontrol.h"
 #include "main.h"
-#include "Darksend.h"
+// Removing Darksend - BJK
+// #include "Darksend.h"
 #include "wallet.h"
 
 #include <boost/assign/list_of.hpp> // for 'map_list_of()'
@@ -135,7 +136,7 @@ CoinControlDialog::CoinControlDialog(QWidget* parent) : QDialog(parent),
     ui->treeWidget->setColumnWidth(COLUMN_AMOUNT, 100);
     ui->treeWidget->setColumnWidth(COLUMN_LABEL, 170);
     ui->treeWidget->setColumnWidth(COLUMN_ADDRESS, 190);
-    ui->treeWidget->setColumnWidth(COLUMN_DARKSEND_ROUNDS, 88);
+    //ui->treeWidget->setColumnWidth(COLUMN_DARKSEND_ROUNDS, 88);
     ui->treeWidget->setColumnWidth(COLUMN_DATE, 80);
     ui->treeWidget->setColumnWidth(COLUMN_CONFIRMATIONS, 100);
     ui->treeWidget->setColumnWidth(COLUMN_PRIORITY, 100);
@@ -433,6 +434,7 @@ void CoinControlDialog::viewItemChanged(QTreeWidgetItem* item, int column)
         else {
             coinControl->Select(outpt);
             CTxIn vin(outpt);
+            /* Removing darksend - BJK
             int rounds = pwalletMain->GetInputDarksendRounds(vin);
             if (coinControl->useDarKsend && rounds < nDarksendRounds) {
                 QMessageBox::warning(this, windowTitle(),
@@ -440,6 +442,7 @@ void CoinControlDialog::viewItemChanged(QTreeWidgetItem* item, int column)
                     QMessageBox::Ok, QMessageBox::Ok);
                 coinControl->useDarKsend = false;
             }
+            */
         }
 
         // selection changed -> update labels
@@ -598,11 +601,13 @@ void CoinControlDialog::updateLabels(WalletModel* model, QDialog* dialog)
         if (nPayAmount > 0) {
             nChange = nAmount - nPayFee - nPayAmount;
 
+            /* Removing Darksend - BJK
             // DS Fee = overpay
             if (coinControl->useDarKsend && nChange > 0) {
                 nPayFee += nChange;
                 nChange = 0;
             }
+            */
             // Never create dust outputs; if we would, just add the dust to the fee.
             if (nChange > 0 && nChange < CENT) {
                 CTxOut txout(nChange, (CScript)vector<unsigned char>(24, 0));
@@ -805,13 +810,14 @@ void CoinControlDialog::updateView()
 
             // ds+ rounds
             CTxIn vin = CTxIn(out.tx->GetHash(), out.i);
+            /* Removing Darksend - BJK
             int rounds = pwalletMain->GetInputDarksendRounds(vin);
 
             if (rounds >= 0)
                 itemOutput->setText(COLUMN_DARKSEND_ROUNDS, strPad(QString::number(rounds), 11, " "));
             else
                 itemOutput->setText(COLUMN_DARKSEND_ROUNDS, strPad(QString(tr("n/a")), 11, " "));
-
+            */
 
             // confirmations
             itemOutput->setText(COLUMN_CONFIRMATIONS, strPad(QString::number(out.nDepth), 8, " "));

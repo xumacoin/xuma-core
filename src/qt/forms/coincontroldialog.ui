@@ -447,7 +447,7 @@
       <bool>false</bool>
      </property>
      <property name="columnCount">
-      <number>13</number>
+      <number>12</number>
      </property>
      <attribute name="headerShowSortIndicator" stdset="0">
       <bool>true</bool>
@@ -464,6 +464,9 @@
       <property name="text">
        <string>Amount</string>
       </property>
+      <property name="textAlignment">
+       <set>AlignTrailing|AlignVCenter</set>
+      </property>
      </column>
      <column>
       <property name="text">
@@ -477,11 +480,6 @@
      </column>
      <column>
       <property name="text">
-       <string>MIX Rounds</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
        <string>Date</string>
       </property>
      </column>
@@ -491,6 +489,9 @@
       </property>
       <property name="toolTip">
        <string>Confirmed</string>
+      </property>
+      <property name="textAlignment">
+       <set>AlignTrailing|AlignVCenter</set>
       </property>
      </column>
      <column>

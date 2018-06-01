@@ -74,6 +74,7 @@ void OptionsModel::Init()
         settings.setValue("fCoinControlFeatures", false);
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
 
+    /* Removing Darksend - BJK
     if (!settings.contains("nDarksendRounds"))
         settings.setValue("nDarksendRounds", 2);
 
@@ -82,6 +83,7 @@ void OptionsModel::Init()
 
     nDarksendRounds = settings.value("nDarksendRounds").toLongLong();
     nAnonymizeAmount = settings.value("nAnonymizeAmount").toLongLong();
+    */
 
     if (!settings.contains("fShowMasternodesTab"))
         settings.setValue("fShowMasternodesTab", masternodeConfig.getCount());
@@ -146,10 +148,12 @@ void OptionsModel::Init()
     if (!SoftSetArg("-lang", settings.value("language").toString().toStdString()))
         addOverriddenOption("-lang");
 
+    /* Removing Darksend - BJK
     if (settings.contains("nDarksendRounds"))
         SoftSetArg("-Darksendrounds", settings.value("nDarksendRounds").toString().toStdString());
     if (settings.contains("nAnonymizeAmount"))
         SoftSetArg("-anonymizeamount", settings.value("nAnonymizeAmount").toString().toStdString());
+    */
 
     language = settings.value("language").toString();
 }
@@ -227,10 +231,12 @@ QVariant OptionsModel::data(const QModelIndex& index, int role) const
             return settings.value("nDatabaseCache");
         case ThreadsScriptVerif:
             return settings.value("nThreadsScriptVerif");
+        /* Removing Darksend - BJK
         case DarksendRounds:
             return QVariant(nDarksendRounds);
         case AnonymizeAmount:
             return QVariant(nAnonymizeAmount);
+        */
         case Listen:
             return settings.value("fListen");
         default:
@@ -334,6 +340,7 @@ bool OptionsModel::setData(const QModelIndex& index, const QVariant& value, int 
                 setRestartRequired(true);
             }
             break;
+        /* Removing Darksend - BJK
         case DarksendRounds:
             nDarksendRounds = value.toInt();
             settings.setValue("nDarksendRounds", nDarksendRounds);
@@ -344,6 +351,7 @@ bool OptionsModel::setData(const QModelIndex& index, const QVariant& value, int 
             settings.setValue("nAnonymizeAmount", nAnonymizeAmount);
             emit anonymizeAmountChanged(nAnonymizeAmount);
             break;
+        */
         case CoinControlFeatures:
             fCoinControlFeatures = value.toBool();
             settings.setValue("fCoinControlFeatures", fCoinControlFeatures);

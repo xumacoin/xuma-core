@@ -234,7 +234,8 @@ private:
     EncryptionStatus cachedEncryptionStatus;
     int cachedNumBlocks;
     int cachedTxLocks;
-    int cachedDarksendRounds;
+    // Removing Darksend - BJK
+    // int cachedDarksendRounds;
 
     QTimer* pollTimer;
 

@@ -856,11 +856,11 @@ margin-left:16px;
 QWidget .QFrame#frame .QLabel#labelBalanceText { /* Available Balance Label - bold */
 qproperty-alignment: 'AlignVCenter | AlignRight';
 min-width:160px;
-background-color:#A3844A;
+background-color:#606060;
 color:#fff;
 font-weight:bold;
 margin-right:5px;
-padding-right:5px;
+padding-right:20px;
 font-weight:bold;
 font-size:14px;
 min-height:35px;
@@ -886,15 +886,15 @@ min-width:160px;
 font-size:12px;
 background-color:transparent;
 color:#91854B;
-font-weight:bold;
-margin-right:5px;
+font-weight:normal;
+margin-right:20px;
 padding-right:5px;
 }
 
 QWidget .QFrame#frame .QLabel#labelUnconfirmed { /* Pending Balance */
-qproperty-alignment: 'AlignVCenter | AlignLeft';
+qproperty-alignment: 'AlignVCenter | AlignRight';
 font-size:12px;
-margin-left:0px;
+margin-left:20px;
 }
 
 QWidget .QFrame#frame .QLabel#labelWatchPending { /* Watch-only Pending Balance */
@@ -909,7 +909,7 @@ min-width:160px;
 font-size:12px;
 background-color:transparent;
 color:#91854B;
-margin-right:5px;
+margin-right:20px;
 padding-right:5px;
 }
 
@@ -936,7 +936,7 @@ font-size:12px;
 background-color:transparent;
 color:#91854B;
 font-weight:bold;
-margin-right:5px;
+margin-right:20px;
 padding-right:5px;
 }
 

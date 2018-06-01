@@ -1,6 +1,7 @@
+/* Removing Darksend - BJK
 #include "Darksendconfig.h"
 #include "ui_Darksendconfig.h"
-
+*/
 #include "bitcoinunits.h"
 #include "guiconstants.h"
 #include "init.h"
@@ -12,6 +13,7 @@
 #include <QPushButton>
 #include <QSettings>
 
+/* Removing Darksend - BJK
 DarksendConfig::DarksendConfig(QWidget* parent) : QDialog(parent),
                                                         ui(new Ui::DarksendConfig),
                                                         model(0)
@@ -85,3 +87,4 @@ void DarksendConfig::configure(bool enabled, int coins, int rounds)
     nDarksendRounds = rounds;
     nAnonymizeAmount = coins;
 }
+*/
