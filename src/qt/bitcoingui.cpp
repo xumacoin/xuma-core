@@ -71,6 +71,7 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
                                                                             clientModel(0),
                                                                             walletFrame(0),
                                                                             unitDisplayControl(0),
+                                                                            labelXMXIcon(0),
                                                                             labelStakingIcon(0),
                                                                             labelEncryptionIcon(0),
                                                                             labelConnectionsIcon(0),
@@ -182,6 +183,7 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
     QFrame* frameBlocks = new QFrame();
     frameBlocks->setContentsMargins(0, 0, 0, 0);
     frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    frameBlocks->setStyleSheet(".QFrame { border: 0; }");
     QHBoxLayout* frameBlocksLayout = new QHBoxLayout(frameBlocks);
     frameBlocksLayout->setContentsMargins(3, 0, 3, 0);
     frameBlocksLayout->setSpacing(3);
@@ -194,6 +196,11 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
     labelConnectionsIcon->setMaximumSize(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE);
     labelBlocksIcon = new QLabel();
 
+    labelXMXIcon = new QLabel("XMX");
+    //labelXMXIcon->setPixmap(QIcon(":/icons/label_xmx").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+    frameBlocksLayout->addStretch();
+    frameBlocksLayout->addWidget(labelXMXIcon);
+    
     if (enableWallet) {
         frameBlocksLayout->addStretch();
         frameBlocksLayout->addWidget(unitDisplayControl);
@@ -220,7 +227,7 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
     // See https://qt-project.org/doc/qt-4.8/gallery.html
     QString curStyle = QApplication::style()->metaObject()->className();
     if (curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle") {
-        progressBar->setStyleSheet("QProgressBar { background-color: #F8F8F8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #00CCFF, stop: 1 #33CCFF); border-radius: 7px; margin: 0px; }");
+        progressBar->setStyleSheet("QProgressBar { background-color: #FFFFFF; border: 1px solid grey; border-radius: 1px; padding: 1px; text-align: center; } QProgressBar::chunk { background: #A3844A; border-radius: 1px; margin: 2px; }");
     }
 
     statusBar()->addWidget(progressBarLabel);
@@ -343,14 +350,14 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
 	tabGroup->addAction(coinmixAction);
 */
 	///	Unlock
-	unlockWalletAction = new QAction(QIcon(":/icons/blueunlock"),tr("&Unlock Wallet..."), this);
+    unlockWalletAction = new QAction(QIcon(":/icons/unlock_tab"),tr("&Unlock Wallet..."), this);
     unlockWalletAction->setStatusTip(tr("Unlock wallet"));
 	unlockWalletAction->setToolTip(unlockWalletAction->statusTip());
 	unlockWalletAction->setCheckable(true);
 	tabGroup->addAction(unlockWalletAction);
 	
 	///	Lock
-	lockWalletAction2 = new QAction(QIcon(":/icons/bluelock"),tr("&Lock Wallet..."), this);
+    lockWalletAction2 = new QAction(QIcon(":/icons/lock_tab"),tr("&Lock Wallet..."), this);
     lockWalletAction2->setStatusTip(tr("Lock wallet"));
 	lockWalletAction2->setToolTip(lockWalletAction2->statusTip());
 	lockWalletAction2->setCheckable(true);
