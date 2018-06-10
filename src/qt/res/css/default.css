@@ -815,6 +815,11 @@ padding-right:5px;
 
 /**************************** OVERVIEW SCREEN *******************************************/
 
+/* bottom right box */
+#frameBlocks {
+    border: 4px solid #F00 !important;
+}
+
 QWidget .QFrame#frame { /* Wallet Balance */
 min-width:490px;
 }

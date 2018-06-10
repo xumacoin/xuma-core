@@ -181,9 +181,12 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
 
     // Status bar notification icons
     QFrame* frameBlocks = new QFrame();
+    frameBlocks->setObjectName("frameBlocks");
     frameBlocks->setContentsMargins(0, 0, 0, 0);
     frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-    frameBlocks->setStyleSheet(".QFrame { border: 0; }");
+    frameBlocks->setFrameStyle(QFrame::NoFrame | QFrame::Plain);
+    //frameBlocks->setFrameShadow(QFrame::Plain);
+
     QHBoxLayout* frameBlocksLayout = new QHBoxLayout(frameBlocks);
     frameBlocksLayout->setContentsMargins(3, 0, 3, 0);
     frameBlocksLayout->setSpacing(3);
@@ -1189,7 +1192,7 @@ void BitcoinGUI::setEncryptionStatus(int status)
         unlockWalletAction->setVisible(false);
         lockWalletAction->setVisible(true);
 		lockWalletAction2->setVisible(true);
-		lockWalletAction2->setIcon(QIcon(":/icons/blueunlock"));
+        lockWalletAction2->setIcon(QIcon(":/icons/unlock_tab"));
         encryptWalletAction->setEnabled(false); // TODO: decrypt currently not supported
         break;
     case WalletModel::UnlockedForAnonymizationOnly:
@@ -1199,7 +1202,7 @@ void BitcoinGUI::setEncryptionStatus(int status)
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
         unlockWalletAction->setVisible(true);
-		unlockWalletAction->setIcon(QIcon(":/icons/bluelock"));
+        unlockWalletAction->setIcon(QIcon(":/icons/lock_tab"));
         lockWalletAction->setVisible(true);
 		lockWalletAction2->setVisible(false);
 		lockWalletAction2->setIcon(QIcon(":/icons/blueunlock"));
@@ -1212,7 +1215,7 @@ void BitcoinGUI::setEncryptionStatus(int status)
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
         unlockWalletAction->setVisible(true);
-		unlockWalletAction->setIcon(QIcon(":/icons/bluelock"));
+        unlockWalletAction->setIcon(QIcon(":/icons/lock_tab"));
         lockWalletAction->setVisible(false);
 		lockWalletAction2->setVisible(false);
 		encryptWalletAction->setEnabled(false); // TODO: decrypt currently not supported
