@@ -2,6 +2,7 @@
     <qresource prefix="/icons">
         <file alias="add">res/icons/add.png</file>
         <file alias="address-book">res/icons/address-book.png</file>
+        <file alias="address-book_menu">res/icons/address-book_menu.png</file>
         <file alias="bitcoin">res/icons/bitcoin.png</file>
         <file alias="bitcoin_testnet">res/icons/bitcoin_testnet.png</file>
         <file alias="bluelock">res/icons/lock_closed.png</file>
@@ -55,6 +56,7 @@
         <file alias="tx_mined">res/icons/tx_mined.png</file>
         <file alias="tx_output">res/icons/tx_output.png</file>
         <file alias="unlock_tab">res/icons/unlock_tab.png</file>
+        <file alias="verify_menu">res/icons/verify_menu.png</file>
     </qresource>
     <qresource prefix="/css">
         <file alias="default">res/css/default.css</file>
