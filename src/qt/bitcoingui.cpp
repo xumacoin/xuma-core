@@ -230,7 +230,7 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
     // See https://qt-project.org/doc/qt-4.8/gallery.html
     QString curStyle = QApplication::style()->metaObject()->className();
     if (curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle") {
-        progressBar->setStyleSheet("QProgressBar { background-color: #FFFFFF; border: 1px solid grey; border-radius: 1px; padding: 1px; text-align: center; } QProgressBar::chunk { background: #A3844A; border-radius: 1px; margin: 2px; }");
+        progressBar->setStyleSheet("QProgressBar { background-color: #FFFFFF; border: 1px solid grey; border-radius: 1px; padding: 1px; text-align: center; } QProgressBar::chunk { background: #A3844A; border-radius: 0; margin: 0; }");
     }
 
     statusBar()->addWidget(progressBarLabel);

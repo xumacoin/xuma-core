@@ -1316,7 +1316,7 @@
        </property>
        <property name="icon">
         <iconset resource="../xuma.qrc">
-         <normaloff>:/icons/send</normaloff>:/icons/send</iconset>
+         <normaloff>:/icons/send_button</normaloff>:/icons/send_button</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>

@@ -365,6 +365,21 @@ QString TransactionTableModel::formatTxType(const TransactionRecord* wtx) const
 
 QVariant TransactionTableModel::txAddressDecoration(const TransactionRecord* wtx) const
 {
+    /* BJK hack to make different icons visible for testing
+    if (wtx->time % 5 == 0) {
+        return QIcon(":/icons/tx_output");
+    }
+    if (wtx->time % 5 == 1) {
+        return QIcon(":/icons/tx_input");
+    }
+    if (wtx->time % 5 == 2) {
+        return QIcon(":/icons/tx_output");
+    }
+    if (wtx->time % 5 == 3) {
+        return QIcon(":/icons/tx_inout");
+    }
+    return QIcon(":/icons/tx_mined");
+    */
     switch (wtx->type) {
     case TransactionRecord::Generated:
     case TransactionRecord::StakeMint:

@@ -34,9 +34,11 @@
         <file alias="overview">res/icons/overview.png</file>
         <file alias="qrcode">res/icons/qrcode.png</file>
         <file alias="quit">res/icons/quit.png</file>
+        <file alias="receive_button">res/icons/receive_button.png</file>
         <file alias="receiving_addresses">res/icons/receive.png</file>
         <file alias="remove">res/icons/remove.png</file>
         <file alias="send">res/icons/send.png</file>
+        <file alias="send_button">res/icons/send_button.png</file>
         <file alias="staking_active">res/icons/staking_active.png</file>
         <file alias="staking_inactive">res/icons/staking_inactive.png</file>
         <file alias="synced">res/icons/synced.png</file>
@@ -60,6 +62,7 @@
     </qresource>
     <qresource prefix="/images">
         <file alias="about">res/images/about.png</file>
+        <file alias="background">res/images/background.png</file>
         <file alias="downArrow">res/images/downArrow.png</file>
         <file alias="downArrow_small">res/images/downArrow_small.png</file>
         <file alias="leftArrow_small">res/images/leftArrow_small.png</file>
