@@ -199,8 +199,10 @@ BitcoinGUI::BitcoinGUI(const NetworkStyle* networkStyle, QWidget* parent) : QMai
     labelConnectionsIcon->setMaximumSize(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE);
     labelBlocksIcon = new QLabel();
 
-    labelXMXIcon = new QLabel("XMX");
-    //labelXMXIcon->setPixmap(QIcon(":/icons/label_xmx").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+    labelXMXIcon = new QLabel();
+    //labelXMXIcon->setObjectName("XmxIcon");
+    //labelXMXIcon->setStyleSheet("QLabel {font-family: Segoe UI, Tahoe, Georgia, sans-serif, font-weight: 900; font-size: 14px; color: #606060; }");
+    labelXMXIcon->setPixmap(QIcon(":/icons/label_xmx").pixmap(37, 11));
     frameBlocksLayout->addStretch();
     frameBlocksLayout->addWidget(labelXMXIcon);
     

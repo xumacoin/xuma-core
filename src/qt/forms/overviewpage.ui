@@ -19,8 +19,14 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <property name="styleSheet">
-   <string notr="true">background: url(:images/xumalogo_name.png);</string>
+   <string notr="true">#OverviewPage {
+qproperty-alignment: 'AlignVTop | AlignRight';
+border-image: url(:/images/background) 0 0 0 0 no-repeat stretch;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="topLayout">
    <item>
@@ -45,11 +51,14 @@
       <layout class="QVBoxLayout" name="leftSide">
        <item>
         <widget class="QFrame" name="frame">
+         <property name="styleSheet">
+          <string notr="true">background-color: transparent;</string>
+         </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Plain</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
@@ -485,13 +494,25 @@ font-weight: bold;</string>
       <layout class="QVBoxLayout" name="rightSide">
        <item>
         <widget class="QFrame" name="frame_2">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Plain</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>9</number>
+          </property>
           <item>
            <spacer name="verticalSpacer_2">
             <property name="orientation">

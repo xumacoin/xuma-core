@@ -40,7 +40,7 @@ background-color:#606060;
 
 QMenuBar::item {
 background-color:#606060;
-color:#ffffff;
+color:#eee;
 }
 
 QMenuBar::item:selected {
@@ -74,7 +74,7 @@ border:0px solid #333;
 min-height:2.5em;
 padding: 0em 1em;
 font-weight:bold;
-color:#A3844A;
+color:#FFF;
 font-weight:bold;
 }
 
@@ -89,8 +89,8 @@ background-color:#FFFFFF;
 }
 
 QProgressBar {
-color:#333;
-border:2px solid grey;
+color:#606060;
+border:2px solid red;
 border-radius:1px;
 background-color:transparent;
 }
@@ -101,17 +101,23 @@ width: 20px;
 }
 
 QTabWidget {
-background-color:#f2f2f2;
+    background-color:#f2f2f2;
+    color: #fff;
 }
 
 QTabWidget::pane {
 background-color:#f2f2f2;
 border:1px solid #c2c2c2;
+color: #fff;
 }
 
 QTabBar {
 background-color:#f2f2f2;
-color:#333;
+color:#fff;
+}
+
+QTabBar::tab {
+    color: #fff;
 }
 
 QTabBar::tab:hover:!selected {
@@ -131,7 +137,7 @@ color:#333;
 
 QToolTip {
 background-color:#606060;
-color:#000;
+color:#fff;
 }
 
 QTextEdit {
@@ -815,6 +821,10 @@ padding-right:5px;
 
 /**************************** OVERVIEW SCREEN *******************************************/
 
+#OverviewPage .QFrame {
+    background-color: transparent !important;
+}
+
 /* bottom right box */
 #frameBlocks {
     border: 4px solid #F00 !important;
@@ -1159,8 +1169,8 @@ min-width:410px;
 margin-right:20px;
 margin-left:0;
 margin-top:0;
-background-image: url(':/images/xuma_logo_horizontal');
-background-repeat:none;
+/* background-image: url(':/images/xuma_logo_horizontal'); */
+/* background-repeat:none; */
 }
 
 QWidget .QFrame#frame_2 .QLabel#label_4 { /* Recent Transactions Label */
