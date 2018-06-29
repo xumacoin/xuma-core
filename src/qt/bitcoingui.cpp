@@ -472,7 +472,7 @@ void BitcoinGUI::createActions(const NetworkStyle* networkStyle)
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 	
 	///AAAA
-    openAction = new QAction(QIcon(":/icons/editpaste"), tr("Open &URI..."), this);
+    openAction = new QAction(QIcon(":/icons/editpaste_menu"), tr("Open &URI..."), this);
     openAction->setStatusTip(tr("Open a XUMA:URI or payment request"));
     openBlockExplorerAction = new QAction(QIcon(":/icons/explorer"), tr("&Blockchain explorer"), this);
     openBlockExplorerAction->setStatusTip(tr("Block explorer window"));

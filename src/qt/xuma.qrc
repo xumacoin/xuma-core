@@ -18,6 +18,7 @@
         <file alias="edit">res/icons/edit.png</file>
         <file alias="editcopy">res/icons/editcopy.png</file>
         <file alias="editpaste">res/icons/editpaste.png</file>
+        <file alias="editpaste_menu">res/icons/editpaste_menu.png</file>
         <file alias="explorer">res/icons/explorer.png</file>
         <file alias="export">res/icons/export.png</file>
         <file alias="eye">res/icons/eye.png</file>
