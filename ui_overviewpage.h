@@ -61,12 +61,12 @@ public:
     QVBoxLayout *rightSide;
     QFrame *frame_2;
     QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer_2;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label_4;
     QLabel *labelTransactionsStatus;
     QSpacerItem *horizontalSpacer;
     QListView *listTransactions;
-    QSpacerItem *verticalSpacer_2;
 
     void setupUi(QWidget *OverviewPage)
     {
@@ -74,7 +74,11 @@ public:
             OverviewPage->setObjectName(QStringLiteral("OverviewPage"));
         OverviewPage->resize(960, 615);
         OverviewPage->setMinimumSize(QSize(960, 0));
-        OverviewPage->setStyleSheet(QStringLiteral("background: url(:images/xumalogo_name.png);"));
+        OverviewPage->setAutoFillBackground(false);
+        OverviewPage->setStyleSheet(QLatin1String("#OverviewPage {\n"
+"qproperty-alignment: 'AlignVTop | AlignRight';\n"
+"border-image: url(:/images/background) 0 0 0 0 no-repeat stretch;\n"
+"}"));
         topLayout = new QVBoxLayout(OverviewPage);
         topLayout->setObjectName(QStringLiteral("topLayout"));
         labelAlerts = new QLabel(OverviewPage);
@@ -92,8 +96,9 @@ public:
         leftSide->setObjectName(QStringLiteral("leftSide"));
         frame = new QFrame(OverviewPage);
         frame->setObjectName(QStringLiteral("frame"));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
+        frame->setStyleSheet(QStringLiteral("background-color: transparent;"));
+        frame->setFrameShape(QFrame::NoFrame);
+        frame->setFrameShadow(QFrame::Plain);
         verticalLayout_4 = new QVBoxLayout(frame);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         balanceLabelLayout = new QHBoxLayout();
@@ -316,10 +321,16 @@ public:
         rightSide->setObjectName(QStringLiteral("rightSide"));
         frame_2 = new QFrame(OverviewPage);
         frame_2->setObjectName(QStringLiteral("frame_2"));
-        frame_2->setFrameShape(QFrame::StyledPanel);
-        frame_2->setFrameShadow(QFrame::Raised);
+        frame_2->setStyleSheet(QStringLiteral(""));
+        frame_2->setFrameShape(QFrame::NoFrame);
+        frame_2->setFrameShadow(QFrame::Plain);
         verticalLayout = new QVBoxLayout(frame_2);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(-1, 0, 0, 9);
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer_2);
+
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         label_4 = new QLabel(frame_2);
@@ -346,7 +357,10 @@ public:
 
         listTransactions = new QListView(frame_2);
         listTransactions->setObjectName(QStringLiteral("listTransactions"));
-        listTransactions->setStyleSheet(QStringLiteral("QListView { background: transparent; }"));
+        listTransactions->setStyleSheet(QLatin1String("QListView { background: transparent; }\n"
+"QListView::item {\n"
+"  margin-bottom: 50px;\n"
+"}"));
         listTransactions->setFrameShape(QFrame::NoFrame);
         listTransactions->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         listTransactions->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -356,10 +370,6 @@ public:
 
 
         rightSide->addWidget(frame_2);
-
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        rightSide->addItem(verticalSpacer_2);
 
 
         horizontalLayout->addLayout(rightSide);

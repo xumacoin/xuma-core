@@ -835,7 +835,7 @@ public:
         sendButton->setObjectName(QStringLiteral("sendButton"));
         sendButton->setMinimumSize(QSize(150, 0));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/send"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/icons/send_button"), QSize(), QIcon::Normal, QIcon::Off);
         sendButton->setIcon(icon);
         sendButton->setAutoDefault(false);
 

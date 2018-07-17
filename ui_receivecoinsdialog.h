@@ -135,7 +135,7 @@ public:
         receiveButton->setObjectName(QStringLiteral("receiveButton"));
         receiveButton->setMinimumSize(QSize(150, 0));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/receiving_addresses"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/icons/receive_button"), QSize(), QIcon::Normal, QIcon::Off);
         receiveButton->setIcon(icon);
 
         horizontalLayout->addWidget(receiveButton);

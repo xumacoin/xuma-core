@@ -42,7 +42,6 @@ public:
     QTableWidget *tableWidgetMyMasternodes;
     QHBoxLayout *horizontalLayout_5;
     QPushButton *startButton;
-    QPushButton *startAllButton;
     QPushButton *startMissingButton;
     QPushButton *UpdateButton;
     QLabel *autoupdate_label;
@@ -137,11 +136,6 @@ public:
         startButton->setObjectName(QStringLiteral("startButton"));
 
         horizontalLayout_5->addWidget(startButton);
-
-        startAllButton = new QPushButton(tabMyMasternodes);
-        startAllButton->setObjectName(QStringLiteral("startAllButton"));
-
-        horizontalLayout_5->addWidget(startAllButton);
 
         startMissingButton = new QPushButton(tabMyMasternodes);
         startMissingButton->setObjectName(QStringLiteral("startMissingButton"));
@@ -272,7 +266,6 @@ public:
         QTableWidgetItem *___qtablewidgetitem6 = tableWidgetMyMasternodes->horizontalHeaderItem(6);
         ___qtablewidgetitem6->setText(QApplication::translate("MasternodeList", "Pubkey", 0));
         startButton->setText(QApplication::translate("MasternodeList", "S&tart alias", 0));
-        startAllButton->setText(QApplication::translate("MasternodeList", "Start &all", 0));
         startMissingButton->setText(QApplication::translate("MasternodeList", "Start &MISSING", 0));
         UpdateButton->setText(QApplication::translate("MasternodeList", "&Update status", 0));
         autoupdate_label->setText(QApplication::translate("MasternodeList", "Status will be updated automatically in (sec):", 0));
