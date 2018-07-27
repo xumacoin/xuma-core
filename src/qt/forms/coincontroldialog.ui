@@ -447,7 +447,7 @@
       <bool>false</bool>
      </property>
      <property name="columnCount">
-      <number>12</number>
+      <number>13</number>
      </property>
      <attribute name="headerShowSortIndicator" stdset="0">
       <bool>true</bool>
@@ -476,6 +476,11 @@
      <column>
       <property name="text">
        <string>Received with address</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
       </property>
      </column>
      <column>

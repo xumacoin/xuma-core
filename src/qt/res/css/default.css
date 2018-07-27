@@ -108,20 +108,21 @@ QTabWidget {
 QTabWidget::pane {
 background-color:#f2f2f2;
 border:1px solid #c2c2c2;
-color: #fff;
+color: #000;
 }
 
 QTabBar {
 background-color:#f2f2f2;
-color:#fff;
+color:#000;
 }
 
 QTabBar::tab {
-    color: #fff;
+    color: #000;
 }
 
 QTabBar::tab:hover:!selected {
-background-color:#606060;
+    background-color:#606060;
+    color: #f2f2f2;
 }
 
 QWidget {

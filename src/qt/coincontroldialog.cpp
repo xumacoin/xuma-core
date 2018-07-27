@@ -135,9 +135,9 @@ CoinControlDialog::CoinControlDialog(QWidget* parent) : QDialog(parent),
     ui->treeWidget->setColumnWidth(COLUMN_CHECKBOX, 84);
     ui->treeWidget->setColumnWidth(COLUMN_AMOUNT, 100);
     ui->treeWidget->setColumnWidth(COLUMN_LABEL, 170);
-    ui->treeWidget->setColumnWidth(COLUMN_ADDRESS, 190);
-    //ui->treeWidget->setColumnWidth(COLUMN_DARKSEND_ROUNDS, 88);
-    ui->treeWidget->setColumnWidth(COLUMN_DATE, 80);
+    ui->treeWidget->setColumnWidth(COLUMN_ADDRESS, 250); // 190
+    ui->treeWidget->setColumnHidden(COLUMN_DARKSEND_ROUNDS, true);
+    ui->treeWidget->setColumnWidth(COLUMN_DATE, 108);
     ui->treeWidget->setColumnWidth(COLUMN_CONFIRMATIONS, 100);
     ui->treeWidget->setColumnWidth(COLUMN_PRIORITY, 100);
     ui->treeWidget->setColumnHidden(COLUMN_TXHASH, true);         // store transacton hash in this column, but dont show it
