@@ -14,8 +14,9 @@
 #include "guiconstants.h"
 #include "guiutil.h"
 #include "init.h"
-#include "Darksend.h"
-#include "Darksendconfig.h"
+// Removing Darksend - BJK
+// #include "Darksend.h"
+// #include "Darksendconfig.h"
 #include "optionsmodel.h"
 #include "transactionfilterproxy.h"
 #include "transactiontablemodel.h"
@@ -128,9 +129,12 @@ Coinmix::Coinmix(QWidget* parent) : QWidget(parent),
 	*/
     // init "out of sync" warning labels
     //ui->labelWalletStatus->setText("(" + tr("out of sync") + ")");
+    /* Removing Darksend - BJK
     ui->labelDarksendSyncStatus->setText("(" + tr("out of sync") + ")");
+    */
     //ui->labelTransactionsStatus->setText("(" + tr("out of sync") + ")");
 
+    /* Removing Darksend - BJK
     if (fLiteMode) {
         ui->frameDarksend->setVisible(false);
     } else {
@@ -150,6 +154,7 @@ Coinmix::Coinmix(QWidget* parent) : QWidget(parent),
             timer->start(1000);
         }
     }
+    */
 
     // start with displaying the "out of sync" warnings
     showOutOfSyncWarning(true);
@@ -163,7 +168,9 @@ void Coinmix::handleTransactionClicked(const QModelIndex& index)
 */
 Coinmix::~Coinmix()
 {
+  /* Removing Darksend - BJK
     if (!fLiteMode && !fMasterNode) disconnect(timer, SIGNAL(timeout()), this, SLOT(DarKsendStatus()));
+  */
     delete ui;
 }
 
@@ -201,7 +208,10 @@ void Coinmix::setBalance(const CAmount& balance, const CAmount& unconfirmedBalan
     ui->labelImmatureText->setVisible(showImmature || showWatchOnlyImmature);
     ui->labelWatchImmature->setVisible(showWatchOnlyImmature); // show watch-only immature balance
 */
+
+    /* Removing Darksend - BJK
     updateDarksendProgress();
+    */
 /*
     static int cachedTxLocks = 0;
 
@@ -269,9 +279,11 @@ void Coinmix::setWalletModel(WalletModel* model)
 
         //connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
 
+        /* Removing Darksend - BJK
         connect(ui->DarksendAuto, SIGNAL(clicked()), this, SLOT(DarksendAuto()));
         connect(ui->DarksendReset, SIGNAL(clicked()), this, SLOT(DarksendReset()));
         connect(ui->toggleDarksend, SIGNAL(clicked()), this, SLOT(toggleDarksend()));
+        */
      //  updateWatchOnlyLabels(model->haveWatchOnly());
         //connect(model, SIGNAL(notifyWatchonlyChanged(bool)), this, SLOT(updateWatchOnlyLabels(bool)));
     }
@@ -309,11 +321,14 @@ void Coinmix::updateAlerts(const QString& warnings)
 void Coinmix::showOutOfSyncWarning(bool fShow)
 {
    // ui->labelWalletStatus->setVisible(fShow);
+   /* Removing Darksend - BJK
     ui->labelDarksendSyncStatus->setVisible(fShow);
+   */
     //ui->labelTransactionsStatus->setVisible(fShow);
 }
 
 
+/* Removing Darksend - BJK
 void Coinmix::updateDarksendProgress()
 {
     if (!masternodeSync.IsBlockchainSynced() || ShutdownRequested()) return;
@@ -547,3 +562,4 @@ void Coinmix::toggleDarksend()
         }
     }
 }
+*/

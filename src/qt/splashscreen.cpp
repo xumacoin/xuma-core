@@ -28,7 +28,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle* networkStyle) 
 {
     // set reference point, paddings
     int paddingLeft = 9;
-    int paddingTop = 526 - 32;
+    int paddingTop = 526 + 150 - 32;
     int titleVersionVSpace = 17;
     int titleCopyrightVSpace = 32;
 

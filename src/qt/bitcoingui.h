@@ -83,6 +83,7 @@ private:
     WalletFrame* walletFrame;
 
     UnitDisplayStatusBarControl* unitDisplayControl;
+    QLabel* labelXMXIcon;
     QLabel* labelStakingIcon;
     QLabel* labelEncryptionIcon;
     QPushButton* labelConnectionsIcon;
@@ -94,7 +95,7 @@ private:
     QMenuBar* appMenuBar;
     QAction* overviewAction;
 	////AAAA
-	QAction* coinmixAction;
+    //QAction* coinmixAction;
     QAction* historyAction;
     QAction* masternodeAction;
     QAction* quitAction;
@@ -201,7 +202,7 @@ private slots:
     void gotoOverviewPage();
 	//AAAA
 	/** Switch to coinmix (home) page */
-    void gotocoinmixPage();
+    //void gotocoinmixPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
     /** Switch to Explorer Page */

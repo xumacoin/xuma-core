@@ -142,7 +142,7 @@
             </property>
             <property name="icon">
              <iconset resource="../xuma.qrc">
-              <normaloff>:/icons/receiving_addresses</normaloff>:/icons/receiving_addresses</iconset>
+              <normaloff>:/icons/receive_button</normaloff>:/icons/receive_button</iconset>
             </property>
            </widget>
           </item>

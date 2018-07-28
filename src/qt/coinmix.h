@@ -36,10 +36,14 @@ public:
     void setClientModel(ClientModel* clientModel);
     void setWalletModel(WalletModel* walletModel);
     void showOutOfSyncWarning(bool fShow);
+    /* Removing Darksend - BJK
     void updateDarksendProgress();
+    */
 
 public slots:
+    /* Removing Darksend - BJK
     void DarKsendStatus();
+    */
     void setBalance(const CAmount& balance, const CAmount& unconfirmedBalance, const CAmount& immatureBalance, const CAmount& anonymizedBalance, const CAmount& watchOnlyBalance, const CAmount& watchUnconfBalance, const CAmount& watchImmatureBalance);
 
 signals:
@@ -63,9 +67,11 @@ private:
     TransactionFilterProxy* filter;
 
 private slots:
+    /* Removing Darksend - BJK
     void toggleDarksend();
     void DarksendAuto();
     void DarksendReset();
+    */
     //void updateDisplayUnit();
     //void handleTransactionClicked(const QModelIndex& index);
     //void updateAlerts(const QString& warnings);

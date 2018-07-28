@@ -43,8 +43,9 @@ public:
         ThreadsScriptVerif,  // int
         DatabaseCache,       // int
         SpendZeroConfChange, // bool
-        DarksendRounds,      // int
-        AnonymizeAmount,     // int
+        // Removing Darksend - BJK
+        // DarksendRounds,      // int
+        // AnonymizeAmount,     // int
         ShowMasternodesTab,  // bool
         Listen,              // bool
         OptionIDRowCount,
@@ -89,8 +90,10 @@ private:
 
 signals:
     void displayUnitChanged(int unit);
+    /* Removing Darksend - BJK
     void DarksendRoundsChanged(int);
     void anonymizeAmountChanged(int);
+    */
     void coinControlFeaturesChanged(bool);
 };
 

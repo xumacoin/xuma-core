@@ -330,30 +330,6 @@ void MasternodeList::on_startButton_clicked()
     StartAlias(strAlias);
 }
 
-void MasternodeList::on_startAllButton_clicked()
-{
-    // Display message box
-    QMessageBox::StandardButton retval = QMessageBox::question(this, tr("Confirm all masternodes start"),
-        tr("Are you sure you want to start ALL masternodes?"),
-        QMessageBox::Yes | QMessageBox::Cancel,
-        QMessageBox::Cancel);
-
-    if (retval != QMessageBox::Yes) return;
-
-    WalletModel::EncryptionStatus encStatus = walletModel->getEncryptionStatus();
-
-    if (encStatus == walletModel->Locked || encStatus == walletModel->UnlockedForAnonymizationOnly) {
-        WalletModel::UnlockContext ctx(walletModel->requestUnlock());
-
-        if (!ctx.isValid()) return; // Unlock wallet was cancelled
-
-        StartAll();
-        return;
-    }
-
-    StartAll();
-}
-
 void MasternodeList::on_startMissingButton_clicked()
 {
     if (!masternodeSync.IsMasternodeListSynced()) {
