@@ -19,6 +19,7 @@
         <file alias="editcopy">res/icons/editcopy.png</file>
         <file alias="editpaste">res/icons/editpaste.png</file>
         <file alias="editpaste_menu">res/icons/editpaste_menu.png</file>
+        <file alias="encryptwallet_menu">res/icons/encryptwallet_menu.png</file>
         <file alias="explorer">res/icons/explorer.png</file>
         <file alias="export">res/icons/export.png</file>
         <file alias="eye">res/icons/eye.png</file>
@@ -26,12 +27,14 @@
         <file alias="eye_plus">res/icons/eye_plus.png</file>
         <file alias="filesave">res/icons/filesave.png</file>
         <file alias="history">res/icons/history.png</file>
+        <file alias="info_menu">res/icons/info_menu.png</file>
         <file alias="key">res/icons/key.png</file>
         <file alias="label_xmx">res/icons/label_xmx.png</file>
         <file alias="lock_closed">res/icons/lock_closed.png</file>
         <file alias="lock_open">res/icons/lock_open.png</file>
         <file alias="lock_tab">res/icons/lock_tab.png</file>
         <file alias="masternodes">res/icons/masternodes.png</file>
+        <file alias="network-peers_menu">res/icons/network-peers_menu.png</file>
         <file alias="options">res/icons/configure.png</file>
         <file alias="overview">res/icons/overview.png</file>
         <file alias="qrcode">res/icons/qrcode.png</file>
