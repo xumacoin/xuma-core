@@ -16,8 +16,8 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "Xuma"
-            VALUE "FileDescription",    "xumad (OSS daemon/client for Xuma)"
+            VALUE "CompanyName",        "XUMA"
+            VALUE "FileDescription",    "xumad (OSS daemon/client for XUMA)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "xumad"
             VALUE "LegalCopyright",     COPYRIGHT_STR

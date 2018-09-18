@@ -181,7 +181,7 @@
       <string>Asks</string>
      </property>
     </widget>
-    <widget class="QLabel" name="XumaSupply">
+    <widget class="QLabel" name="XMXSupply">
      <property name="geometry">
       <rect>
        <x>540</x>
@@ -197,7 +197,7 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="XumaDemand">
+    <widget class="QLabel" name="XMXDemand">
      <property name="geometry">
       <rect>
        <x>160</x>
@@ -432,7 +432,7 @@
     <attribute name="title">
      <string>Buy</string>
     </attribute>
-    <widget class="QPushButton" name="BuyXuma">
+    <widget class="QPushButton" name="BuyXMX">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -442,7 +442,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Buy Xuma</string>
+      <string>Buy XMX</string>
      </property>
      <property name="icon">
       <iconset resource="../xuma.qrc">
@@ -512,7 +512,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Xuma</string>
+      <string>XMX</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_5">
@@ -1704,10 +1704,10 @@
       </rect>
      </property>
      <property name="text">
-      <string>Xuma</string>
+      <string>XMX</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="UnitsInputXuma">
+    <widget class="QLineEdit" name="UnitsInputXMX">
      <property name="geometry">
       <rect>
        <x>310</x>
@@ -1741,7 +1741,7 @@
       </font>
      </property>
     </widget>
-    <widget class="QPushButton" name="SellXumaBTN">
+    <widget class="QPushButton" name="SellXMXBTN">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -1751,7 +1751,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Sell Xuma</string>
+      <string>Sell XMX</string>
      </property>
      <property name="icon">
       <iconset resource="../xuma">
@@ -1777,12 +1777,12 @@
          </font>
         </property>
         <property name="text">
-         <string>Xuma Available:</string>
+         <string>XMX Available:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="XumaAvailableLabel">
+       <widget class="QLabel" name="XMXAvailableLabel">
         <property name="palette">
          <palette>
           <active>
@@ -2213,7 +2213,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="labelXuma">
+       <widget class="QLabel" name="labelXMX">
         <property name="font">
          <font>
           <weight>75</weight>
@@ -2221,7 +2221,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Xuma</string>
+         <string>XMX</string>
         </property>
        </widget>
       </item>
@@ -2733,7 +2733,7 @@
       <string>TextLabel</string>
      </property>
     </widget>
-    <widget class="QLabel" name="XumaBalanceLabel">
+    <widget class="QLabel" name="XMXBalanceLabel">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -2762,7 +2762,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Xuma Balance:</string>
+      <string>XMX Balance:</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_12">
@@ -2784,7 +2784,7 @@
       <string>BTC Balance:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="XumaAvailableLabel_2">
+    <widget class="QLabel" name="XMXAvailableLabel_2">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -2813,7 +2813,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Xuma Available:</string>
+      <string>XMX Available:</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_14">
@@ -2832,10 +2832,10 @@
       </font>
      </property>
      <property name="text">
-      <string>Xuma Pending:</string>
+      <string>XMX Pending:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="XumaPendingLabel">
+    <widget class="QLabel" name="XMXPendingLabel">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -2928,7 +2928,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Bittrex Xuma Deposit Address:</string>
+      <string>Bittrex XMX Deposit Address:</string>
      </property>
     </widget>
     <widget class="QPushButton" name="GenDepositBTN">
@@ -2941,7 +2941,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Generate Xuma Deposit Address</string>
+      <string>Generate XUMA Deposit Address</string>
      </property>
      <property name="icon">
       <iconset resource="../xuma.qrc">
@@ -3155,7 +3155,7 @@
        <string notr="true">border: 1px solid #61696c;margin-left:4px;</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnConvertXuma">
+     <widget class="QPushButton" name="btnConvertXUMA">
       <property name="geometry">
        <rect>
         <x>260</x>

@@ -4,7 +4,7 @@
 There are many ways to setup a wallet to support start-many. This guide will walk through two of them.
 
 1. [Importing an existing wallet (recommended if you are consolidating wallets).](#option1)
-2. [Sending 10,000 XMX to new wallet addresses.](#option2)
+2. [Sending 10,000 XUMA to new wallet addresses.](#option2)
 
 ## <a name="option1"></a>Option 1. Importing an existing wallet
 
@@ -50,15 +50,15 @@ The wallet will re-scan and you will see your available balance increase by the 
     * Label: mn01
     * Amount: 1000 (optional)
     * Click *Request payment*
-4. Click the *Copy Address* button
+5. Click the *Copy Address* button
 
 Create a new wallet address for each MasterNode.
 
 Close your QT Wallet.
 
-### Send 10,000 XMX to New Addresses
+### Send 10,000 XUMA to New Addresses
 
-Just like setting up a standard MN. Send exactly 10,000 XMX to each new address created above.
+Just like setting up a standard MN. Send exactly 10,000 XUMA to each new address created above.
 
 ### Create New Masternode Private Keys
 
@@ -66,9 +66,7 @@ Open your QT Wallet and go to console (from the menu select Tools => Debug Conso
 
 Issue the following:
 
-```
-masternode genkey
-```
+```masternode genkey```
 
 *Note: A masternode private key will need to be created for each MasterNode you run. You should not use the same masternode private key for multiple MasterNodes.*
 
@@ -80,11 +78,11 @@ Remember... this is local. Make sure your QT is not running.
 
 Create the masternode.conf file in the same directory as your wallet.dat.
 
-Copy the masternode private key and correspondig collateral output transaction that holds the 10K XMX.
+Copy the masternode private key and correspondig collateral output transaction that holds the 1K XUMA.
 
 The masternode private key may be an existing key from [Option 1](#option1), or a newly generated key from [Option 2](#option2). 
 
-*Please note, the masternode priviate key is not the same as a wallet private key. Never put your wallet private key in the masternode.conf file. That is equivalent to putting your 10,000 XMX on the remote server and defeats the purpose of a hot/cold setup.*
+*Please note, the masternode priviate key is not the same as a wallet private key. Never put your wallet private key in the masternode.conf file. That is equivalent to putting your 10,000 XUMA on the remote server and defeats the purpose of a hot/cold setup.*
 
 ### Get the collateral output
 
@@ -92,20 +90,20 @@ Open your QT Wallet and go to console (from the menu select Tools => Debug Conso
 
 Issue the following:
 
-```
-masternode outputs
-```
+```masternode outputs```
 
 Make note of the hash (which is your collaterla_output) and index.
 
 ### Enter your MasterNode details into your masternode.conf file
-[From the Xuma github repo](https://github.com/xumacoin/xuma-core/blob/master/doc/masternode_conf.md)
+[From the xuma github repo](https://github.com/xuma-crypto/xuma/blob/master/doc/masternode_conf.md)
 
 The new masternode.conf format consists of a space seperated text file. Each line consisting of an alias, IP address followed by port, masternode private key, collateral output transaction id and collateral output index, donation address and donation percentage (the latter two are optional and should be in format "address:percentage").
 
 ```
 alias ipaddress:port masternode_private_key collateral_output collateral_output_index donationin_address:donation_percentage
 ```
+
+
 
 Example:
 
@@ -124,9 +122,7 @@ If you generated a new masternode private key, you will need to update the remot
 
 Shut down the daemon and then edit the file.
 
-```
-sudo nano .xuma/xuma.conf
-```
+```sudo nano .xuma/xuma.conf```
 
 ### Edit the masternodeprivkey
 If you generated a new masternode private key, you will need to update the masternodeprivkey value in your remote xuma.conf file.
@@ -139,9 +135,7 @@ If your remote server is not running, start your remote daemon as you normally w
 
 I usually confirm that remote is on the correct block by issuing:
 
-```
-xumad getinfo
-```
+```xumad getinfo```
 
 And compare with the official explorer at http://xumaexplorer.coin-server.com <or> dnet.presstab.pw
 
@@ -155,11 +149,9 @@ From the menu select Tools => Debug Console
 
 If you want to review your masternode.conf setting before starting the MasterNodes, issue the following in the Debug Console:
 
-```
-masternode list-conf
-```
+```masternode list-conf```
 
 Give it the eye-ball test. If satisfied, you can start your nodes one of two ways.
 
-1. masternode start-alias [alias_from_masternode.conf]. Example `masternode start-alias mn01`
+1. masternode start-alias [alias_from_masternode.conf]. Example ```masternode start-alias mn01```
 2. masternode start-many

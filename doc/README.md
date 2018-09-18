@@ -1,14 +1,13 @@
-Xuma Core
-=========
+XUMA Core
+=====================
 
 Setup
------
-
-[Xuma Core]http://bit.xumas/ is the original Xuma client and it builds the backbone of the network. However, it downloads and stores the entire history of Xuma transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
+---------------------
+[XUMA Core](http://xuma.org/wallet) is the original XUMA client and it builds the backbone of the network. However, it downloads and stores the entire history of XUMA transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
 
 Running
--------
-The following are some helpful notes on how to run Xuma on your native platform.
+---------------------
+The following are some helpful notes on how to run XUMA on your native platform.
 
 ### Unix
 
@@ -23,28 +22,27 @@ Unpack the files into a directory, and then run xuma-qt.exe.
 
 ### OSX
 
-Drag Xuma-Qt to your applications folder, and then run Xuma-Qt.
+Drag XUMA-Qt to your applications folder, and then run XUMA-Qt.
 
 ### Need Help?
 
-* See the documentation at the [Xuma Wiki](https://en.bitcoin.it/wiki/Main_Page) ***TODO***
+* See the documentation at the [XUMA Wiki](https://en.bitcoin.it/wiki/Main_Page) ***TODO***
 for help and more information.
-* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=2976421).
-* Join our Discord server [Xuma Discord](https://discord.gg/DHYsG6j).
+* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) or on the [XUMA Forum](http://forum.xuma.org/).
+* Join our Discord server [Discord Server](https://discord.xuma.org)
+* Join one of our Slack groups [XUMA Slack Groups](https://xuma.org/slack-logins/) (Main community is replaced by Discord).
 
 Building
---------
-
-The following are developer notes on how to build Xuma on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+---------------------
+The following are developer notes on how to build XUMA on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
 
 - [OSX Build Notes](build-osx.md)
 - [Unix Build Notes](build-unix.md)
 - [Gitian Building Guide](gitian-building.md)
 
 Development
------------
-
-The Xuma repo's [root README](https://github.com/xumacoin/xuma-core/blob/master/README.md) contains relevant information on the development process and automated testing.
+---------------------
+The XUMA repo's [root README](https://github.com/XUMA-Project/XUMA/blob/master/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
 - [Multiwallet Qt Development](multiwallet-qt.md)
@@ -58,19 +56,17 @@ The Xuma repo's [root README](https://github.com/xumacoin/xuma-core/blob/master/
 
 ### Resources
 
-* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=2976421).
-* Join the [Xuma Discord](https://discord.gg/DHYsG6j) 
+* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) or the [XUMA](http://forum.xuma.org/) forum.
+* Join the [XUMA-Dev](https://xuma-dev.slack.com/) Slack group ([Sign-Up](https://xuma-dev.herokuapp.com/)).
 
 ### Miscellaneous
-
 - [Assets Attribution](assets-attribution.md)
 - [Files](files.md)
 - [Tor Support](tor.md)
 - [Init Scripts (systemd/upstart/openrc)](init.md)
 
 License
--------
-
+---------------------
 Distributed under the [MIT/X11 software license](http://www.opensource.org/licenses/mit-license.php).
 This product includes software developed by the OpenSSL Project for use in the [OpenSSL Toolkit](https://www.openssl.org/). This product includes
 cryptographic software written by Eric Young ([eay@cryptsoft.com](mailto:eay@cryptsoft.com)), and UPnP software written by Thomas Bernard.

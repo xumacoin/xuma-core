@@ -5,11 +5,9 @@ Various coding styles have been used during the history of the codebase,
 and the result is not very consistent. However, we're now trying to converge to
 a single style, so please use it in new code. Old code will be converted
 gradually.
-
 - Basic rules specified in [src/.clang-format](/src/.clang-format).
   Use a recent clang-format to format automatically using one of the [dev scripts]
   (/contrib/devtools/README.md#clang-formatpy).
-
   - Braces on new lines for namespaces, classes, functions, methods.
   - Braces on the same line for everything else.
   - 4 space indentation (no tabs) for every block except namespaces.
@@ -18,7 +16,6 @@ gradually.
   - No space after function names; one space after if, for and while.
 
 Block style example:
-
 ```c++
 namespace foo
 {
@@ -42,12 +39,11 @@ class Class
 ```
 
 Doxygen comments
-----------------
+-----------------
 
 To facilitate the generation of documentation, use doxygen-compatible comment blocks for functions, methods and fields.
 
 For example, to describe a function use:
-
 ```c++
 /**
  * ... text ...
@@ -57,13 +53,11 @@ For example, to describe a function use:
  */
 bool function(int arg1, const char *arg2)
 ```
-
 A complete list of `@xxx` commands can be found at http://www.stack.nl/~dimitri/doxygen/manual/commands.html.
 As Doxygen recognizes the comments by the delimiters (`/**` and `*/` in this case), you don't
 *need* to provide any commands for a comment to be valid; just a description text is fine.
 
 To describe a class use the same construct above the class definition:
-
 ```c++
 /**
  * Alerts are for notifying old versions if they become too obsolete and
@@ -75,20 +69,17 @@ class CAlert
 ```
 
 To describe a member or variable use:
-
 ```c++
 int var; //!< Detailed description after the member
 ```
 
 or
-
 ```cpp
 //! Description before the member
 int var;
 ```
 
 Also OK:
-
 ```c++
 ///
 /// ... text ...
@@ -97,7 +88,6 @@ bool function2(int arg1, const char *arg2)
 ```
 
 Not OK (used plenty in the current source, but not picked up):
-
 ```c++
 //
 // ... text ...
@@ -133,7 +123,7 @@ are testing multi-machine code that needs to operate across the internet.
 
 **DEBUG_LOCKORDER**
 
-Xuma Core is a multithreaded application, and deadlocks or other multithreading bugs
+XUMA Core is a multithreaded application, and deadlocks or other multithreading bugs
 can be very difficult to track down. Compiling with -DDEBUG_LOCKORDER (configure
 CXXFLAGS="-DDEBUG_LOCKORDER -g") inserts run-time checks to keep track of which locks
 are held, and adds warnings to the debug.log file if inconsistencies are detected.
@@ -187,12 +177,12 @@ Threads
 - Shutdown : Does an orderly shutdown of everything.
 
 Ignoring IDE/editor files
--------------------------
+--------------------------
 
 In closed-source environments in which everyone uses the same IDE it is common
 to add temporary files it produces to the project-wide `.gitignore` file.
 
-However, in open source software such as Xuma Core, where everyone uses
+However, in open source software such as XUMA Core, where everyone uses
 their own editors/IDE/tools, it is less common. Only you know what files your
 editor produces and this may change from version to version. The canonical way
 to do this is thus to create your local gitignore. Add this to `~/.gitconfig`:
@@ -206,7 +196,6 @@ to do this is thus to create your local gitignore. Add this to `~/.gitconfig`:
 on a terminal)
 
 Then put your favourite tool's temporary filenames in that file, e.g.
-
 ```
 # NetBeans
 nbproject/
@@ -220,13 +209,13 @@ example, lcov) it is perfectly acceptable to add its files to `.gitignore`
 and commit them.
 
 Development guidelines
-======================
+============================
 
 A few non-style-related recommendations for developers, as well as points to
-pay attention to for reviewers of Xuma Core code.
+pay attention to for reviewers of XUMA Core code.
 
-General Xuma Core
------------------
+General XUMA Core
+----------------------
 
 - New features should be exposed on RPC first, then can be made available in the GUI
 
@@ -243,7 +232,7 @@ General Xuma Core
     be done first
 
 Wallet
-------
+-------
 
 - Make sure that no crashes happen with run-time option `-disablewallet`.
 
@@ -257,7 +246,7 @@ Wallet
   - *Rationale*: Otherwise compilation of the disable-wallet build will fail in environments without BerkeleyDB
 
 General C++
------------
+-------------
 
 - Assertions should not have side-effects
 
@@ -277,7 +266,7 @@ General C++
   - *Rationale*: This avoids memory and resource leaks, and ensures exception safety
 
 C++ data structures
--------------------
+--------------------
 
 - Never use the `std::map []` syntax when reading from a map, but instead use `.find()`
 
@@ -316,7 +305,7 @@ C++ data structures
   that are not language lawyers
 
 Strings and formatting
-----------------------
+------------------------
 
 - Be careful of `LogPrint` versus `LogPrintf`. `LogPrint` takes a `category` argument, `LogPrintf` does not.
 
@@ -335,10 +324,10 @@ Strings and formatting
 
 - For `strprintf`, `LogPrint`, `LogPrintf` formatting characters don't need size specifiers
 
-  - *Rationale*: Xuma Core uses tinyformat, which is type safe. Leave them out to avoid confusion
+  - *Rationale*: XUMA Core uses tinyformat, which is type safe. Leave them out to avoid confusion
 
 Threads and synchronization
----------------------------
+----------------------------
 
 - Build and run tests with `-DDEBUG_LOCKORDER` to verify that no potential
   deadlocks are introduced.
@@ -366,7 +355,7 @@ TRY_LOCK(cs_vNodes, lockNodes);
 ```
 
 Source code organization
-------------------------
+--------------------------
 
 - Implementation code should go into the `.cpp` file and not the `.h`, unless necessary due to template usage or
   when performance due to inlining is critical
@@ -379,7 +368,7 @@ Source code organization
   - *Rationale*: Avoids symbol conflicts
 
 GUI
----
+-----
 
 - Do not display or manipulate dialogs in model code (classes `*Model`)
 
@@ -388,7 +377,7 @@ GUI
     holds: try to not directly access core data structures from Views.
 
 Git and github tips
--------------------
+---------------------
 
 - For resolving merge/rebase conflicts, it can be useful to enable diff3 style using
   `git config merge.conflictstyle diff3`. Instead of
@@ -429,7 +418,7 @@ Git and github tips
 
         [remote "upstream-pull"]
                 fetch = +refs/pull/*:refs/remotes/upstream-pull/*
-                url = git@github.com:xumacoin/xuma-core.git
+                url = git@github.com:XUMA-Project/XUMA.git
 
   This will add an `upstream-pull` remote to your git repository, which can be fetched using `git fetch --all`
   or `git fetch upstream-pull`. Afterwards, you can use `upstream-pull/NUMBER/head` in arguments to `git show`,

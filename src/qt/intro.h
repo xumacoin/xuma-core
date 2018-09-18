@@ -1,4 +1,5 @@
 // Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -36,10 +37,13 @@ public:
     /**
      * Determine data directory. Let the user choose if the current one doesn't exist.
      *
+     * @returns true if a data directory was selected, false if the user cancelled the selection
+     * dialog.
+     *
      * @note do NOT call global GetDataDir() before calling this function, this
      * will cause the wrong path to be cached.
      */
-    static void pickDataDirectory();
+    static bool pickDataDirectory();
 
     /**
      * Determine default data directory for operating system.

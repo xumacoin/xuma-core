@@ -7,7 +7,7 @@
 #  spendfrom.py  # Lists available funds
 #  spendfrom.py --from=ADDRESS --to=ADDRESS --amount=11.00
 #
-# Assumes it will talk to a xumad or Xuma-Qt running
+# Assumes it will talk to a xumad or xuma-Qt running
 # on localhost.
 #
 # Depends on jsonrpc
@@ -26,7 +26,7 @@ from jsonrpc import ServiceProxy, json
 BASE_FEE=Decimal("0.001")
 
 def check_json_precision():
-    """Make sure JSON library being used does not lose precision converting XMX values"""
+    """Make sure json library being used does not lose precision converting BTC values"""
     n = Decimal("20000000.00000003")
     satoshis = int(json.loads(json.dumps(float(n)))*1.0e8)
     if satoshis != 2000000000000003:
@@ -35,9 +35,9 @@ def check_json_precision():
 def determine_db_dir():
     """Return the default location of the xuma data directory"""
     if platform.system() == "Darwin":
-        return os.path.expanduser("~/Library/Application Support/Xuma/")
+        return os.path.expanduser("~/Library/Application Support/XUMA/")
     elif platform.system() == "Windows":
-        return os.path.join(os.environ['APPDATA'], "Xuma")
+        return os.path.join(os.environ['APPDATA'], "XUMA")
     return os.path.expanduser("~/.xuma")
 
 def read_bitcoin_config(dbdir):
@@ -67,7 +67,7 @@ def connect_JSON(config):
     testnet = config.get('testnet', '0')
     testnet = (int(testnet) > 0)  # 0/1 in config file, convert to True/False
     if not 'rpcport' in config:
-        config['rpcport'] = 19643 if testnet else 20643
+        config['rpcport'] = 51475 if testnet else 55000
     connect = "http://%s:%s@127.0.0.1:%s"%(config['rpcuser'], config['rpcpassword'], config['rpcport'])
     try:
         result = ServiceProxy(connect)
@@ -152,7 +152,7 @@ def create_tx(xumad, fromaddresses, toaddress, amount, fee):
         total_available += all_coins[addr]["total"]
 
     if total_available < needed:
-        sys.stderr.write("Error, only %f XMX available, need %f\n"%(total_available, needed));
+        sys.stderr.write("Error, only %f BTC available, need %f\n"%(total_available, needed));
         sys.exit(1)
 
     #

@@ -7,8 +7,7 @@ General tips:
 - mylib_foo is written as $(package)_foo in order to make recipes more similar.
 
 ## Identifiers
-
-Each package is required to define at least four variables:
+Each package is required to define at least these variables:
 
     $(package)_version:
     Version of the upstream library or program. If there is no version, a
@@ -44,8 +43,8 @@ These variables are optional:
     Any extra files that will be fetched via $(package)_fetch_cmds. These are
     specified so that they can be fetched and verified via 'make download'.
 
-## Build Variables:
 
+## Build Variables:
 After defining the main identifiers, build variables may be added or customized
 before running the build commands. They should be added to a function called
 $(package)_set_vars. For example:

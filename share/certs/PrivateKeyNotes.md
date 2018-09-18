@@ -1,5 +1,5 @@
 Code-signing private key notes
-==============================
+==
 
 The private keys for these certificates were generated on Gavin's main work machine,
 following the certificate authoritys' recommendations for generating certificate
@@ -14,7 +14,7 @@ The key and certificate were exported into a separate, passphrase-protected PKCS
 then deleted from Firefox's keystore. The exported file is used to sign the Windows setup.exe.
 
 Threat analysis
----------------
+--
 
 Gavin is a single point of failure. He could be coerced to divulge the secret signing keys,
 allowing somebody to distribute a Bitcoin-Qt.app or bitcoin-qt-setup.exe with a valid
@@ -25,7 +25,7 @@ by breaking in to his office, allowing the attacker to get the private key files
 install a keylogger to get the passphrase that protects them.
 
 Threat Mitigation
------------------
+--
 
 "Air gapping" the machine used to do the signing will not work, because the signing
 process needs to access a timestamp server over the network. And it would not

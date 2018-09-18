@@ -16,8 +16,8 @@ BITCOIND_USER=${BITCOIND_USER:-xuma}
 BITCOIND_GROUP=${BITCOIND_GROUP:-xuma}
 BITCOIND_BIN=${BITCOIND_BIN:-/usr/bin/xumad}
 
-name="Xuma Core Daemon"
-description="Xuma crypto-currency p2p network daemon"
+name="XUMA Core Daemon"
+description="XUMA crypto-currency p2p network daemon"
 
 command="/usr/bin/xumad"
 command_args="-pid=\"${BITCOIND_PIDFILE}\" \
@@ -78,7 +78,7 @@ checkconfig()
 		eerror "It is also recommended that you also set alertnotify so you are "
 		eerror "notified of problems:"
 		eerror ""
-		eerror "ie: alertnotify=echo %%s | mail -s \"Xuma Alert\"" \
+		eerror "ie: alertnotify=echo %%s | mail -s \"XUMA Alert\"" \
 			"admin@foo.com"
 		eerror ""
 		return 1

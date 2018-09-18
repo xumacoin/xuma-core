@@ -31,7 +31,6 @@ To obtain it, register for a developer account, then download the [Xcode 7.3.1 d
 
 This file is several gigabytes in size, but only a single directory inside is
 needed:
-
 ```
 Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 ```
@@ -40,7 +39,6 @@ Unfortunately, the usual linux tools (7zip, hpmount, loopback mount) are incapab
 To create a tarball suitable for Gitian input, there are two options:
 
 Using Mac OS X, you can mount the dmg, and then create it with:
-
 ```
   $ hdiutil attach Xcode_7.3.1.dmg
   $ tar -C /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/ -czf MacOSX10.11.sdk.tar.gz MacOSX10.11.sdk
@@ -94,6 +92,6 @@ build process to remain somewhat deterministic. Here's how it works:
   that have been previously (deterministically) built in order to create a
   final dmg.
 - **TODO** The Apple keyholder uses this unsigned app to create a detached signature,
-  using the script that is also included there. Detached signatures are available from this [repository](https://github.com/xumacoin/xuma-detached-sigs).
+  using the script that is also included there. Detached signatures are available from this [repository](https://github.com/XUMA-Project/xuma-detached-sigs).
 - Builders feed the unsigned app + detached signature back into Gitian. It
   uses the pre-built tools to recombine the pieces into a deterministic dmg.

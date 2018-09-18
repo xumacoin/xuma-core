@@ -1,9 +1,9 @@
 Release Process
-===============
+====================
 
 Before every release candidate:
 
-* Update translations (ping Fuzzbawls on Slack) see [translation_process.md](https://github.com/xumacoin/xuma-core/blob/master/doc/translation_process.md#synchronising-translations).
+* Update translations (ping Fuzzbawls on Slack) see [translation_process.md](https://github.com/XUMA-Project/XUMA/blob/master/doc/translation_process.md#synchronising-translations).
 
 Before every minor and major release:
 
@@ -24,12 +24,12 @@ If you're using the automated script (found in [contrib/gitian-build.sh](/contri
 Check out the source code in the following directory hierarchy.
 
     cd /path/to/your/toplevel/build
-    git clone https://github.com/xumacoin/xuma-sigs/
-    git clone https://github.com/xumacoin/xuma-detached-sigs/
-    git clone https://github.com/devrandom/gitian-builder/
-    git clone https://github.com/xumacoin/xuma-core/
+    git clone https://github.com/xuma-project/gitian.sigs.git
+    git clone https://github.com/xuma-project/xuma-detached-sigs.git
+    git clone https://github.com/devrandom/gitian-builder.git
+    git clone https://github.com/xuma-project/xuma.git
 
-### Xuma maintainers/release engineers, suggestion for writing release notes
+### XUMA maintainers/release engineers, suggestion for writing release notes
 
 Write release notes. git shortlog helps a lot, for example:
 
@@ -84,7 +84,7 @@ Create the OS X SDK tarball, see the [OS X readme](README_osx.md) for details, a
 By default, Gitian will fetch source files as needed. To cache them ahead of time:
 
     pushd ./gitian-builder
-    make -C ../xuma-core/depends download SOURCES_PATH=`pwd`/cache/common
+    make -C ../xuma/depends download SOURCES_PATH=`pwd`/cache/common
     popd
 
 Only missing files will be fetched, so this is safe to re-run for each build.
@@ -92,27 +92,31 @@ Only missing files will be fetched, so this is safe to re-run for each build.
 NOTE: Offline builds must use the --url flag to ensure Gitian fetches only from local URLs. For example:
 
     pushd ./gitian-builder
-    ./bin/gbuild --url xuma=/path/to/xuma-core,signature=/path/to/sigs {rest of arguments}
+    ./bin/gbuild --url xuma=/path/to/xuma,signature=/path/to/sigs {rest of arguments}
     popd
 
 The gbuild invocations below <b>DO NOT DO THIS</b> by default.
 
-### Build and sign Xuma Core for Linux, Windows, and OS X:
+### Build and sign XUMA Core for Linux, Windows, and OS X:
 
     pushd ./gitian-builder
-    ./bin/gbuild --memory 3000 --commit xuma=v${VERSION} ../xuma-core/contrib/gitian-descriptors/gitian-linux.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../xuma-core/contrib/gitian-descriptors/gitian-linux.yml
+    ./bin/gbuild --memory 3000 --commit xuma=v${VERSION} ../xuma/contrib/gitian-descriptors/gitian-linux.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../xuma/contrib/gitian-descriptors/gitian-linux.yml
     mv build/out/xuma-*.tar.gz build/out/src/xuma-*.tar.gz ../
 
-    ./bin/gbuild --memory 3000 --commit xuma=v${VERSION} ../xuma-core/contrib/gitian-descriptors/gitian-win.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../xuma-core/contrib/gitian-descriptors/gitian-win.yml
+    ./bin/gbuild --memory 3000 --commit xuma=v${VERSION} ../xuma/contrib/gitian-descriptors/gitian-win.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../xuma/contrib/gitian-descriptors/gitian-win.yml
     mv build/out/xuma-*-win-unsigned.tar.gz inputs/xuma-win-unsigned.tar.gz
     mv build/out/xuma-*.zip build/out/xuma-*.exe ../
 
-    ./bin/gbuild --memory 3000 --commit xuma=v${VERSION} ../xuma-core/contrib/gitian-descriptors/gitian-osx.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../xuma-core/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gbuild --memory 3000 --commit xuma=v${VERSION} ../xuma/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../xuma/contrib/gitian-descriptors/gitian-osx.yml
     mv build/out/xuma-*-osx-unsigned.tar.gz inputs/xuma-osx-unsigned.tar.gz
     mv build/out/xuma-*.tar.gz build/out/xuma-*.dmg ../
+
+    ./bin/gbuild --memory 3000 --commit xuma=v${VERSION} ../xuma/contrib/gitian-descriptors/gitian-aarch64.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-aarch64 --destination ../gitian.sigs/ ../xuma/contrib/gitian-descriptors/gitian-aarch64.yml
+    mv build/out/xuma-*.tar.gz build/out/src/xuma-*.tar.gz ../
     popd
 
 Build output expected:
@@ -133,9 +137,10 @@ Add other gitian builders keys to your gpg keyring, and/or refresh keys.
 Verify the signatures
 
     pushd ./gitian-builder
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../xuma-core/contrib/gitian-descriptors/gitian-linux.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../xuma-core/contrib/gitian-descriptors/gitian-win.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../xuma-core/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../xuma/contrib/gitian-descriptors/gitian-linux.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../xuma/contrib/gitian-descriptors/gitian-win.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../xuma/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-aarch64 ../xuma/contrib/gitian-descriptors/gitian-aarch64.yml
     popd
 
 ### Next steps:
@@ -146,6 +151,7 @@ Commit your signature to gitian.sigs:
     git add ${VERSION}-linux/${SIGNER}
     git add ${VERSION}-win-unsigned/${SIGNER}
     git add ${VERSION}-osx-unsigned/${SIGNER}
+    git add ${VERSION}-aarch64/${SIGNER}
     git commit -a
     git push  # Assuming you can push to the gitian.sigs tree
     popd
@@ -184,23 +190,23 @@ Codesigner only: Commit the detached codesign payloads:
 Non-codesigners: wait for Windows/OS X detached signatures:
 
 - Once the Windows/OS X builds each have 3 matching signatures, they will be signed with their respective release keys.
-- Detached signatures will then be committed to the [xuma-detached-sigs](https://github.com/xumacoin/xuma-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
+- Detached signatures will then be committed to the [xuma-detached-sigs](https://github.com/XUMA-Project/xuma-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
 
 Create (and optionally verify) the signed OS X binary:
 
     pushd ./gitian-builder
-    ./bin/gbuild -i --commit signature=v${VERSION} ../xuma-core/contrib/gitian-descriptors/gitian-osx-signer.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../xuma-core/contrib/gitian-descriptors/gitian-osx-signer.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../xuma-core/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gbuild -i --commit signature=v${VERSION} ../xuma/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../xuma/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../xuma/contrib/gitian-descriptors/gitian-osx-signer.yml
     mv build/out/xuma-osx-signed.dmg ../xuma-${VERSION}-osx.dmg
     popd
 
 Create (and optionally verify) the signed Windows binaries:
 
     pushd ./gitian-builder
-    ./bin/gbuild -i --commit signature=v${VERSION} ../xuma-core/contrib/gitian-descriptors/gitian-win-signer.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../xuma-core/contrib/gitian-descriptors/gitian-win-signer.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-signed ../xuma-core/contrib/gitian-descriptors/gitian-win-signer.yml
+    ./bin/gbuild -i --commit signature=v${VERSION} ../xuma/contrib/gitian-descriptors/gitian-win-signer.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../xuma/contrib/gitian-descriptors/gitian-win-signer.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-signed ../xuma/contrib/gitian-descriptors/gitian-win-signer.yml
     mv build/out/xuma-*win64-setup.exe ../xuma-${VERSION}-win64-setup.exe
     mv build/out/xuma-*win32-setup.exe ../xuma-${VERSION}-win32-setup.exe
     popd
@@ -223,7 +229,6 @@ sha256sum * > SHA256SUMS
 ```
 
 The list of files should be:
-
 ```
 xuma-${VERSION}-aarch64-linux-gnu.tar.gz
 xuma-${VERSION}-arm-linux-gnueabihf.tar.gz
@@ -237,20 +242,17 @@ xuma-${VERSION}-win32.zip
 xuma-${VERSION}-win64-setup.exe
 xuma-${VERSION}-win64.zip
 ```
-
 The `*-debug*` files generated by the gitian build contain debug symbols
 for troubleshooting by developers. It is assumed that anyone that is interested
 in debugging can run gitian to generate the files for themselves. To avoid
 end-user confusion about which file to pick, as well as save storage
-space *do not upload these to the http://bit.xumas/ server*.
+space *do not upload these to the xuma.org server*.
 
 - GPG-sign it, delete the unsigned file:
-
 ```
 gpg --digest-algo sha256 --clearsign SHA256SUMS # outputs SHA256SUMS.asc
 rm SHA256SUMS
 ```
-
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spurious/nonsensical entry.
 
@@ -260,10 +262,10 @@ Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spur
 
   - bitcointalk announcement thread
 
-  - Optionally twitter, reddit /r/xumacoin, ... but this will usually sort out itself
+  - Optionally twitter, reddit /r/xuma, ... but this will usually sort out itself
 
   - Archive release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
 
-  - Create a [new GitHub release](https://github.com/xumacoin/xuma-core/releases/new) with a link to the archived release notes.
+  - Create a [new GitHub release](https://github.com/XUMA-Project/XUMA/releases/new) with a link to the archived release notes.
 
   - Celebrate

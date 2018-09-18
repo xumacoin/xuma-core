@@ -34,3 +34,5 @@ for frame in xrange(NUMFRAMES):
     outfile = frame_to_filename(frame)
     im_new.save(outfile, 'png')
     frame_files.append(outfile)
+
+

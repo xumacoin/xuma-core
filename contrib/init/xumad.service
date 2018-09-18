@@ -1,5 +1,5 @@
 [Unit]
-Description=Xuma's distributed currency daemon
+Description=XUMA's distributed currency daemon
 After=network.target
 
 [Service]

@@ -1,7 +1,7 @@
-TOR SUPPORT IN Xuma
-===================
+TOR SUPPORT IN XUMA
+=======================
 
-It is possible to run Xuma as a Tor hidden service, and connect to such services.
+It is possible to run XUMA as a Tor hidden service, and connect to such services.
 
 The following directions assume you have a Tor proxy running on port 9050. Many
 distributions default to having a SOCKS proxy listening on port 9050, but others
@@ -9,12 +9,12 @@ may not. In particular, the Tor Browser Bundle defaults to listening on a random
 port. See [Tor Project FAQ:TBBSocksPort](https://www.torproject.org/docs/faq.html.en#TBBSocksPort)
 for how to properly configure Tor.
 
-Run Xuma behind a Tor proxy
----------------------------
 
-The first step is running Xuma behind a Tor proxy. This will already make all
+Run XUMA behind a Tor proxy
+----------------------------------
+
+The first step is running XUMA behind a Tor proxy. This will already make all
 outgoing connections be anonymized, but more is possible.
-
 ```
 -proxy=ip:port  Set the proxy server. If SOCKS5 is selected (default), this proxy
                 server will be used to try to reach .onion addresses as well.
@@ -37,24 +37,21 @@ outgoing connections be anonymized, but more is possible.
 
 An example how to start the client if the Tor proxy is running on local host on
 port 9050 and only allows .onion nodes to connect:
-
 ```
 ./xumad -onion=127.0.0.1:9050 -onlynet=tor -listen=0 -addnode=dnetzj6l4cvo2fxy.onion:989
 ```
 
 In a typical situation, this suffices to run behind a Tor proxy:
-
 ```
 ./xumad -proxy=127.0.0.1:9050
 ```
 
-Run a Xuma hidden server
-------------------------
+Run a XUMA hidden server
+-------------------------------
 
 If you configure your Tor system accordingly, it is possible to make your node also
 reachable from the Tor network. Add these lines to your /etc/tor/torrc (or equivalent
 config file):
-
 ```
 ClientOnly 1
 SOCKSPort 9050
@@ -73,9 +70,8 @@ NumEntryGuards 8
 
 The directory can be different of course, but (both) port numbers should be equal to
 your xumad's P2P listen port (19777 by default).
-
 ```
--externalip=X   You can tell Xuma about its publicly reachable address using
+-externalip=X   You can tell xuma about its publicly reachable address using
                 this option, and this can be a .onion address. Given the above
                 configuration, you can find your onion address in
                 /var/lib/tor/xuma-service/hostname. Onion addresses are given
@@ -95,7 +91,6 @@ your xumad's P2P listen port (19777 by default).
 ```
 
 In a typical situation, where you're only reachable via Tor, this should suffice:
-
 ```
 ./xumad -proxy=127.0.0.1:9050 -externalip=dnetzj6l4cvo2fxy.onion:989 -listen
 ```
@@ -103,7 +98,6 @@ In a typical situation, where you're only reachable via Tor, this should suffice
 (obviously, replace the Onion address with your own). If you don't care too much
 about hiding your node, and want to be reachable on IPv4 as well, additionally
 specify:
-
 ```
 ./xumad ... -discover
 ```
@@ -112,14 +106,12 @@ and open port 19777 on your firewall (or use -upnp).
 
 If you only want to use Tor to reach onion addresses, but not use it as a proxy
 for normal IPv4/IPv6 communication, use:
-
 ```
 ./xumad -onion=127.0.0.1:9050 -externalip=dnetzj6l4cvo2fxy.onion:989 -discover
 ```
 
-List of known Xuma Tor relays
------------------------------
-
+List of known XUMA Tor relays
+------------------------------------
 ```
 y5kcscnhpygvvnjn.onion:989
 5bmhtjvn2jvwpiej.onion:989
