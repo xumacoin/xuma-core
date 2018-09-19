@@ -70,8 +70,8 @@ src/qt/test/moc*.cpp
 *.trs
 *.dmg
 
-*.json.h
-*.raw.h
+#*.json.h
+#*.raw.h
 
 #libtool object files
 *.lo
