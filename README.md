@@ -38,13 +38,12 @@ Proof of Stake will automatically be enabled at block 475201.
 
 <table>
 <tr><th>Block Height</th><th>Reward Amount</th></tr>
-<tr><td>Block 300,000 - 399,999</td><td>80 XMX</td></tr>
-<tr><td>Block 400,000 - 459,999</td><td>40 XMX</td></tr>
-<tr><td>Block 460,000 - 519,999</td><td>20 XMX</td></tr>
-<tr><td>Block 520,000 - 579,999</td><td>10 XMX</td></tr>
-<tr><td>Block 580,000 - infinite</td><td>1 XMX</td></tr>
+<tr><td>Block 300,000 - 399,999</td><td>100 XMX</td></tr>
+<tr><td>Block 400,000 - 459,999</td><td>50 XMX</td></tr>
+<tr><td>Block 460,000 - 519,999</td><td>25 XMX</td></tr>
+<tr><td>Block 520,000 - 579,999</td><td>15 XMX</td></tr>
+<tr><td>Block 580,000 - infinite</td><td>7 XMX</td></tr>
 </table>
 
 Masternode and staker rewards with PoS:
- - Masternodes and stakers will receive split reward allocation when PoS sets in.
- - This means the more masternodes are in the system, the more staking gets attractive and vice versa.
+ - Masternodes and stakers will receive split reward when PoS sets in.

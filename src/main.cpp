@@ -1828,16 +1828,17 @@ int64_t GetBlockValue(int nHeight)
 	} else if (nHeight > 88999 && nHeight <= 299999) { // 299999 => LAST POW BLOCK
 		nSubsidy = 150 * COIN;
 	} else if (nHeight > 299999 && nHeight <= 399999) { // 300000 => FIRST POS BLOCK
-		nSubsidy = 80 * COIN;
-	} else if (nHeight > 399999 && nHeight <= 459999) {
-		nSubsidy = 40 * COIN;
-	} else if (nHeight > 459999 && nHeight <= 519999) {
-		nSubsidy = 20 * COIN;
-	} else if (nHeight > 519999 && nHeight <= 579999) {
-		nSubsidy = 10 * COIN;
-	} else if (nHeight > 579999) {
-		nSubsidy = 1 * COIN;
-	}
+                nSubsidy = 100 * COIN;
+        } else if (nHeight > 399999 && nHeight <= 459999) {
+                nSubsidy = 50 * COIN;
+        } else if (nHeight > 459999 && nHeight <= 519999) {
+                nSubsidy = 25 * COIN;
+        } else if (nHeight > 519999 && nHeight <= 579999) {
+                nSubsidy = 15 * COIN;
+        } else if (nHeight > 579999) {
+                nSubsidy = 7 * COIN;
+        }
+
     return nSubsidy;
 }
 
