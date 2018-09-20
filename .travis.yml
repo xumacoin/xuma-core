@@ -1,5 +1,5 @@
 sudo: required
-dist: trusty
+dist: xenial
 
 #workaround for https://github.com/travis-ci/travis-ci/issues/5227
 addons:
