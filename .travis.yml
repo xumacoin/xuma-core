@@ -70,13 +70,13 @@ after_script:
     - echo $TRAVIS_COMMIT_LOG
 after_success:
   - find $OUTDIR
-  - export VERSION=$REASON-$TRAVIS_BRANCH
-  - if [ "$REASON" = "ARM" ]; then cd $OUTDIR && cp -a bin Xuma-Core-$VERSION && rm Xuma-Core-$VERSION/*test* && zip -r Xuma-Core-$VERSION.zip Xuma-Core-$VERSION; fi
-  - if [ "$REASON" = "Win32" ]; then cd $OUTDIR && cp -a bin Xuma-Core-$VERSION && rm Xuma-Core-$VERSION/*test* && zip -r Xuma-Core-$VERSION.zip Xuma-Core-$VERSION; fi
-  - if [ "$REASON" = "Win64" ]; then cd $OUTDIR && cp -a bin Xuma-Core-$VERSION && rm Xuma-Core-$VERSION/*test* && zip -r Xuma-Core-$VERSION.zip Xuma-Core-$VERSION; fi
-  - if [ "$REASON" = "Linux32" ]; then cd $OUTDIR && cp -a bin Xuma-Core-$VERSION && rm Xuma-Core-$VERSION/*test* && zip -r Xuma-Core-$VERSION.zip Xuma-Core-$VERSION; fi
-  - if [ "$REASON" = "Linux64" ]; then cd $OUTDIR && cp -a bin Xuma-Core-$VERSION && rm Xuma-Core-$VERSION/*test* && zip -r Xuma-Core-$VERSION.zip Xuma-Core-$VERSION; fi
-  - if [ "$REASON" = "MacOSX" ]; then mkdir -p $OUTDIR && cd $OUTDIR && cp /home/travis/build/xumacoin/xuma-core/bitcoin-x86_64-apple-darwin11/XUMA-Core.dmg Xuma-Core-$VERSION.dmg; fi
+    - export VERSION=$REASON-$TRAVIS_BRANCH
+    - if [ "$REASON" = "ARM" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
+    - if [ "$REASON" = "Win32" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
+    - if [ "$REASON" = "Win64" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
+#    - if [ "$REASON" = "Linux32" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
+    - if [ "$REASON" = "Linux64" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
+    - if [ "$REASON" = "MacOSX" ]; then pwd && find . -name '*.dmg' && echo $OUTDIR && mkdir -p $OUTDIR && cp *.dmg $OUTDIR/XUMA-$VERSION.dmg && ls; fi
 deploy:
   provider: releases
   api_key:
