@@ -115,7 +115,7 @@ public:
         pchMessageStart[1] = 0x04;
         pchMessageStart[2] = 0x15;
         pchMessageStart[3] = 0x14;
-        vAlertPubKey = ParseHex("0497dfcea626dca270cfe2eebf1160733b07352af966926e30058ca53dae05bbc71d64dbaa0c66e373211e324a23b361fc33e1e2dece1fb90afcefc707643a28f5");
+        vAlertPubKey = ParseHex("043c965c9f64452d91b05ee7ef1be55134ee5a1584dc35717f160c35ca576ba1b93f06e5e39232db44ad547b4d7cc3673ba3d7d31de9e92fd082e1b61353225ff2");
         nDefaultPort = 19777;
         bnProofOfWorkLimit = ~uint256(0) >> 20; // XUMA starting difficulty is 1 / 2^12
         nSubsidyHalvingInterval = 210000;
@@ -129,7 +129,7 @@ public:
         nMaturity = 120;
         nMasternodeCountDrift = 20;
         nMaxMoneyOut = 100000000 * COIN;
-		strDeveloperFeePayee = "XGjLuh8mFrXwLGJjGJZfPK4rVQpahP4FP1";
+	strDeveloperFeePayee = "XBN4RM1YeKWLP9KtV65uBMieZhFaPmTGoz";
 		
         /** Height or Time Based Activations **/
         nLastPOWBlock = 299999;
@@ -189,10 +189,10 @@ public:
         fHeadersFirstSyncingActive = false;
 
         nPoolMaxTransactions = 3;
-        strSporkKey = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
-        strSporkKeyOld = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
-        strObfuscationPoolDummyAddress = "AcmpqXViWUXNroqVNYRdKjKrFM6PNa1oTM";
-        nStartMasternodePayments = 1519010250; //11/10/2017 @ 12:00am (UTC)
+        strSporkKey = "0474374a71e48d2cd41b6d92bc7563202c1d35cc1c0e45259c620a800a6243993e0ab30c7847ce53670275f6116cd3b637543ad6044ecefb4fc24b6e9ea6c7448f";
+        strSporkKeyOld = "0474374a71e48d2cd41b6d92bc7563202c1d35cc1c0e45259c620a800a6243993e0ab30c7847ce53670275f6116cd3b637543ad6044ecefb4fc24b6e9ea6c7448f";
+        strObfuscationPoolDummyAddress = "XGjLuh8mFrXwLGJjGJZfPK4rVQpahP4FP1";
+        nStartMasternodePayments = 1519010250;
 
         /** Zerocoin */
         zerocoinModulus = "25195908475657893494027183240048398571429282126204032027777137836043662020707595556264018525880784"
@@ -233,7 +233,7 @@ public:
         pchMessageStart[1] = 0x44;
         pchMessageStart[2] = 0x65;
         pchMessageStart[3] = 0x54;
-        vAlertPubKey = ParseHex("04e1d34432d3a5803312f33cf20686b1801835ea8efb18ad77d50b5ec1ce5ca73de65c36c082ca5c51880f8ffb5a296d8dc780f1dc02f22eba4dde1816a6a54b75");
+        vAlertPubKey = ParseHex("04bb86054abb3f9ddf7f3e638d286cd8c0c0c0d77bea08bcc3b569d6183548a1288e76c7150792b8224e18c67628bfc8383e9bc761255872e17a72415c9c648a66");
         nDefaultPort = 20777;
         nEnforceBlockUpgradeMajority = 51;
         nRejectBlockOutdatedMajority = 75;
@@ -290,8 +290,8 @@ public:
         fTestnetToBeDeprecatedFieldRPC = true;
 
         nPoolMaxTransactions = 2;
-        strSporkKey = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
-        strSporkKeyOld = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
+        strSporkKey = "0474374a71e48d2cd41b6d92bc7563202c1d35cc1c0e45259c620a800a6243993e0ab30c7847ce53670275f6116cd3b637543ad6044ecefb4fc24b6e9ea6c7448f";
+        strSporkKeyOld = "0474374a71e48d2cd41b6d92bc7563202c1d35cc1c0e45259c620a800a6243993e0ab30c7847ce53670275f6116cd3b637543ad6044ecefb4fc24b6e9ea6c7448f";
         strObfuscationPoolDummyAddress = "";
         nStartMasternodePayments = 1519010250;
         nBudget_Fee_Confirmations = 3;
