@@ -8,7 +8,7 @@
 
 std::string LoadInvalidOutPoints()
 {
-    std::string str = "[]";
+    std::string str = "";
     return str;
 }
 

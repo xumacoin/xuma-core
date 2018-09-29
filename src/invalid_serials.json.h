@@ -11,7 +11,7 @@
 
 std::string LoadInvalidSerials()
 {
-    std::string str = "[]";
+    std::string str = "";
     return str;
 }
 

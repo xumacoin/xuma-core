@@ -7,7 +7,12 @@
 
 #include <string>
 std::string GetMainCheckpoints() {
-    std::string strMainCheckpoints = "[]";
+    std::string strMainCheckpoints = "";
+    return strMainCheckpoints;
+}
+
+std::string GetTestCheckpoints() {
+    std::string strTestCheckpoints = "";
     return strTestCheckpoints;
 }
 
