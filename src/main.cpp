@@ -1814,13 +1814,13 @@ int64_t GetBlockValue(int nHeight)
             return 10000 * COIN;
         } else {
             return 100 * COIN;
-        }	 
+        }
     }
-	
+
 	if (nHeight == 0) return 120001 * COIN;
-		
+
 	int64_t nSubsidy = 0 * COIN;
-	
+
 	if(nHeight > 0 && nHeight <= 40999) {
         nSubsidy = 200 * COIN;
 	} else if (nHeight > 40999 && nHeight <= 88999) {
@@ -1828,15 +1828,15 @@ int64_t GetBlockValue(int nHeight)
 	} else if (nHeight > 88999 && nHeight <= 299999) { // 299999 => LAST POW BLOCK
 		nSubsidy = 150 * COIN;
 	} else if (nHeight > 299999 && nHeight <= 399999) { // 300000 => FIRST POS BLOCK
-                nSubsidy = 100 * COIN;
+                nSubsidy = 80 * COIN;
         } else if (nHeight > 399999 && nHeight <= 459999) {
-                nSubsidy = 50 * COIN;
+                nSubsidy = 40 * COIN;
         } else if (nHeight > 459999 && nHeight <= 519999) {
-                nSubsidy = 25 * COIN;
+                nSubsidy = 20 * COIN;
         } else if (nHeight > 519999 && nHeight <= 579999) {
-                nSubsidy = 15 * COIN;
+                nSubsidy = 10 * COIN;
         } else if (nHeight > 579999) {
-                nSubsidy = 7 * COIN;
+                nSubsidy = 5 * COIN;
         }
 
     return nSubsidy;
@@ -1847,9 +1847,9 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
 	if (Params().NetworkID() == CBaseChainParams::TESTNET) {
         	return blockValue / 100 * 10;
         }
-	
+
 	int64_t ret = 0;
-	
+
 	if(nHeight > 0 && nHeight <= 40999) {
         	ret = blockValue / 100 * 20;
 	} else if (nHeight > 40999 && nHeight <= 88999) {
@@ -1859,7 +1859,7 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
 	} else if (nHeight > 299999) {
 		ret = blockValue / 100 * 50;
 	}
-	
+
 	return ret;
 }
 
@@ -4281,7 +4281,7 @@ bool ProcessNewBlock(CValidationState& state, CNode* pfrom, CBlock* pblock, CDis
     // Preliminary checks
     int64_t nStartTime = GetTimeMillis();
     bool checked = CheckBlock(*pblock, state);
-	
+
     int nMints = 0;
     int nSpends = 0;
     for (const CTransaction tx : pblock->vtx) {
