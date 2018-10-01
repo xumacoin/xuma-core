@@ -3,7 +3,7 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
 // Copyright (c) 2017-2018 The ALQO & Bitfineon developers
-// Copyright (c) 2017-2018 The Xuma developers
+// Copyright (c) 2018 The Xuma developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -132,7 +132,7 @@ public:
 	strDeveloperFeePayee = "XBN4RM1YeKWLP9KtV65uBMieZhFaPmTGoz";
 		
         /** Height or Time Based Activations **/
-        nLastPOWBlock = 299999;
+        nLastPOWBlock = 330240;
         nModifierUpdateBlock = 1;  // we use the version 2 for dmd
         nZerocoinStartHeight = 1000000;
         nZerocoinStartTime = 1577836800;
