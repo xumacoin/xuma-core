@@ -149,8 +149,8 @@ public:
         nInvalidAmountFiltered = 0*COIN; //Amount of invalid coins filtered through exchanges, that should be considered valid
         nBlockZerocoinV2 = 1000000;
 		
-        nEnforceNewSporkKey = 1525158000; //!> Sporks signed after (GMT): Tuesday, May 1, 2018 7:00:00 AM GMT must use the new spork key
-        nRejectOldSporkKey = 1527811200; //!> Fully reject old spork key after (GMT): Friday, June 1, 2018 12:00:00 AM
+        nEnforceNewSporkKey = 1538189913; //!> Sporks signed after (GMT): 29th Sep 2018 04:58:33 AM GMT must use the new spork key
+        nRejectOldSporkKey = 1543463913; //!> Fully reject old spork key after (GMT): 29th Nov 2018 04:58:33
 
         const char* pszTimestamp = "February 18th, 2018 - Switzerland embraces cryptocurrency.";
         CMutableTransaction txNew;
@@ -194,8 +194,8 @@ public:
         fHeadersFirstSyncingActive = false;
 
         nPoolMaxTransactions = 3;
-        strSporkKey = "03e88b9292d77bc5720f768763267a31a2878667b961f3f3bd94b0c7739336173f";
-        strSporkKeyOld = "03e88b9292d77bc5720f768763267a31a2878667b961f3f3bd94b0c7739336173f";
+        strSporkKey = "0457d3905baa74fab8c8502e4b2a6059e2715afc9380b4df6b04ba2d876192f6979d662e48560ecc6d38197de286df91d72ddbac6b7b5bf1053c6c2ffeb6f6df84";
+        strSporkKeyOld = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
         strObfuscationPoolDummyAddress = "XGjLuh8mFrXwLGJjGJZfPK4rVQpahP4FP1";
         nStartMasternodePayments = 1519010250;
 
@@ -296,7 +296,7 @@ public:
 
         nPoolMaxTransactions = 2;
         strSporkKey = "0457d3905baa74fab8c8502e4b2a6059e2715afc9380b4df6b04ba2d876192f6979d662e48560ecc6d38197de286df91d72ddbac6b7b5bf1053c6c2ffeb6f6df84";
-        strSporkKeyOld = "0457d3905baa74fab8c8502e4b2a6059e2715afc9380b4df6b04ba2d876192f6979d662e48560ecc6d38197de286df91d72ddbac6b7b5bf1053c6c2ffeb6f6df84";
+        strSporkKeyOld = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
         strObfuscationPoolDummyAddress = "";
         nStartMasternodePayments = 1519010250;
         nBudget_Fee_Confirmations = 3;
