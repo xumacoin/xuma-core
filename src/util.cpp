@@ -430,7 +430,7 @@ boost::filesystem::path GetDefaultDataDir()
 // Unix: ~/.xuma
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "XUMA";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Xuma";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -442,7 +442,7 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "XUMA";
+    return pathRet / "Xuma";
 #else
     // Unix
     return pathRet / ".xuma";
@@ -493,9 +493,7 @@ void ClearDatadirCache()
 boost::filesystem::path GetConfigFile()
 {
     boost::filesystem::path pathConfigFile(GetArg("-conf", "xuma.conf"));
-    if (!pathConfigFile.is_complete())
-        pathConfigFile = GetDataDir(false) / pathConfigFile;
-
+    if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(true) / pathConfigFile;
     return pathConfigFile;
 }
 

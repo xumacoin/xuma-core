@@ -76,6 +76,19 @@ static CBaseChainParams* pCurrentBaseParams = 0;
 
 const CBaseChainParams& BaseParams()
 {
+    if (pCurrentBaseParams) return *pCurrentBaseParams;
+
+    switch (NetworkIdFromCommandLine()) {
+    case CBaseChainParams::MAIN:
+        return mainParams;
+    case CBaseChainParams::TESTNET:
+        return testNetParams;
+    case CBaseChainParams::REGTEST:
+        return regTestParams;
+    case CBaseChainParams::UNITTEST:
+        return unitTestParams;
+    }
+
     assert(pCurrentBaseParams);
     return *pCurrentBaseParams;
 }
