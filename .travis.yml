@@ -30,7 +30,7 @@ env:
 # 32-bit
 #    - REASON=Linux32 HOST=i686-pc-linux-gnu PACKAGES="g++-multilib bc python3-zmq" RUN_TESTS=false GOAL="install" BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++" USE_SHELL="/bin/dash" PYZMQ=true
 # Win64
-    - REASON=Win64 HOST=x86_64-w64-mingw32 DPKG_ADD_ARCH="i386" PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine1.6 bc" RUN_TESTS=false GOAL="install" BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"
+#buggy libs    - REASON=Win64 HOST=x86_64-w64-mingw32 DPKG_ADD_ARCH="i386" PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine1.6 bc" RUN_TESTS=false GOAL="install" BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"
 # Linux64
     - REASON=Linux64 HOST=x86_64-unknown-linux-gnu PACKAGES="bc python3-zmq" RUN_TESTS=false GOAL="install" BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests CPPFLAGS=-DDEBUG_LOCKORDER" PYZMQ=true
 # No wallet
@@ -77,7 +77,7 @@ after_success:
     - export VERSION=$REASON-$TRAVIS_BRANCH
     - if [ "$REASON" = "ARM" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
     - if [ "$REASON" = "Win" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
-    - if [ "$REASON" = "Win64" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
+#buggy    - if [ "$REASON" = "Win64" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
 #    - if [ "$REASON" = "Linux32" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
     - if [ "$REASON" = "Linux64" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
     - if [ "$REASON" = "MacOSX" ]; then pwd && find . -name '*.dmg' && echo $OUTDIR && mkdir -p $OUTDIR && cp *.dmg $OUTDIR/XUMA-$VERSION.dmg && ls; fi
