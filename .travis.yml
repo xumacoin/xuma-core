@@ -1,5 +1,5 @@
 sudo: required
-dist: xenial
+dist: trusty
 
 os: linux
 language: minimal
@@ -10,7 +10,7 @@ cache:
   - $HOME/.ccache
 env:
   global:
-    - MAKEJOBS=-j4
+    - MAKEJOBS=-j2
     - RUN_TESTS=false
     - CHECK_DOC=0
     - CHECK_LOGPRINT=0

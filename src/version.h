@@ -20,7 +20,7 @@ static const int INIT_PROTO_VERSION = 209;
 static const int GETHEADERS_VERSION = 10000;
 
 //! disconnect from peers older than this proto version
-static const int MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT = 10100;
+static const int MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT = 10200;
 static const int MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT = 10300;
 
 //! masternodes older than this proto version use old strMessage format for mnannounce
