@@ -120,8 +120,9 @@ public:
         pchMessageStart[1] = 0x04;
         pchMessageStart[2] = 0x15;
         pchMessageStart[3] = 0x14;
-        vAlertPubKey = ParseHex("04b6ea4c1ebb14bf0fab53ea8bb3b18e63c5e0a8b62f8da33438ca282332d83df456bb277642705b1c823003b9cf4a2a5edfcb4964901f693b848ad611f8661975");
-        nDefaultPort = 19777;
+        //vAlertPubKey = ParseHex("04b6ea4c1ebb14bf0fab53ea8bb3b18e63c5e0a8b62f8da33438ca282332d83df456bb277642705b1c823003b9cf4a2a5edfcb4964901f693b848ad611f8661975");
+        vAlertPubKey = ParseHex("0497dfcea626dca270cfe2eebf1160733b07352af966926e30058ca53dae05bbc71d64dbaa0c66e373211e324a23b361fc33e1e2dece1fb90afcefc707643a28f5");
+	nDefaultPort = 19777;
         bnProofOfWorkLimit = ~uint256(0) >> 20; // XUMA starting difficulty is 1 / 2^12
         nSubsidyHalvingInterval = 210000;
         nMaxReorganizationDepth = 100;
