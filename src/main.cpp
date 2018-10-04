@@ -6060,7 +6060,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
                 // peer might be an older or different implementation with
                 // a different signature key, etc.
                 LOCK(cs_main);
-                //Misbehaving(pfrom->GetId(), 10);
+                Misbehaving(pfrom->GetId(), 10);
             }
         }
     }
