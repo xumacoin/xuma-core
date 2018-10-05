@@ -1866,8 +1866,11 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
 bool IsInitialBlockDownload()
 {
     LOCK(cs_main);
-    if (fImporting || fReindex || fVerifyingBlocks || chainActive.Height() < Checkpoints::GetTotalBlocksEstimate())
+    //if (fImporting || fReindex || fVerifyingBlocks || chainActive.Height() < Checkpoints::GetTotalBlocksEstimate()){
+    if (fImporting || fReindex || fVerifyingBlocks){
+        LogPrintf("Error: still initial Blockdownload: %i\n",chainActive.Height());
         return true;
+    }
     static bool lockIBDState = false;
     if (lockIBDState)
         return false;
