@@ -5453,7 +5453,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv, 
         // Must have a version message before anything else
         LOCK(cs_main);
         LogPrintf("Error: No Version Message yet!\n");
-        Misbehaving(pfrom->GetId(), 1);
+        //Misbehaving(pfrom->GetId(), 1);
         return false;
     }
 
