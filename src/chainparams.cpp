@@ -120,8 +120,8 @@ public:
         pchMessageStart[1] = 0x04;
         pchMessageStart[2] = 0x15;
         pchMessageStart[3] = 0x14;
-        //vAlertPubKey = ParseHex("04b6ea4c1ebb14bf0fab53ea8bb3b18e63c5e0a8b62f8da33438ca282332d83df456bb277642705b1c823003b9cf4a2a5edfcb4964901f693b848ad611f8661975");
-        vAlertPubKey = ParseHex("0497dfcea626dca270cfe2eebf1160733b07352af966926e30058ca53dae05bbc71d64dbaa0c66e373211e324a23b361fc33e1e2dece1fb90afcefc707643a28f5");
+        vAlertPubKey = ParseHex("04b6ea4c1ebb14bf0fab53ea8bb3b18e63c5e0a8b62f8da33438ca282332d83df456bb277642705b1c823003b9cf4a2a5edfcb4964901f693b848ad611f8661975");
+        //vAlertPubKey = ParseHex("0497dfcea626dca270cfe2eebf1160733b07352af966926e30058ca53dae05bbc71d64dbaa0c66e373211e324a23b361fc33e1e2dece1fb90afcefc707643a28f5");
 	nDefaultPort = 19777;
         bnProofOfWorkLimit = ~uint256(0) >> 20; // XUMA starting difficulty is 1 / 2^12
         nSubsidyHalvingInterval = 210000;
@@ -173,7 +173,7 @@ public:
         assert(genesis.hashMerkleRoot == uint256("0x03c8762ec4b0597a4437f8fafb7046a718f9f1089aabf9b06ba9560d105febfc"));
 
         vSeeds.push_back(CDNSSeedData("mainnet.xumacoin.org", "mainnet.xumacoin.org"));
-		vSeeds.push_back(CDNSSeedData("62.113.206.204", "62.113.206.204"));
+	vSeeds.push_back(CDNSSeedData("62.113.206.204", "62.113.206.204"));
 		
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 75);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 16);
@@ -183,7 +183,7 @@ public:
         // 	BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
         base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x07)(0xb9).convert_to_container<std::vector<unsigned char> >();
 
-        convertSeed6(vFixedSeeds, pnSeed6_main, ARRAYLEN(pnSeed6_main));
+        //convertSeed6(vFixedSeeds, pnSeed6_main, ARRAYLEN(pnSeed6_main));
 
         fMiningRequiresPeers = true;
         fAllowMinDifficultyBlocks = false;
@@ -195,8 +195,8 @@ public:
         fHeadersFirstSyncingActive = false;
 
         nPoolMaxTransactions = 3;
-        //strSporkKey = "0457d3905baa74fab8c8502e4b2a6059e2715afc9380b4df6b04ba2d876192f6979d662e48560ecc6d38197de286df91d72ddbac6b7b5bf1053c6c2ffeb6f6df84";
-        strSporkKey = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
+        strSporkKey = "0457d3905baa74fab8c8502e4b2a6059e2715afc9380b4df6b04ba2d876192f6979d662e48560ecc6d38197de286df91d72ddbac6b7b5bf1053c6c2ffeb6f6df84";
+        //strSporkKey = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
         strSporkKeyOld = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
         strObfuscationPoolDummyAddress = "XGjLuh8mFrXwLGJjGJZfPK4rVQpahP4FP1";
         nStartMasternodePayments = 1519010250;
