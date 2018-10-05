@@ -1,4 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2014-2016 The Dash developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -334,29 +336,39 @@ QString TransactionTableModel::formatTxType(const TransactionRecord* wtx) const
         return tr("Masternode Reward");
     case TransactionRecord::RecvFromOther:
         return tr("Received from");
-    // Removing Darksend - BJK
-    // case TransactionRecord::RecvWithDarksend:
-    //     return tr("Received via Darksend");
+    case TransactionRecord::RecvWithObfuscation:
+        return tr("Received via Obfuscation");
     case TransactionRecord::SendToAddress:
     case TransactionRecord::SendToOther:
         return tr("Sent to");
     case TransactionRecord::SendToSelf:
         return tr("Payment to yourself");
     case TransactionRecord::StakeMint:
-        return tr("Minted");
+        return tr("XMX Stake");
+    case TransactionRecord::StakeZXMX:
+        return tr("zXMX Stake");
     case TransactionRecord::Generated:
         return tr("Mined");
-    // Removing Darksend - BJK
-    case TransactionRecord::DarksendDenominate:
-        return tr("Darksend Denominate");
-    // case TransactionRecord::DarksendCollateralPayment:
-    //     return tr("Darksend Collateral Payment");
-    // case TransactionRecord::DarksendMakeCollaterals:
-    //     return tr("Darksend Make Collateral Inputs");
-    // case TransactionRecord::DarksendCreateDenominations:
-    //     return tr("Darksend Create Denominations");
+    case TransactionRecord::ObfuscationDenominate:
+        return tr("Obfuscation Denominate");
+    case TransactionRecord::ObfuscationCollateralPayment:
+        return tr("Obfuscation Collateral Payment");
+    case TransactionRecord::ObfuscationMakeCollaterals:
+        return tr("Obfuscation Make Collateral Inputs");
+    case TransactionRecord::ObfuscationCreateDenominations:
+        return tr("Obfuscation Create Denominations");
     case TransactionRecord::Obfuscated:
         return tr("Obfuscated");
+    case TransactionRecord::ZerocoinMint:
+        return tr("Converted XMX to zXMX");
+    case TransactionRecord::ZerocoinSpend:
+        return tr("Spent zXMX");
+    case TransactionRecord::RecvFromZerocoinSpend:
+        return tr("Received XMX from zXMX");
+    case TransactionRecord::ZerocoinSpend_Change_zXmx:
+        return tr("Minted Change as zXMX from zXMX Spend");
+    case TransactionRecord::ZerocoinSpend_FromMe:
+        return tr("Converted zXMX to XMX");
 
     default:
         return QString();
@@ -365,33 +377,20 @@ QString TransactionTableModel::formatTxType(const TransactionRecord* wtx) const
 
 QVariant TransactionTableModel::txAddressDecoration(const TransactionRecord* wtx) const
 {
-    /* BJK hack to make different icons visible for testing
-    if (wtx->time % 5 == 0) {
-        return QIcon(":/icons/tx_output");
-    }
-    if (wtx->time % 5 == 1) {
-        return QIcon(":/icons/tx_input");
-    }
-    if (wtx->time % 5 == 2) {
-        return QIcon(":/icons/tx_output");
-    }
-    if (wtx->time % 5 == 3) {
-        return QIcon(":/icons/tx_inout");
-    }
-    return QIcon(":/icons/tx_mined");
-    */
     switch (wtx->type) {
     case TransactionRecord::Generated:
     case TransactionRecord::StakeMint:
+    case TransactionRecord::StakeZXMX:
     case TransactionRecord::MNReward:
         return QIcon(":/icons/tx_mined");
-    // Removing Darksend - BJK
-    // case TransactionRecord::RecvWithDarksend:
+    case TransactionRecord::RecvWithObfuscation:
     case TransactionRecord::RecvWithAddress:
     case TransactionRecord::RecvFromOther:
+    case TransactionRecord::RecvFromZerocoinSpend:
         return QIcon(":/icons/tx_input");
     case TransactionRecord::SendToAddress:
     case TransactionRecord::SendToOther:
+    case TransactionRecord::ZerocoinSpend:
         return QIcon(":/icons/tx_output");
     default:
         return QIcon(":/icons/tx_inout");
@@ -411,16 +410,23 @@ QString TransactionTableModel::formatTxToAddress(const TransactionRecord* wtx, b
         return QString::fromStdString(wtx->address) + watchAddress;
     case TransactionRecord::RecvWithAddress:
     case TransactionRecord::MNReward:
-    // Removing Darksend - BJK
-    // case TransactionRecord::RecvWithDarksend:
+    case TransactionRecord::RecvWithObfuscation:
     case TransactionRecord::SendToAddress:
     case TransactionRecord::Generated:
     case TransactionRecord::StakeMint:
+    case TransactionRecord::ZerocoinSpend:
+    case TransactionRecord::ZerocoinSpend_FromMe:
+    case TransactionRecord::RecvFromZerocoinSpend:
         return lookupAddress(wtx->address, tooltip);
     case TransactionRecord::Obfuscated:
         return lookupAddress(wtx->address, tooltip) + watchAddress;
     case TransactionRecord::SendToOther:
         return QString::fromStdString(wtx->address) + watchAddress;
+    case TransactionRecord::ZerocoinMint:
+    case TransactionRecord::ZerocoinSpend_Change_zXmx:
+        return tr("Anonymous (zXMX Transaction)");
+    case TransactionRecord::StakeZXMX:
+        return tr("Anonymous (zXMX Stake)");
     case TransactionRecord::SendToSelf:
     default:
         return tr("(n/a)") + watchAddress;
@@ -568,8 +574,12 @@ QVariant TransactionTableModel::data(const QModelIndex& index, int role) const
     case Qt::TextAlignmentRole:
         return column_alignments[index.column()];
     case Qt::ForegroundRole:
-        // Non-confirmed (but not immature) as transactions are grey
-        if (!rec->status.countsForBalance && rec->status.status != TransactionStatus::Immature) {
+        // Conflicted, most probably orphaned
+        if (rec->status.status == TransactionStatus::Conflicted || rec->status.status == TransactionStatus::NotAccepted) {
+            return COLOR_CONFLICTED;
+        }
+        // Unconfimed or immature
+        if ((rec->status.status == TransactionStatus::Unconfirmed) || (rec->status.status == TransactionStatus::Immature)) {
             return COLOR_UNCONFIRMED;
         }
         if (index.column() == Amount && (rec->credit + rec->debit) < 0) {

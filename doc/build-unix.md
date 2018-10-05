@@ -1,13 +1,11 @@
 UNIX BUILD NOTES
-================
-
-Some notes on how to build Xuma in Unix.
+====================
+Some notes on how to build XUMA in Unix.
 
 Note
-----
-
-Always use absolute paths to configure and compile Xuma and the dependencies,
-for example, when specifying the the path of the dependency:
+---------------------
+Always use absolute paths to configure and compile xuma and the dependencies,
+for example, when specifying the path of the dependency:
 
 	../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_PREFIX
 
@@ -15,7 +13,7 @@ Here BDB_PREFIX must absolute path - it is defined using $(pwd) which ensures
 the usage of the absolute path.
 
 To Build
---------
+---------------------
 
 ```bash
 ./autogen.sh
@@ -27,7 +25,7 @@ make install # optional
 This will build xuma-qt as well if the dependencies are met.
 
 Dependencies
-------------
+---------------------
 
 These dependencies are required:
 
@@ -35,6 +33,7 @@ These dependencies are required:
  ------------|------------------|----------------------
  libssl      | SSL Support      | Secure communications
  libboost    | Boost            | C++ Library
+ libevent    | Events           | Asynchronous event notification
 
 Optional dependencies:
 
@@ -45,22 +44,22 @@ Optional dependencies:
  qt          | GUI              | GUI toolkit (only needed when GUI enabled)
  protobuf    | Payments in GUI  | Data interchange format used for payment protocol (only needed when GUI enabled)
  libqrencode | QR codes in GUI  | Optional for generating QR codes (only needed when GUI enabled)
+ univalue    | Utility          | JSON parsing and encoding (bundled version will be used unless --with-system-univalue passed to configure)
 
 For the versions used in the release, see [release-process.md](release-process.md) under *Fetch and build inputs*.
 
 System requirements
--------------------
+--------------------
 
 C++ compilers are memory-hungry. It is recommended to have at least 1 GB of
-memory available when compiling Xuma Core. With 512MB of memory or less
+memory available when compiling XUMA Core. With 512MB of memory or less
 compilation will take much longer due to swap thrashing.
 
 Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------
-
 Build requirements:
 
-	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev
+	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev
 
 For Ubuntu 12.04 and later or Debian 7 and later libboost-all-dev has to be installed:
 
@@ -86,7 +85,7 @@ Optional:
 Dependencies for the GUI: Ubuntu & Debian
 -----------------------------------------
 
-If you want to build Xuma-Qt, make sure that the required packages for Qt development
+If you want to build XUMA-Qt, make sure that the required packages for Qt development
 are installed. Qt 5 is necessary to build the GUI.
 If both Qt 4 and Qt 5 are installed, Qt 5 will be used.
 To build without GUI pass `--without-gui`.
@@ -104,9 +103,9 @@ built by default.
 
 Notes
 -----
-
 The release is built with GCC and then "strip xumad" to strip the debug
 symbols, which reduces the executable size by about 90%.
+
 
 miniupnpc
 ---------
@@ -127,9 +126,9 @@ To build:
 	sudo su
 	make install
 
+
 Berkeley DB
 -----------
-
 It is recommended to use Berkeley DB 4.8. If you have to build it yourself:
 
 ```bash
@@ -151,7 +150,7 @@ cd db-4.8.30.NC/build_unix/
 ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_PREFIX
 make install
 
-# Configure Xuma Core to use our own-built instance of BDB
+# Configure XUMA Core to use our own-built instance of BDB
 cd $XUMA_ROOT
 ./configure (other args...) LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
 ```
@@ -160,17 +159,16 @@ cd $XUMA_ROOT
 
 Boost
 -----
-
 If you need to build Boost yourself:
 
 	sudo su
 	./bootstrap.sh
 	./bjam install
 
+
 Security
 --------
-
-To help make your Xuma installation more secure by making certain attacks impossible to
+To help make your XUMA installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
 This can be disabled with:
 
@@ -179,10 +177,10 @@ Hardening Flags:
 	./configure --enable-hardening
 	./configure --disable-hardening
 
+
 Hardening enables the following features:
 
 * Position Independent Executable
-
     Build position independent code to take advantage of Address Space Layout Randomization
     offered by some kernels. An attacker who is able to cause execution of code at an arbitrary
     memory location is thwarted if he doesn't know where anything useful is located.
@@ -201,9 +199,8 @@ Hardening enables the following features:
     ET_DYN
 
 * Non-executable Stack
-
     If the stack is executable then trivial stack based buffer overflow exploits are possible if
-    vulnerable buffers are found. By default, Xuma should be built with a non-executable stack
+    vulnerable buffers are found. By default, xuma should be built with a non-executable stack
     but if one of the libraries it uses asks for an executable stack or someone makes a mistake
     and uses a compiler extension which requires an executable stack, it will silently build an
     executable without the non-executable stack protection.

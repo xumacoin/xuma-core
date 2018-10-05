@@ -74,6 +74,7 @@ $(1)_staged=$$($(1)_staging_dir)/.stamp_staged
 $(1)_postprocessed=$$($(1)_staging_prefix_dir)/.stamp_postprocessed
 $(1)_download_path_fixed=$(subst :,\:,$$($(1)_download_path))
 
+
 #default commands
 $(1)_fetch_cmds ?= $(call fetch_file,$(1),$(subst \:,:,$$($(1)_download_path_fixed)),$$($(1)_download_file),$($(1)_file_name),$($(1)_sha256_hash))
 $(1)_extract_cmds ?= mkdir -p $$($(1)_extract_dir) && echo "$$($(1)_sha256_hash)  $$($(1)_source)" > $$($(1)_extract_dir)/.$$($(1)_file_name).hash &&  $(build_SHA256SUM) -c $$($(1)_extract_dir)/.$$($(1)_file_name).hash && tar --strip-components=1 -xf $$($(1)_source)
@@ -83,9 +84,11 @@ $(1)_config_cmds ?=
 $(1)_stage_cmds ?=
 $(1)_set_vars ?=
 
+
 all_sources+=$$($(1)_fetched)
 endef
 #$(foreach dep_target,$($(1)_all_dependencies),$(eval $(1)_dependency_targets=$($(dep_target)_cached)))
+
 
 define int_config_attach_build_config
 $(eval $(call $(1)_set_vars,$(1)))

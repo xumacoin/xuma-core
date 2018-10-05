@@ -1,7 +1,7 @@
 Masternode Budget API
-=====================
+=======================
 
-Xuma now supports full decentralized budgets that are paid directly from the blockchain via superblocks once per month.
+XUMA now supports full decentralized budgets that are paid directly from the blockchain via superblocks once per month.
 
 Budgets go through a series of stages before being paid:
 * prepare - create a special transaction that destroys coins in order to make a proposal
@@ -12,51 +12,47 @@ Budgets go through a series of stages before being paid:
 * finalized budget voting - masternodes that agree with the finalization will vote on that budget
 * payment - the winning finalized budget is paid
 
-Prepare collateral transaction
-------------------------------
 
-mnbudget prepare <proposal-name> <url> <payment_count> <block_start> <xuma_address> <monthly_payment_xmx>
+Prepare collateral transaction
+------------------------
+
+mnbudget prepare \<proposal-name\> \<url\> \<payment_count\> \<block_start\> \<xuma_address\> \<monthly_payment_xuma\> [use_ix(true|false)]
 
 Example:
-
 ```
-mnbudget prepare cool-project http://www.cool-project/one.json 12 100000 XLd5zb7KJewkBNH7xb94r9WHUVrxKiXLcS 1200
+mnbudget prepare cool-project http://www.cool-project/one.json 12 100000 y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7 1200 true
 ```
 
 Output: `464a0eb70ea91c94295214df48c47baa72b3876cfb658744aaf863c7b5bf1ff0` - This is the collateral hash, copy this output for the next step
 
-In this transaction we prepare collateral for "_cool-project_". This proposal will pay _1200_ XMX, _12_ times over the course of a year totaling _24000_ XMX.
+In this transaction we prepare collateral for "_cool-project_". This proposal will pay _1200_ XUMA, _12_ times over the course of a year totaling _24000_ XUMA.
 
 **Warning -- if you change any fields within this command, the collateral transaction will become invalid.**
 
 Submit proposal to network
---------------------------
+------------------------
 
-mnbudget submit <proposal-name> <url> <payment_count> <block_start> <xuma_address> <monthly_payment_xmx> <collateral_hash>
+mnbudget submit \<proposal-name\> \<url\> \<payment_count\> \<block_start\> \<xuma_address\> \<monthly_payment_xuma\> \<collateral_hash\>
 
 Example:
-
 ```
-mnbudget submit cool-project http://www.cool-project/one.json 12 100000 XLd5zb7KJewkBNH7xb94r9WHUVrxKiXLcS 1200 464a0eb70ea91c94295214df48c47baa72b3876cfb658744aaf863c7b5bf1ff0
+mnbudget submit cool-project http://www.cool-project/one.json 12 100000 y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7 1200 464a0eb70ea91c94295214df48c47baa72b3876cfb658744aaf863c7b5bf1ff0
 ```
 
 Output: `a2b29778ae82e45a973a94309ffa6aa2e2388b8f95b39ab3739f0078835f0491` - This is your proposal hash, which other nodes will use to vote on it
 
 Lobby for votes
----------------
+------------------------
 
 Double check your information:
 
-mnbudget getinfo <proposal-name>
+mnbudget getinfo \<proposal-name\>
 
 Example:
-
 ```
 mnbudget getinfo cool-project
 ```
-
 Output:
-
 ```
 {
     "Name" : "cool-project",
@@ -67,7 +63,7 @@ Output:
     "BlockEnd" : 100625,
     "TotalPaymentCount" : 12,
     "RemainingPaymentCount" : 12,
-    "PaymentAddress" : "XLd5zb7KJewkBNH7xb94r9WHUVrxKiXLcS",
+    "PaymentAddress" : "y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7",
     "Ratio" : 0.00000000,
     "Yeas" : 0,
     "Nays" : 0,
@@ -81,10 +77,9 @@ Output:
 
 If everything looks correct, you can ask for votes from other masternodes. To vote on a proposal, load a wallet with _masternode.conf_ file. You do not need to access your cold wallet to vote for proposals.
 
-mnbudget vote <proposal_hash> [yes|no]
+mnbudget vote \<proposal_hash\> [yes|no]
 
 Example:
-
 ```
 mnbudget vote a2b29778ae82e45a973a94309ffa6aa2e2388b8f95b39ab3739f0078835f0491 yes
 ```
@@ -97,13 +92,11 @@ Make it into the budget
 After you get enough votes, execute `mnbudget projection` to see if you made it into the budget. If you the budget was finalized at this moment which proposals would be in it. Note: Proposals must be active at least 1 day on the network and receive 10% of the masternode network in yes votes in order to qualify (E.g. if there is 2500 masternodes, you will need 250 yes votes.)
 
 Example:
-
 ```
 mnbudget projection
 ```
 
 Output:
-
 ```
 {
     "cool-project" : {
@@ -114,7 +107,7 @@ Output:
 	    "BlockEnd" : 100625,
 	    "TotalPaymentCount" : 12,
 	    "RemainingPaymentCount" : 12,
-	    "PaymentAddress" : "XLd5zb7KJewkBNH7xb94r9WHUVrxKiXLcS",
+	    "PaymentAddress" : "y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7",
 	    "Ratio" : 1.00000000,
 	    "Yeas" : 33,
 	    "Nays" : 0,
@@ -128,7 +121,7 @@ Output:
 ```
 
 Finalized budget
-----------------
+------------------------
 
 ```
 "main" : {
@@ -143,20 +136,21 @@ Finalized budget
 ```
 
 Get paid
---------
+------------------------
 
-When block `1000000` is reached you'll receive a payment for `1200` XMX.
+When block `1000000` is reached you'll receive a payment for `1200` XUMA.
+
 
 RPC Commands
-------------
+------------------------
 
 The following new RPC commands are supported:
 - mnbudget "command"... ( "passphrase" )
  * prepare            - Prepare proposal for network by signing and creating tx
  * submit             - Submit proposal for network
- * vote-many          - Vote on a Xuma initiative
- * vote-alias         - Vote on a Xuma initiative
- * vote               - Vote on a Xuma initiative/budget
+ * vote-many          - Vote on a XUMA initiative
+ * vote-alias         - Vote on a XUMA initiative
+ * vote               - Vote on a XUMA initiative/budget
  * getvotes           - Show current masternode budgets
  * getinfo            - Show current masternode budgets
  * show               - Show all budgets

@@ -1,4 +1,5 @@
 // Copyright (c) 2014 The Bitcoin developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +11,7 @@
 
 /**
  * CBaseChainParams defines the base parameters (shared between xuma-cli and xumad)
- * of a given instance of the Xuma system.
+ * of a given instance of the XUMA system.
  */
 class CBaseChainParams
 {
@@ -20,6 +21,7 @@ public:
         TESTNET,
         REGTEST,
         UNITTEST,
+
         MAX_NETWORK_TYPES
     };
 

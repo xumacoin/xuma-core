@@ -1,3 +1,4 @@
+
 * xuma.conf: contains configuration settings for xumad or xuma-qt
 * xumad.pid: stores the process id of xumad while running
 * blocks/blk000??.dat: block data (custom, 128 MiB per file); since 0.8.0
@@ -14,3 +15,17 @@
 * mnpayments.dat: stores data for masternode payments
 * peers.dat: peer IP address database (custom format); since 0.7.0
 * wallet.dat: personal wallet (BDB) with keys and transactions
+
+Only used in pre-0.8.0
+---------------------
+* blktree/*; block chain index (LevelDB); since pre-0.8, replaced by blocks/index/* in 0.8.0
+* coins/*; unspent transaction output database (LevelDB); since pre-0.8, replaced by chainstate/* in 0.8.0
+
+Only used before 0.8.0
+---------------------
+* blkindex.dat: block chain index database (BDB); replaced by {chainstate/*,blocks/index/*,blocks/rev000??.dat} in 0.8.0
+* blk000?.dat: block data (custom, 2 GiB per file); replaced by blocks/blk000??.dat in 0.8.0
+
+Only used before 0.7.0
+---------------------
+* addr.dat: peer IP address database (BDB); replaced by peers.dat in 0.7.0

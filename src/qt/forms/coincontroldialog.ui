@@ -464,9 +464,6 @@
       <property name="text">
        <string>Amount</string>
       </property>
-      <property name="textAlignment">
-       <set>AlignTrailing|AlignVCenter</set>
-      </property>
      </column>
      <column>
       <property name="text">
@@ -480,7 +477,7 @@
      </column>
      <column>
       <property name="text">
-       <string/>
+       <string>Type</string>
       </property>
      </column>
      <column>
@@ -494,9 +491,6 @@
       </property>
       <property name="toolTip">
        <string>Confirmed</string>
-      </property>
-      <property name="textAlignment">
-       <set>AlignTrailing|AlignVCenter</set>
       </property>
      </column>
      <column>

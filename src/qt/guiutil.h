@@ -1,4 +1,5 @@
 // Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -30,7 +31,7 @@ class QUrl;
 class QWidget;
 QT_END_NAMESPACE
 
-/** Utility functions used by the Xuma Qt UI.
+/** Utility functions used by the XUMA Qt UI.
  */
 namespace GUIUtil
 {
@@ -38,14 +39,14 @@ namespace GUIUtil
 QString dateTimeStr(const QDateTime& datetime);
 QString dateTimeStr(qint64 nTime);
 
-// Render Xuma addresses in monospace font
+// Render XUMA addresses in monospace font
 QFont bitcoinAddressFont();
 
 // Set up widgets for address and amounts
 void setupAddressWidget(QValidatedLineEdit* widget, QWidget* parent);
 void setupAmountWidget(QLineEdit* widget, QWidget* parent);
 
-// Parse "XUMA:" URI into recipient object, return true on successful parsing
+// Parse "xuma:" URI into recipient object, return true on successful parsing
 bool parseBitcoinURI(const QUrl& uri, SendCoinsRecipient* out);
 bool parseBitcoinURI(QString uri, SendCoinsRecipient* out);
 QString formatBitcoinURI(const SendCoinsRecipient& info);
@@ -64,6 +65,14 @@ QString HtmlEscape(const std::string& str, bool fMultiLine = false);
        @see  TransactionView::copyLabel, TransactionView::copyAmount, TransactionView::copyAddress
      */
 void copyEntryData(QAbstractItemView* view, int column, int role = Qt::EditRole);
+
+/** Return a field of the currently selected entry as a QString. Does nothing if nothing
+        is selected.
+       @param[in] column  Data column to extract from the model
+       @param[in] role    Data role to extract from the model
+       @see  TransactionView::copyLabel, TransactionView::copyAmount, TransactionView::copyAddress
+     */
+QString getEntryData(QAbstractItemView *view, int column, int role);
 
 void setClipboard(const QString& str);
 
@@ -215,6 +224,9 @@ QString formatServicesStr(quint64 mask);
 
 /* Format a CNodeCombinedStats.dPingTime into a user-readable string or display N/A, if 0*/
 QString formatPingTime(double dPingTime);
+
+/* Format a CNodeCombinedStats.nTimeOffset into a user-readable string. */
+QString formatTimeOffset(int64_t nTimeOffset);
 
 #if defined(Q_OS_MAC) && QT_VERSION >= 0x050000
 // workaround for Qt OSX Bug:

@@ -1,8 +1,6 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers 
-// Copyright (c) 2015-2017 The ALQO developers
-// Copyright (c) 2017-2018 The Xuma developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -31,7 +29,8 @@
 
 #include "init.h"
 #include "main.h"
-#include "rpcserver.h"
+#include "rpc/server.h"
+#include "scheduler.h"
 #include "ui_interface.h"
 #include "util.h"
 
@@ -167,7 +166,7 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
 }
 #endif
 
-/** Class encapsulating Xuma Core startup and shutdown.
+/** Class encapsulating XUMA Core startup and shutdown.
  * Allows running startup and shutdown in a different thread from the UI thread.
  */
 class BitcoinCore : public QObject
@@ -188,6 +187,7 @@ signals:
 
 private:
     boost::thread_group threadGroup;
+    CScheduler scheduler;
 
     /// Flag indicating a restart
     bool execute_restart;
@@ -196,7 +196,7 @@ private:
     void handleRunawayException(std::exception* e);
 };
 
-/** Main Xuma application object */
+/** Main XUMA application object */
 class BitcoinApplication : public QApplication
 {
     Q_OBJECT
@@ -272,13 +272,7 @@ void BitcoinCore::initialize()
 
     try {
         qDebug() << __func__ << ": Running AppInit2 in thread";
-        int rv = AppInit2(threadGroup);
-        if (rv) {
-            /* Start a dummy RPC thread if no RPC thread is active yet
-             * to handle timeouts.
-             */
-            StartDummyRPCThread();
-        }
+        int rv = AppInit2(threadGroup, scheduler);
         emit initializeResult(rv);
     } catch (std::exception& e) {
         handleRunawayException(&e);
@@ -293,7 +287,7 @@ void BitcoinCore::restart(QStringList args)
         execute_restart = false;
         try {
             qDebug() << __func__ << ": Running Restart in thread";
-            threadGroup.interrupt_all();
+            Interrupt(threadGroup);
             threadGroup.join_all();
             PrepareShutdown();
             qDebug() << __func__ << ": Shutdown finished";
@@ -314,7 +308,7 @@ void BitcoinCore::shutdown()
 {
     try {
         qDebug() << __func__ << ": Running Shutdown in thread";
-        threadGroup.interrupt_all();
+        Interrupt(threadGroup);
         threadGroup.join_all();
         Shutdown();
         qDebug() << __func__ << ": Shutdown finished";
@@ -358,7 +352,7 @@ BitcoinApplication::~BitcoinApplication()
 #endif
     // Delete Qt-settings if user clicked on "Reset Options"
     QSettings settings;
-    if (optionsModel->resetSettings) {
+    if (optionsModel && optionsModel->resetSettings) {
         settings.clear();
         settings.sync();
     }
@@ -485,7 +479,7 @@ void BitcoinApplication::initializeResult(int retval)
 
 #ifdef ENABLE_WALLET
         // Now that initialization/startup is done, process any command-line
-        // Xuma:URIs or payment requests:
+        // XUMA: URIs or payment requests:
         connect(paymentServer, SIGNAL(receivedPaymentRequest(SendCoinsRecipient)),
             window, SLOT(handlePaymentRequest(SendCoinsRecipient)));
         connect(window, SIGNAL(receivedURI(QString)),
@@ -507,7 +501,7 @@ void BitcoinApplication::shutdownResult(int retval)
 
 void BitcoinApplication::handleRunawayException(const QString& message)
 {
-    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. Xuma can no longer continue safely and will quit.") + QString("\n\n") + message);
+    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. XUMA can no longer continue safely and will quit.") + QString("\n\n") + message);
     ::exit(1);
 }
 
@@ -545,6 +539,9 @@ int main(int argc, char* argv[])
     // Generate high-dpi pixmaps
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
+#if QT_VERSION >= 0x050600
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
 #ifdef Q_OS_MAC
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
@@ -579,20 +576,22 @@ int main(int argc, char* argv[])
 
     /// 5. Now that settings and translations are available, ask user for data directory
     // User language is set up: pick a data directory
-    Intro::pickDataDirectory();
+    if (!Intro::pickDataDirectory())
+        return 0;
 
     /// 6. Determine availability of data directory and parse xuma.conf
-    if (!boost::filesystem::is_directory(GetDataDir())) {
-        QMessageBox::critical(0, QObject::tr("Xuma Core"),
+    /// - Do not call GetDataDir(true) before this step finishes
+    if (!boost::filesystem::is_directory(GetDataDir(false))) {
+        QMessageBox::critical(0, QObject::tr("XUMA Core"),
             QObject::tr("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(mapArgs["-datadir"])));
         return 1;
     }
     try {
         ReadConfigFile(mapArgs, mapMultiArgs);
     } catch (std::exception& e) {
-        QMessageBox::critical(0, QObject::tr("Xuma Core"),
+        QMessageBox::critical(0, QObject::tr("XUMA Core"),
             QObject::tr("Error: Cannot parse configuration file: %1. Only use key=value syntax.").arg(e.what()));
-        return false;
+        return 0;
     }
 
     /// 7. Determine network (and switch to network specific options)
@@ -603,7 +602,7 @@ int main(int argc, char* argv[])
 
     // Check for -testnet or -regtest parameter (Params() calls are only valid after this clause)
     if (!SelectParamsFromCommandLine()) {
-        QMessageBox::critical(0, QObject::tr("Xuma Core"), QObject::tr("Error: Invalid combination of -regtest and -testnet."));
+        QMessageBox::critical(0, QObject::tr("XUMA Core"), QObject::tr("Error: Invalid combination of -regtest and -testnet."));
         return 1;
     }
 #ifdef ENABLE_WALLET
@@ -622,9 +621,9 @@ int main(int argc, char* argv[])
     /// 7a. parse masternode.conf
     string strErr;
     if (!masternodeConfig.read(strErr)) {
-        QMessageBox::critical(0, QObject::tr("Xuma Core"),
+        QMessageBox::critical(0, QObject::tr("XUMA Core"),
             QObject::tr("Error reading masternode configuration file: %1").arg(strErr.c_str()));
-        return false;
+        return 0;
     }
 
     /// 8. URI IPC sending
@@ -637,7 +636,7 @@ int main(int argc, char* argv[])
         exit(0);
 
     // Start up the payment server early, too, so impatient users that click on
-    // Xuma: links repeatedly have their payment requests routed to this process:
+    // xuma: links repeatedly have their payment requests routed to this process:
     app.createPaymentServer();
 #endif
 
@@ -668,7 +667,7 @@ int main(int argc, char* argv[])
         app.createWindow(networkStyle.data());
         app.requestInitialize();
 #if defined(Q_OS_WIN) && QT_VERSION >= 0x050000
-        WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("Xuma Core didn't yet exit safely..."), (HWND)app.getMainWinId());
+        WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("XUMA Core didn't yet exit safely..."), (HWND)app.getMainWinId());
 #endif
         app.exec();
         app.requestShutdown();

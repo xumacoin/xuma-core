@@ -1,9 +1,9 @@
 ### SpendFrom ###
 
-Use the raw transactions API to send coins received on a particular address (or addresses).
+Use the raw transactions API to send coins received on a particular
+address (or addresses).
 
 ### Usage: ###
-
 Depends on [jsonrpc](http://json-rpc.org/).
 
 	spendfrom.py --from=FROMADDRESS1[,FROMADDRESS2] --to=TOADDRESS --amount=amount \
@@ -16,7 +16,7 @@ With arguments, sends coins received by the `FROMADDRESS` addresses to the `TOAD
 ### Notes ###
 
 - You may explicitly specify how much fee to pay (a fee more than 1% of the amount
-will fail, though, to prevent xuma-losing accidents). Spendfrom may fail if
+will fail,  though, to prevent xuma-losing accidents). Spendfrom may fail if
 it thinks the transaction would never be confirmed (if the amount being sent is
 too small, or if the transaction is too many bytes for the fee).
 

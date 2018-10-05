@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,7 +18,7 @@ class CAutoFile;
 
 inline double AllowFreeThreshold()
 {
-    return COIN * 576 / 250;
+    return COIN * 1440 / 250;
 }
 
 inline bool AllowFree(double dPriority)
@@ -126,6 +127,7 @@ public:
     void removeForBlock(const std::vector<CTransaction>& vtx, unsigned int nBlockHeight, std::list<CTransaction>& conflicts);
     void clear();
     void queryHashes(std::vector<uint256>& vtxid);
+    void getTransactions(std::set<uint256>& setTxid);
     void pruneSpent(const uint256& hash, CCoins& coins);
     unsigned int GetTransactionsUpdated() const;
     void AddTransactionsUpdated(unsigned int n);

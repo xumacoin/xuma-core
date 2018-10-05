@@ -1,9 +1,9 @@
 Gitian building
-===============
+================
 
-*Setup instructions for a gitian build of Xuma using a Debian VM or physical system.*
+*Setup instructions for a gitian build of XUMA using a Debian VM or physical system.*
 
-Gitian is the deterministic build process that is used to build the Xuma
+Gitian is the deterministic build process that is used to build the XUMA
 Core executables. It provides a way to be reasonably sure that the
 executables are really built from source on GitHub. It also makes sure that
 the same, tested dependencies are used and statically built into the executable.
@@ -11,14 +11,14 @@ the same, tested dependencies are used and statically built into the executable.
 Multiple developers build the source code by following a specific descriptor
 ("recipe"), cryptographically sign the result, and upload the resulting signature.
 These results are compared and only if they match, the build is accepted and uploaded
-to xumacoin.com.
+to xuma-crypto.com.
 
 More independent gitian builders are needed, which is why I wrote this
 guide. It is preferred to follow these steps yourself instead of using someone else's
 VM image to avoid 'contaminating' the build.
 
 Table of Contents
------------------
+------------------
 
 - [Create a new VirtualBox VM](#create-a-new-virtualbox-vm)
 - [Connecting to the VM](#connecting-to-the-vm)
@@ -26,7 +26,7 @@ Table of Contents
 - [Installing gitian](#installing-gitian)
 - [Setting up gitian images](#setting-up-gitian-images)
 - [Getting and building the inputs](#getting-and-building-the-inputs)
-- [Building Xuma](#building-xuma)
+- [Building XUMA](#building-xuma)
 - [Building an alternative repository](#building-an-alternative-repository)
 - [Signing externally](#signing-externally)
 - [Uploading signatures](#uploading-signatures)
@@ -46,8 +46,7 @@ Any kind of virtualization can be used, for example:
 You can also install on actual hardware instead of using virtualization.
 
 Create a new VirtualBox VM
---------------------------
-
+---------------------------
 In the VirtualBox GUI click "Create" and choose the following parameters in the wizard:
 
 ![](gitian-building/create_vm_page1.png)
@@ -108,7 +107,7 @@ Then start the VM. On the first launch you will be asked for a CD or DVD image. 
 ![](gitian-building/select_startup_disk.png)
 
 Installing Debian
------------------
+------------------
 
 In this section it will be explained how to install Debian on the newly created VM.
 
@@ -196,7 +195,7 @@ and proceed, just press `Enter`. To select a different button, press `Tab`.
 - After installation, the VM will reboot and you will have a working Debian VM. Congratulations!
 
 Connecting to the VM
----------------------
+----------------------
 
 After the VM has booted you can connect to it using SSH, and files can be copied from and to the VM using a SFTP utility.
 Connect to `localhost`, port `22222` (or the port configured when installing the VM).
@@ -219,7 +218,7 @@ Replace `root` with `debian` to log in as user.
 [2] http://winscp.net/eng/index.php
 
 Setting up Debian for gitian building
--------------------------------------
+--------------------------------------
 
 In this section we will be setting up the Debian installation for Gitian building.
 
@@ -259,7 +258,7 @@ At the end the VM is rebooted to make sure that the changes take effect. The ste
 section need only to be performed once.
 
 Installing gitian
------------------
+------------------
 
 Re-login as the user `debian` that was created during installation.
 The rest of the steps in this guide will be performed as that user.
@@ -278,20 +277,21 @@ cd ..
 
 **Note**: When sudo asks for a password, enter the password for the user *debian* not for *root*.
 
-Clone the git repositories for Xuma and gitian and then checkout the Xuma version that you want to build.
+Clone the git repositories for xuma and gitian and then checkout the xuma version that you want to build.
 
 ```bash
 git clone https://github.com/devrandom/gitian-builder.git
-git clone https://github.com/xumacoin/xuma-core.git
-cd xuma-core
+git clone https://github.com/xuma-crypto/xuma.git
+cd xuma
 git checkout v${VERSION}
 cd ..
 ```
 
 **Note**: if you've installed Gitian before May 16, 2015, please update to the latest version, see https://github.com/devrandom/gitian-builder/issues/86
 
+
 Setting up gitian images
-------------------------
+-------------------------
 
 Gitian needs virtual images of the operating system to build in.
 Currently this is Ubuntu Precise for x86_64.
@@ -313,25 +313,24 @@ There will be a lot of warnings printed during build of the images. These can be
 **Note**: Repeat this step when you have upgraded to a newer version of Gitian.
 
 **Note**: if you get the error message *"bin/make-base-vm: mkfs.ext4: not found"* during this process you have to make the following change in file *"gitian-builder/bin/make-base-vm"* at line 117:
-
 ```bash
 # mkfs.ext4 -F $OUT-lxc
 /sbin/mkfs.ext4 -F $OUT-lxc # (some Gitian environents do NOT find mkfs.ext4. Some do...)
 ```
 
 Getting and building the inputs
--------------------------------
+--------------------------------
 
-Follow the instructions in [doc/release-process.md](release-process.md) in the xuma-core repository
+Follow the instructions in [doc/release-process.md](release-process.md) in the xuma repository
 under 'Fetch and build inputs' to install sources which require manual intervention. Also follow
 the next step: 'Seed the Gitian sources cache', which will fetch all necessary source files allowing
 for gitian to work offline.
 
-Building Xuma
--------------
+Building XUMA
+----------------
 
-To build Xuma (for Linux, OSX, and Windows) just follow the steps under 'perform
-gitian builds' in [doc/release-process.md](release-process.md) in the xuma-core repository.
+To build XUMA (for Linux, OSX and Windows) just follow the steps under 'perform
+gitian builds' in [doc/release-process.md](release-process.md) in the xuma repository.
 
 This may take a long time as it also builds the dependencies needed for each descriptor.
 These dependencies will be cached after a successful build to avoid rebuilding them when possible.
@@ -346,12 +345,12 @@ tail -f var/build.log
 Output from `gbuild` will look something like
 
 ```bash
-    Initialized empty Git repository in /home/debian/gitian-builder/inputs/xuma-core/.git/
+    Initialized empty Git repository in /home/debian/gitian-builder/inputs/xuma/.git/
     remote: Reusing existing pack: 35606, done.
     remote: Total 35606 (delta 0), reused 0 (delta 0)
     Receiving objects: 100% (35606/35606), 26.52 MiB | 4.28 MiB/s, done.
     Resolving deltas: 100% (25724/25724), done.
-    From https://github.com/xumacoin/xuma-core
+    From https://github.com/xuma-crypto/xuma
     ... (new tags, new branch etc)
     --- Building for precise x86_64 ---
     Stopping target if it is up
@@ -370,16 +369,15 @@ Output from `gbuild` will look something like
 ```
 
 Building an alternative repository
-----------------------------------
+-----------------------------------
 
 If you want to do a test build of a pull on GitHub it can be useful to point
 the gitian builder at an alternative repository, using the same descriptors
 and inputs.
 
 For example:
-
 ```bash
-URL=https://github.com/xumacoin/xuma-core
+URL=https://github.com/crowning-/xuma.git
 COMMIT=b616fb8ef0d49a919b72b0388b091aaec5849b96
 ./bin/gbuild --commit xuma=${COMMIT} --url xuma=${URL} ../xuma/contrib/gitian-descriptors/gitian-linux.yml
 ./bin/gbuild --commit xuma=${COMMIT} --url xuma=${URL} ../xuma/contrib/gitian-descriptors/gitian-win.yml
@@ -387,7 +385,7 @@ COMMIT=b616fb8ef0d49a919b72b0388b091aaec5849b96
 ```
 
 Signing externally
-------------------
+-------------------
 
 If you want to do the PGP signing on another device that's also possible; just define `SIGNER` as mentioned
 and follow the steps in the build process as normal.
@@ -407,9 +405,9 @@ This will create the `.sig` files that can be committed together with the `.asse
 gitian build.
 
 Uploading signatures (not yet implemented)
-------------------------------------------
+---------------------
 
 In the future it will be possible to push your signatures (both the `.assert` and `.assert.sig` files) to the
-[xumacoin/gitian.sigs](https://github.com/xumacoin/gitian.sigs/) repository, or if that's not possible to create a pull
+[xuma/gitian.sigs](https://github.com/xuma-crypto/gitian.sigs/) repository, or if that's not possible to create a pull
 request.
 There will be an official announcement when this repository is online.

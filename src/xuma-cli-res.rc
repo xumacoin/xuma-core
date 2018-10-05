@@ -16,14 +16,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "Xuma"
-            VALUE "FileDescription",    "xuma-cli (OSS RPC client for Xuma)"
+            VALUE "CompanyName",        "XUMA"
+            VALUE "FileDescription",    "XUMA-cli (OSS RPC client for XUMA)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "xuma-cli"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
             VALUE "OriginalFilename",   "xuma-cli.exe"
-            VALUE "ProductName",        "xuma-cli"
+            VALUE "ProductName",        "XUMA-cli"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END

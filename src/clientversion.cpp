@@ -1,4 +1,5 @@
 // Copyright (c) 2012-2014 The Bitcoin developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -13,12 +14,13 @@
  * for both xumad and xuma-qt, to make it harder for attackers to
  * target servers or GUI users specifically.
  */
-const std::string CLIENT_NAME("Xuma Core");
+const std::string CLIENT_NAME("XUMA Core");
 
 /**
  * Client version number
  */
 #define CLIENT_VERSION_SUFFIX ""
+
 
 /**
  * The following part of the code determines the CLIENT_BUILD variable.
@@ -42,7 +44,6 @@ const std::string CLIENT_NAME("Xuma Core");
 #endif
 
 //! git will put "#define GIT_ARCHIVE 1" on the next line inside archives.
-#define GIT_ARCHIVE 1
 #ifdef GIT_ARCHIVE
 #define GIT_COMMIT_ID "cbcb549"
 #define GIT_COMMIT_DATE "Tue, 9 Feb 2016 16:54:57 -0500"

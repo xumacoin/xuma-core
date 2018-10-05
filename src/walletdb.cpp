@@ -1,9 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers 
-// Copyright (c) 2015-2017 The ALQO developers
-// Copyright (c) 2017-2018 The Xuma developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -13,9 +11,11 @@
 #include "protocol.h"
 #include "serialize.h"
 #include "sync.h"
+#include "txdb.h"
 #include "util.h"
 #include "utiltime.h"
 #include "wallet.h"
+#include <primitives/deterministicmint.h>
 
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
@@ -131,6 +131,18 @@ bool CWalletDB::EraseWatchOnly(const CScript& dest)
     return Erase(std::make_pair(std::string("watchs"), dest));
 }
 
+bool CWalletDB::WriteMultiSig(const CScript& dest)
+{
+    nWalletDBUpdated++;
+    return Write(std::make_pair(std::string("multisig"), dest), '1');
+}
+
+bool CWalletDB::EraseMultiSig(const CScript& dest)
+{
+    nWalletDBUpdated++;
+    return Erase(std::make_pair(std::string("multisig"), dest));
+}
+
 bool CWalletDB::WriteBestBlock(const CBlockLocator& locator)
 {
     nWalletDBUpdated++;
@@ -212,29 +224,14 @@ bool CWalletDB::EraseMSDisabledAddresses(std::vector<std::string> vDisabledAddre
     }
     return ret;
 }
-/*
-bool CWalletDB::WriteAutoCombineSettings(bool fEnable, CAmount nCombineThreshold, CAmount nThresholdnAutoCombineThresholdTime)
+bool CWalletDB::WriteAutoCombineSettings(bool fEnable, CAmount nCombineThreshold)
 {
     nWalletDBUpdated++;
     std::pair<bool, CAmount> pSettings;
     pSettings.first = fEnable;
     pSettings.second = nCombineThreshold;
-	pSettings.second = nThresholdnAutoCombineThresholdTime;
     return Write(std::string("autocombinesettings"), pSettings, true);
 }
-*/
-
-bool CWalletDB::WriteAutoCombineSettings(bool fEnable, CAmount nCombineThreshold, int nThresholdnAutoCombineThresholdTime)
-{
-    nWalletDBUpdated++;
-	std::pair<bool, CAmount> enabledMS1(fEnable, nCombineThreshold);
-    std::pair<std::pair<bool, CAmount>,int> pSettings(enabledMS1, nThresholdnAutoCombineThresholdTime);
-	//std::pair<bool, CAmount> pSettings;
-    //pSettings.first = fEnable;
-    //pSettings.second = nCombineThreshold;
-	//	wert.first = nThresholdnAutoCombineThresholdTime;
-    return Write(std::string("autocombinesettings"), pSettings, true);
-} 
 
 bool CWalletDB::WriteDefaultKey(const CPubKey& vchPubKey)
 {
@@ -280,7 +277,7 @@ bool CWalletDB::WriteAccountingEntry(const uint64_t nAccEntryNum, const CAccount
     return Write(std::make_pair(std::string("acentry"), std::make_pair(acentry.strAccount, nAccEntryNum)), acentry);
 }
 
-bool CWalletDB::WriteAccountingEntry(const CAccountingEntry& acentry)
+bool CWalletDB::WriteAccountingEntry_Backend(const CAccountingEntry& acentry)
 {
     return WriteAccountingEntry(++nAccountingEntryNumber, acentry);
 }
@@ -442,7 +439,8 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
             CWalletTx wtx;
             ssValue >> wtx;
             CValidationState state;
-            if (!(CheckTransaction(wtx, state) && (wtx.GetHash() == hash) && state.IsValid()))
+            // false because there is no reason to go through the zerocoin checks for our own wallet
+            if (!(CheckTransaction(wtx, false, false, state) && (wtx.GetHash() == hash) && state.IsValid()))
                 return false;
 
             // Undo serialize changes in 31600
@@ -488,6 +486,17 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
                 pwallet->LoadWatchOnly(script);
 
             // Watch-only addresses have no birthday information for now,
+            // so set the wallet birthday to the beginning of time.
+            pwallet->nTimeFirstKey = 1;
+        } else if (strType == "multisig") {
+            CScript script;
+            ssKey >> script;
+            char fYes;
+            ssValue >> fYes;
+            if (fYes == '1')
+                pwallet->LoadMultiSig(script);
+
+            // MultiSig addresses have no birthday information for now,
             // so set the wallet birthday to the beginning of time.
             pwallet->nTimeFirstKey = 1;
         } else if (strType == "key" || strType == "wkey") {
@@ -558,7 +567,7 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
             if (pwallet->nMasterKeyMaxID < nID)
                 pwallet->nMasterKeyMaxID = nID;
         } else if (strType == "ckey") {
-            vector<unsigned char> vchPubKey;
+            CPubKey vchPubKey;
             ssKey >> vchPubKey;
             vector<unsigned char> vchPrivKey;
             ssValue >> vchPrivKey;
@@ -637,22 +646,11 @@ bool ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue, CW
             ssValue >> strDisabledAddress;
             pwallet->vDisabledAddresses.push_back(strDisabledAddress);
         } else if (strType == "autocombinesettings") {
-			
-			/*
             std::pair<bool, CAmount> pSettings;
             ssValue >> pSettings;
             pwallet->fCombineDust = pSettings.first;
             pwallet->nAutoCombineThreshold = pSettings.second;
-			pwallet->nAutoCombineThresholdTime = pSettings.second;
-			*/
-			
-			std::pair<std::pair<bool, CAmount>,int> pSettings;
-			ssValue >> pSettings;
-			pwallet->fCombineDust = pSettings.first.first;
-			pwallet->nAutoCombineThreshold = pSettings.first.second;
-			pwallet->nAutoCombineThresholdTime = pSettings.second;
-			
-			} else if (strType == "destdata") {
+        } else if (strType == "destdata") {
             std::string strAddress, strKey, strValue;
             ssKey >> strAddress;
             ssKey >> strKey;
@@ -763,6 +761,12 @@ DBErrors CWalletDB::LoadWallet(CWallet* pwallet)
 
     if (wss.fAnyUnordered)
         result = ReorderTransactions(pwallet);
+
+    pwallet->laccentries.clear();
+    ListAccountCreditDebit("*", pwallet->laccentries);
+    BOOST_FOREACH(CAccountingEntry& entry, pwallet->laccentries) {
+        pwallet->wtxOrdered.insert(make_pair(entry.nOrderPos, CWallet::TxPair((CWalletTx*)0, &entry)));
+    }
 
     return result;
 }
@@ -899,10 +903,36 @@ void ThreadFlushWalletDB(const string& strFile)
     }
 }
 
-bool BackupWallet(const CWallet& wallet, const string& strDest)
+void NotifyBacked(const CWallet& wallet, bool fSuccess, string strMessage)
 {
-    if (!wallet.fFileBacked)
+    LogPrint(nullptr, strMessage.data());
+    wallet.NotifyWalletBacked(fSuccess, strMessage);
+}
+
+bool BackupWallet(const CWallet& wallet, const filesystem::path& strDest, bool fEnableCustom)
+{
+    filesystem::path pathCustom;
+    filesystem::path pathWithFile;
+    if (!wallet.fFileBacked) {
         return false;
+    } else if(fEnableCustom) {
+        pathWithFile = GetArg("-backuppath", "");
+        if(!pathWithFile.empty()) {
+            if(!pathWithFile.has_extension()) {
+                pathCustom = pathWithFile;
+                pathWithFile /= wallet.GetUniqueWalletBackupName(false);
+            } else {
+                pathCustom = pathWithFile.parent_path();
+            }
+            try {
+                filesystem::create_directories(pathCustom);
+            } catch(const filesystem::filesystem_error& e) {
+                NotifyBacked(wallet, false, strprintf("%s\n", e.what()));
+                pathCustom = "";
+            }
+        }
+    }
+
     while (true) {
         {
             LOCK(bitdb.cs_db);
@@ -913,30 +943,102 @@ bool BackupWallet(const CWallet& wallet, const string& strDest)
                 bitdb.mapFileUseCount.erase(wallet.strWalletFile);
 
                 // Copy wallet.dat
-                filesystem::path pathSrc = GetDataDir() / wallet.strWalletFile;
                 filesystem::path pathDest(strDest);
-                if (filesystem::is_directory(pathDest))
+                filesystem::path pathSrc = GetDataDir() / wallet.strWalletFile;
+                if (is_directory(pathDest)) {
+                    if(!exists(pathDest)) create_directory(pathDest);
                     pathDest /= wallet.strWalletFile;
-
-                try {
-#if BOOST_VERSION >= 158000
-                    filesystem::copy_file(pathSrc, pathDest, filesystem::copy_option::overwrite_if_exists);
-#else
-                    std::ifstream src(pathSrc.string(), std::ios::binary);
-                    std::ofstream dst(pathDest.string(), std::ios::binary);
-                    dst << src.rdbuf();
-#endif
-                    LogPrintf("copied wallet.dat to %s\n", pathDest.string());
-                    return true;
-                } catch (const filesystem::filesystem_error& e) {
-                    LogPrintf("error copying wallet.dat to %s - %s\n", pathDest.string(), e.what());
-                    return false;
                 }
+                bool defaultPath = AttemptBackupWallet(wallet, pathSrc.string(), pathDest.string());
+
+                if(defaultPath && !pathCustom.empty()) {
+                    int nThreshold = GetArg("-custombackupthreshold", DEFAULT_CUSTOMBACKUPTHRESHOLD);
+                    if (nThreshold > 0) {
+
+                        typedef std::multimap<std::time_t, filesystem::path> folder_set_t;
+                        folder_set_t folderSet;
+                        filesystem::directory_iterator end_iter;
+
+                        pathCustom.make_preferred();
+                        // Build map of backup files for current(!) wallet sorted by last write time
+
+                        filesystem::path currentFile;
+                        for (filesystem::directory_iterator dir_iter(pathCustom); dir_iter != end_iter; ++dir_iter) {
+                            // Only check regular files
+                            if (filesystem::is_regular_file(dir_iter->status())) {
+                                currentFile = dir_iter->path().filename();
+                                // Only add the backups for the current wallet, e.g. wallet.dat.*
+                                if (dir_iter->path().stem().string() == wallet.strWalletFile) {
+                                    folderSet.insert(folder_set_t::value_type(filesystem::last_write_time(dir_iter->path()), *dir_iter));
+                                }
+                            }
+                        }
+
+                        int counter = 0; //TODO: add seconds to avoid naming conflicts
+                        for (auto entry : folderSet) {
+                            counter++;
+                            if(entry.second == pathWithFile) {
+                                pathWithFile += "(1)";
+                            }
+                        }
+
+                        if (counter >= nThreshold) {
+                            std::time_t oldestBackup = 0;
+                            for(auto entry : folderSet) {
+                                if(oldestBackup == 0 || entry.first < oldestBackup) {
+                                    oldestBackup = entry.first;
+                                }
+                            }
+
+                            try {
+                                auto entry = folderSet.find(oldestBackup);
+                                if (entry != folderSet.end()) {
+                                    filesystem::remove(entry->second);
+                                    LogPrintf("Old backup deleted: %s\n", (*entry).second);
+                                }
+                            } catch (filesystem::filesystem_error& error) {
+                                string strMessage = strprintf("Failed to delete backup %s\n", error.what());
+                                LogPrint(nullptr, strMessage.data());
+                                NotifyBacked(wallet, false, strMessage);
+                            }
+                        }
+                    }
+                    AttemptBackupWallet(wallet, pathSrc.string(), pathWithFile.string());
+                }
+
+                return defaultPath;
             }
         }
         MilliSleep(100);
     }
     return false;
+}
+
+bool AttemptBackupWallet(const CWallet& wallet, const filesystem::path& pathSrc, const filesystem::path& pathDest)
+{
+    bool retStatus;
+    string strMessage;
+    try {
+#if BOOST_VERSION >= 105800 /* BOOST_LIB_VERSION 1_58 */
+        filesystem::copy_file(pathSrc.c_str(), pathDest, filesystem::copy_option::overwrite_if_exists);
+#else
+        std::ifstream src(pathSrc.c_str(),  std::ios::binary | std::ios::in);
+        std::ofstream dst(pathDest.c_str(), std::ios::binary | std::ios::out | std::ios::trunc);
+        dst << src.rdbuf();
+        dst.flush();
+        src.close();
+        dst.close();
+#endif
+        strMessage = strprintf("copied wallet.dat to %s\n", pathDest.string());
+        LogPrint(nullptr, strMessage.data());
+        retStatus = true;
+    } catch (const filesystem::filesystem_error& e) {
+        retStatus = false;
+        strMessage = strprintf("%s\n", e.what());
+        LogPrint(nullptr, strMessage.data());
+    }
+    NotifyBacked(wallet, retStatus, strMessage);
+    return retStatus;
 }
 
 //
@@ -1028,4 +1130,477 @@ bool CWalletDB::EraseDestData(const std::string& address, const std::string& key
 {
     nWalletDBUpdated++;
     return Erase(std::make_pair(std::string("destdata"), std::make_pair(address, key)));
+}
+
+bool CWalletDB::WriteZerocoinSpendSerialEntry(const CZerocoinSpend& zerocoinSpend)
+{
+    return Write(make_pair(string("zcserial"), zerocoinSpend.GetSerial()), zerocoinSpend, true);
+}
+bool CWalletDB::EraseZerocoinSpendSerialEntry(const CBigNum& serialEntry)
+{
+    return Erase(make_pair(string("zcserial"), serialEntry));
+}
+
+bool CWalletDB::ReadZerocoinSpendSerialEntry(const CBigNum& bnSerial)
+{
+    CZerocoinSpend spend;
+    return Read(make_pair(string("zcserial"), bnSerial), spend);
+}
+
+bool CWalletDB::WriteDeterministicMint(const CDeterministicMint& dMint)
+{
+    uint256 hash = dMint.GetPubcoinHash();
+    return Write(make_pair(string("dzXMX"), hash), dMint, true);
+}
+
+bool CWalletDB::ReadDeterministicMint(const uint256& hashPubcoin, CDeterministicMint& dMint)
+{
+    return Read(make_pair(string("dzXMX"), hashPubcoin), dMint);
+}
+
+bool CWalletDB::EraseDeterministicMint(const uint256& hashPubcoin)
+{
+    return Erase(make_pair(string("dzXMX"), hashPubcoin));
+}
+
+bool CWalletDB::WriteZerocoinMint(const CZerocoinMint& zerocoinMint)
+{
+    CDataStream ss(SER_GETHASH, 0);
+    ss << zerocoinMint.GetValue();
+    uint256 hash = Hash(ss.begin(), ss.end());
+
+    Erase(make_pair(string("zerocoin"), hash));
+    return Write(make_pair(string("zerocoin"), hash), zerocoinMint, true);
+}
+
+bool CWalletDB::ReadZerocoinMint(const CBigNum &bnPubCoinValue, CZerocoinMint& zerocoinMint)
+{
+    CDataStream ss(SER_GETHASH, 0);
+    ss << bnPubCoinValue;
+    uint256 hash = Hash(ss.begin(), ss.end());
+
+    return ReadZerocoinMint(hash, zerocoinMint);
+}
+
+bool CWalletDB::ReadZerocoinMint(const uint256& hashPubcoin, CZerocoinMint& mint)
+{
+    return Read(make_pair(string("zerocoin"), hashPubcoin), mint);
+}
+
+bool CWalletDB::EraseZerocoinMint(const CZerocoinMint& zerocoinMint)
+{
+    CDataStream ss(SER_GETHASH, 0);
+    ss << zerocoinMint.GetValue();
+    uint256 hash = Hash(ss.begin(), ss.end());
+
+    return Erase(make_pair(string("zerocoin"), hash));
+}
+
+bool CWalletDB::ArchiveMintOrphan(const CZerocoinMint& zerocoinMint)
+{
+    CDataStream ss(SER_GETHASH, 0);
+    ss << zerocoinMint.GetValue();
+    uint256 hash = Hash(ss.begin(), ss.end());;
+
+    if (!Write(make_pair(string("zco"), hash), zerocoinMint)) {
+        LogPrintf("%s : failed to database orphaned zerocoin mint\n", __func__);
+        return false;
+    }
+
+    if (!Erase(make_pair(string("zerocoin"), hash))) {
+        LogPrintf("%s : failed to erase orphaned zerocoin mint\n", __func__);
+        return false;
+    }
+
+    return true;
+}
+
+bool CWalletDB::ArchiveDeterministicOrphan(const CDeterministicMint& dMint)
+{
+    if (!Write(make_pair(string("dzco"), dMint.GetPubcoinHash()), dMint))
+        return error("%s: write failed", __func__);
+
+    if (!Erase(make_pair(string("dzXMX"), dMint.GetPubcoinHash())))
+        return error("%s: failed to erase", __func__);
+
+    return true;
+}
+
+bool CWalletDB::UnarchiveDeterministicMint(const uint256& hashPubcoin, CDeterministicMint& dMint)
+{
+    if (!Read(make_pair(string("dzco"), hashPubcoin), dMint))
+        return error("%s: failed to retrieve deterministic mint from archive", __func__);
+
+    if (!WriteDeterministicMint(dMint))
+        return error("%s: failed to write deterministic mint", __func__);
+
+    if (!Erase(make_pair(string("dzco"), dMint.GetPubcoinHash())))
+        return error("%s : failed to erase archived deterministic mint", __func__);
+
+    return true;
+}
+
+bool CWalletDB::UnarchiveZerocoinMint(const uint256& hashPubcoin, CZerocoinMint& mint)
+{
+    if (!Read(make_pair(string("zco"), hashPubcoin), mint))
+        return error("%s: failed to retrieve zerocoinmint from archive", __func__);
+
+    if (!WriteZerocoinMint(mint))
+        return error("%s: failed to write zerocoinmint", __func__);
+
+    uint256 hash = GetPubCoinHash(mint.GetValue());
+    if (!Erase(make_pair(string("zco"), hash)))
+        return error("%s : failed to erase archived zerocoin mint", __func__);
+
+    return true;
+}
+
+bool CWalletDB::WriteCurrentSeedHash(const uint256& hashSeed)
+{
+    return Write(string("seedhash"), hashSeed);
+}
+
+bool CWalletDB::ReadCurrentSeedHash(uint256& hashSeed)
+{
+    return Read(string("seedhash"), hashSeed);
+}
+
+bool CWalletDB::WriteZXMXSeed(const uint256& hashSeed, const vector<unsigned char>& seed)
+{
+    if (!WriteCurrentSeedHash(hashSeed))
+        return error("%s: failed to write current seed hash", __func__);
+
+    return Write(make_pair(string("dzs"), hashSeed), seed);
+}
+
+bool CWalletDB::EraseZXMXSeed()
+{
+    uint256 hash;
+    if(!ReadCurrentSeedHash(hash)){
+        return error("Failed to read a current seed hash");
+    }
+    if(!WriteZXMXSeed(hash, ToByteVector(base_uint<256>(0) << 256))) {
+        return error("Failed to write empty seed to wallet");
+    }
+    if(!WriteCurrentSeedHash(0)) {
+        return error("Failed to write empty seedHash");
+    }
+
+    return true;
+}
+
+bool CWalletDB::EraseZXMXSeed_deprecated()
+{
+    return Erase(string("dzs"));
+}
+
+bool CWalletDB::ReadZXMXSeed(const uint256& hashSeed, vector<unsigned char>& seed)
+{
+    return Read(make_pair(string("dzs"), hashSeed), seed);
+}
+
+bool CWalletDB::ReadZXMXSeed_deprecated(uint256& seed)
+{
+    return Read(string("dzs"), seed);
+}
+
+bool CWalletDB::WriteZXMXCount(const uint32_t& nCount)
+{
+    return Write(string("dzc"), nCount);
+}
+
+bool CWalletDB::ReadZXMXCount(uint32_t& nCount)
+{
+    return Read(string("dzc"), nCount);
+}
+
+bool CWalletDB::WriteMintPoolPair(const uint256& hashMasterSeed, const uint256& hashPubcoin, const uint32_t& nCount)
+{
+    return Write(make_pair(string("mintpool"), hashPubcoin), make_pair(hashMasterSeed, nCount));
+}
+
+//! map with hashMasterSeed as the key, paired with vector of hashPubcoins and their count
+std::map<uint256, std::vector<pair<uint256, uint32_t> > > CWalletDB::MapMintPool()
+{
+    std::map<uint256, std::vector<pair<uint256, uint32_t> > > mapPool;
+    Dbc* pcursor = GetCursor();
+    if (!pcursor)
+        throw runtime_error(std::string(__func__)+" : cannot create DB cursor");
+    unsigned int fFlags = DB_SET_RANGE;
+    for (;;)
+    {
+        // Read next record
+        CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+        if (fFlags == DB_SET_RANGE)
+            ssKey << make_pair(string("mintpool"), uint256(0));
+        CDataStream ssValue(SER_DISK, CLIENT_VERSION);
+        int ret = ReadAtCursor(pcursor, ssKey, ssValue, fFlags);
+        fFlags = DB_NEXT;
+        if (ret == DB_NOTFOUND)
+            break;
+        else if (ret != 0)
+        {
+            pcursor->close();
+            throw runtime_error(std::string(__func__)+" : error scanning DB");
+        }
+
+        // Unserialize
+        string strType;
+        ssKey >> strType;
+        if (strType != "mintpool")
+            break;
+
+        uint256 hashPubcoin;
+        ssKey >> hashPubcoin;
+
+        uint256 hashMasterSeed;
+        ssValue >> hashMasterSeed;
+
+        uint32_t nCount;
+        ssValue >> nCount;
+
+        pair<uint256, uint32_t> pMint;
+        pMint.first = hashPubcoin;
+        pMint.second = nCount;
+        if (mapPool.count(hashMasterSeed)) {
+            mapPool.at(hashMasterSeed).emplace_back(pMint);
+        } else {
+            vector<pair<uint256, uint32_t> > vPairs;
+            vPairs.emplace_back(pMint);
+            mapPool.insert(make_pair(hashMasterSeed, vPairs));
+        }
+    }
+
+    pcursor->close();
+
+    return mapPool;
+}
+
+std::list<CDeterministicMint> CWalletDB::ListDeterministicMints()
+{
+    std::list<CDeterministicMint> listMints;
+    Dbc* pcursor = GetCursor();
+    if (!pcursor)
+        throw runtime_error(std::string(__func__)+" : cannot create DB cursor");
+    unsigned int fFlags = DB_SET_RANGE;
+    for (;;)
+    {
+        // Read next record
+        CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+        if (fFlags == DB_SET_RANGE)
+            ssKey << make_pair(string("dzXMX"), uint256(0));
+        CDataStream ssValue(SER_DISK, CLIENT_VERSION);
+        int ret = ReadAtCursor(pcursor, ssKey, ssValue, fFlags);
+        fFlags = DB_NEXT;
+        if (ret == DB_NOTFOUND)
+            break;
+        else if (ret != 0)
+        {
+            pcursor->close();
+            throw runtime_error(std::string(__func__)+" : error scanning DB");
+        }
+
+        // Unserialize
+        string strType;
+        ssKey >> strType;
+        if (strType != "dzXMX")
+            break;
+
+        uint256 hashPubcoin;
+        ssKey >> hashPubcoin;
+
+        CDeterministicMint mint;
+        ssValue >> mint;
+
+        listMints.emplace_back(mint);
+    }
+
+    pcursor->close();
+    return listMints;
+}
+
+std::list<CZerocoinMint> CWalletDB::ListMintedCoins()
+{
+    std::list<CZerocoinMint> listPubCoin;
+    Dbc* pcursor = GetCursor();
+    if (!pcursor)
+        throw runtime_error(std::string(__func__)+" : cannot create DB cursor");
+    unsigned int fFlags = DB_SET_RANGE;
+    vector<CZerocoinMint> vOverWrite;
+    vector<CZerocoinMint> vArchive;
+    for (;;)
+    {
+        // Read next record
+        CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+        if (fFlags == DB_SET_RANGE)
+            ssKey << make_pair(string("zerocoin"), uint256(0));
+        CDataStream ssValue(SER_DISK, CLIENT_VERSION);
+        int ret = ReadAtCursor(pcursor, ssKey, ssValue, fFlags);
+        fFlags = DB_NEXT;
+        if (ret == DB_NOTFOUND)
+            break;
+        else if (ret != 0)
+        {
+            pcursor->close();
+            throw runtime_error(std::string(__func__)+" : error scanning DB");
+        }
+
+        // Unserialize
+        string strType;
+        ssKey >> strType;
+        if (strType != "zerocoin")
+            break;
+
+        uint256 hashPubcoin;
+        ssKey >> hashPubcoin;
+
+        CZerocoinMint mint;
+        ssValue >> mint;
+
+        listPubCoin.emplace_back(mint);
+    }
+
+    pcursor->close();
+    return listPubCoin;
+}
+
+std::list<CZerocoinSpend> CWalletDB::ListSpentCoins()
+{
+    std::list<CZerocoinSpend> listCoinSpend;
+    Dbc* pcursor = GetCursor();
+    if (!pcursor)
+        throw runtime_error(std::string(__func__)+" : cannot create DB cursor");
+    unsigned int fFlags = DB_SET_RANGE;
+    for (;;)
+    {
+        // Read next record
+        CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+        if (fFlags == DB_SET_RANGE)
+            ssKey << make_pair(string("zcserial"), CBigNum(0));
+        CDataStream ssValue(SER_DISK, CLIENT_VERSION);
+        int ret = ReadAtCursor(pcursor, ssKey, ssValue, fFlags);
+        fFlags = DB_NEXT;
+        if (ret == DB_NOTFOUND)
+            break;
+        else if (ret != 0)
+        {
+            pcursor->close();
+            throw runtime_error(std::string(__func__)+" : error scanning DB");
+        }
+
+        // Unserialize
+        string strType;
+        ssKey >> strType;
+        if (strType != "zcserial")
+            break;
+
+        CBigNum value;
+        ssKey >> value;
+
+        CZerocoinSpend zerocoinSpendItem;
+        ssValue >> zerocoinSpendItem;
+
+        listCoinSpend.push_back(zerocoinSpendItem);
+    }
+
+    pcursor->close();
+    return listCoinSpend;
+}
+
+// Just get the Serial Numbers
+std::list<CBigNum> CWalletDB::ListSpentCoinsSerial()
+{
+    std::list<CBigNum> listPubCoin;
+    std::list<CZerocoinSpend> listCoins = ListSpentCoins();
+    
+    for ( auto& coin : listCoins) {
+        listPubCoin.push_back(coin.GetSerial());
+    }
+    return listPubCoin;
+}
+
+std::list<CZerocoinMint> CWalletDB::ListArchivedZerocoins()
+{
+    std::list<CZerocoinMint> listMints;
+    Dbc* pcursor = GetCursor();
+    if (!pcursor)
+        throw runtime_error(std::string(__func__)+" : cannot create DB cursor");
+    unsigned int fFlags = DB_SET_RANGE;
+    for (;;)
+    {
+        // Read next record
+        CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+        if (fFlags == DB_SET_RANGE)
+            ssKey << make_pair(string("zco"), CBigNum(0));
+        CDataStream ssValue(SER_DISK, CLIENT_VERSION);
+        int ret = ReadAtCursor(pcursor, ssKey, ssValue, fFlags);
+        fFlags = DB_NEXT;
+        if (ret == DB_NOTFOUND)
+            break;
+        else if (ret != 0)
+        {
+            pcursor->close();
+            throw runtime_error(std::string(__func__)+" : error scanning DB");
+        }
+
+        // Unserialize
+        string strType;
+        ssKey >> strType;
+        if (strType != "zco")
+            break;
+
+        uint256 value;
+        ssKey >> value;
+
+        CZerocoinMint mint;
+        ssValue >> mint;
+
+        listMints.push_back(mint);
+    }
+
+    pcursor->close();
+    return listMints;
+}
+
+std::list<CDeterministicMint> CWalletDB::ListArchivedDeterministicMints()
+{
+    std::list<CDeterministicMint> listMints;
+    Dbc* pcursor = GetCursor();
+    if (!pcursor)
+        throw runtime_error(std::string(__func__)+" : cannot create DB cursor");
+    unsigned int fFlags = DB_SET_RANGE;
+    for (;;)
+    {
+        // Read next record
+        CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+        if (fFlags == DB_SET_RANGE)
+            ssKey << make_pair(string("dzco"), CBigNum(0));
+        CDataStream ssValue(SER_DISK, CLIENT_VERSION);
+        int ret = ReadAtCursor(pcursor, ssKey, ssValue, fFlags);
+        fFlags = DB_NEXT;
+        if (ret == DB_NOTFOUND)
+            break;
+        else if (ret != 0)
+        {
+            pcursor->close();
+            throw runtime_error(std::string(__func__)+" : error scanning DB");
+        }
+
+        // Unserialize
+        string strType;
+        ssKey >> strType;
+        if (strType != "dzco")
+            break;
+
+        uint256 value;
+        ssKey >> value;
+
+        CDeterministicMint dMint;
+        ssValue >> dMint;
+
+        listMints.emplace_back(dMint);
+    }
+
+    pcursor->close();
+    return listMints;
 }

@@ -6,10 +6,10 @@ For Snow Leopard (which uses [Python 2.6](http://www.python.org/download/release
 
 This script should not be run manually, instead, after building as usual:
 
-    brew install librsvg
 	make deploy
 
 During the process, the disk image window will pop up briefly where the fancy
 settings are applied. This is normal, please do not interfere.
 
-When finished, it will produce `Xuma-Qt.dmg`.
+When finished, it will produce `XUMA-Qt.dmg`.
+

@@ -1,9 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers 
-// Copyright (c) 2015-2017 The ALQO developers
-// Copyright (c) 2017-2018 The Xuma developers
+// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,13 +10,18 @@
 #include "main.h"
 #include "masternodeconfig.h"
 #include "noui.h"
-#include "rpcserver.h"
+#include "scheduler.h"
+#include "rpc/server.h"
 #include "ui_interface.h"
 #include "util.h"
+#include "httpserver.h"
+#include "httprpc.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/thread.hpp>
+
+#include <stdio.h>
 
 /* Introduction text for doxygen: */
 
@@ -26,8 +29,8 @@
  *
  * \section intro_sec Introduction
  *
- * This is the developer documentation of the reference client for an experimental new digital currency called Xuma (http://www.xumacoin.org),
- * which enables instant payments to anyone, anywhere in the world. Xuma uses peer-to-peer technology to operate
+ * This is the developer documentation of the reference client for an experimental new digital currency called XUMA (http://www.xuma.org),
+ * which enables instant payments to anyone, anywhere in the world. XUMA uses peer-to-peer technology to operate
  * with no central authority: managing transactions and issuing money are carried out collectively by the network.
  *
  * The software is a community-driven open source project, released under the MIT license.
@@ -38,7 +41,7 @@
 
 static bool fDaemon;
 
-void DetectShutdownThread(boost::thread_group* threadGroup)
+void WaitForShutdown(boost::thread_group* threadGroup)
 {
     bool fShutdown = ShutdownRequested();
     // Tell the main threads to shutdown.
@@ -47,7 +50,7 @@ void DetectShutdownThread(boost::thread_group* threadGroup)
         fShutdown = ShutdownRequested();
     }
     if (threadGroup) {
-        threadGroup->interrupt_all();
+        Interrupt(*threadGroup);
         threadGroup->join_all();
     }
 }
@@ -59,7 +62,7 @@ void DetectShutdownThread(boost::thread_group* threadGroup)
 bool AppInit(int argc, char* argv[])
 {
     boost::thread_group threadGroup;
-    boost::thread* detectShutdownThread = NULL;
+    CScheduler scheduler;
 
     bool fRet = false;
 
@@ -71,13 +74,13 @@ bool AppInit(int argc, char* argv[])
 
     // Process help and version before taking care about datadir
     if (mapArgs.count("-?") || mapArgs.count("-help") || mapArgs.count("-version")) {
-        std::string strUsage = _("Xuma Core Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n";
+        std::string strUsage = _("XUMA Core Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n";
 
         if (mapArgs.count("-version")) {
             strUsage += LicenseInfo();
         } else {
             strUsage += "\n" + _("Usage:") + "\n" +
-                        "  xumad [options]                     " + _("Start Xuma Core Daemon") + "\n";
+                        "  xumad [options]                     " + _("Start XUMA Core Daemon") + "\n";
 
             strUsage += "\n" + HelpMessage(HMM_BITCOIND);
         }
@@ -87,7 +90,7 @@ bool AppInit(int argc, char* argv[])
     }
 
     try {
-        if (!boost::filesystem::is_directory(GetDataDir())) {
+        if (!boost::filesystem::is_directory(GetDataDir(false))) {
             fprintf(stderr, "Error: Specified data directory \"%s\" does not exist.\n", mapArgs["-datadir"].c_str());
             return false;
         }
@@ -123,7 +126,7 @@ bool AppInit(int argc, char* argv[])
 #ifndef WIN32
         fDaemon = GetBoolArg("-daemon", false);
         if (fDaemon) {
-            fprintf(stdout, "Xuma server starting\n");
+            fprintf(stdout, "XUMA server starting\n");
 
             // Daemonize
             pid_t pid = fork();
@@ -144,8 +147,7 @@ bool AppInit(int argc, char* argv[])
 #endif
         SoftSetBoolArg("-server", true);
 
-        detectShutdownThread = new boost::thread(boost::bind(&DetectShutdownThread, &threadGroup));
-        fRet = AppInit2(threadGroup);
+        fRet = AppInit2(threadGroup, scheduler);
     } catch (std::exception& e) {
         PrintExceptionContinue(&e, "AppInit()");
     } catch (...) {
@@ -153,19 +155,12 @@ bool AppInit(int argc, char* argv[])
     }
 
     if (!fRet) {
-        if (detectShutdownThread)
-            detectShutdownThread->interrupt();
-
-        threadGroup.interrupt_all();
+        Interrupt(threadGroup);
         // threadGroup.join_all(); was left out intentionally here, because we didn't re-test all of
         // the startup-failure cases to make sure they don't result in a hang due to some
         // thread-blocking-waiting-for-another-thread-during-startup case
-    }
-
-    if (detectShutdownThread) {
-        detectShutdownThread->join();
-        delete detectShutdownThread;
-        detectShutdownThread = NULL;
+    } else {
+        WaitForShutdown(&threadGroup);
     }
     Shutdown();
 
