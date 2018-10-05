@@ -1,6 +1,8 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+											  
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -25,8 +27,8 @@
 SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle* networkStyle) : QWidget(0, f), curAlignment(0)
 {
     // set reference point, paddings
-    int paddingLeft = 14;
-    int paddingTop = 470;
+    int paddingLeft = 9;
+    int paddingTop = 526 + 150 - 32;
     int titleVersionVSpace = 17;
     int titleCopyrightVSpace = 32;
 
@@ -39,7 +41,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle* networkStyle) 
     QString copyrightTextDash = QChar(0xA9) + QString(" 2014-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Dash Core developers"));
     QString copyrightTextPIVX = QChar(0xA9) + QString(" 2015-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The PIVX Core developers"));
     QString copyrightTextALQO = QChar(0xA9) + QString(" 2017-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The ALQO Core developers"));
-    QString copyrightTextXUMA = QChar(0xA9) + QString(" 2018-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Xuma Core developers"));
+    QString copyrightTextXUMA = QChar(0xA9) + QString(" 2018-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Xuma Community"));
     QString titleAddText = networkStyle->getTitleAddText();
 
     QString font = QApplication::font().toString();
@@ -59,19 +61,21 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle* networkStyle) 
         fontFactor = 0.75;
     }
 
-    pixPaint.setFont(QFont(font, 28 * fontFactor));
+    pixPaint.setFont(QFont(font, 22 * fontFactor));
     fm = pixPaint.fontMetrics();
     //titleTextWidth = fm.width(titleText);
-    //pixPaint.drawText(paddingLeft, paddingTop, titleText);
+    pixPaint.drawText(paddingLeft, paddingTop, titleText);
 
     pixPaint.setFont(QFont(font, 15 * fontFactor));
-    //pixPaint.drawText(paddingLeft, paddingTop + titleVersionVSpace, versionText);
+    pixPaint.drawText(paddingLeft, paddingTop + titleVersionVSpace, versionText);
 
     // draw copyright stuff
-    pixPaint.setFont(QFont(font, 10 * fontFactor));
-    //pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace, copyrightTextBtc);
-    //pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 12, copyrightTextDash);
-    //pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 24, copyrightTextPIVX);
+    pixPaint.setFont(QFont(font, 8 * fontFactor));
+    pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace, copyrightTextBtc);
+    pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 10, copyrightTextDash);
+    pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 20, copyrightTextPIVX);
+	pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 30, copyrightTextALQO);
+    pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 40, copyrightTextXUMA);																						  
 
     // draw additional text if special network
     if (!titleAddText.isEmpty()) {
@@ -80,7 +84,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle* networkStyle) 
         pixPaint.setFont(boldFont);
         fm = pixPaint.fontMetrics();
         int titleAddTextWidth = fm.width(titleAddText);
-        //pixPaint.drawText(pixmap.width() - titleAddTextWidth - 10, pixmap.height() - 25, titleAddText);
+        pixPaint.drawText(pixmap.width() - titleAddTextWidth - 10, pixmap.height() - 25, titleAddText);
     }
 
     pixPaint.end();
@@ -114,7 +118,7 @@ static void InitMessage(SplashScreen* splash, const std::string& message)
         Qt::QueuedConnection,
         Q_ARG(QString, QString::fromStdString(message)),
         Q_ARG(int, Qt::AlignBottom | Qt::AlignHCenter),
-        Q_ARG(QColor, QColor(100, 100, 100)));
+        Q_ARG(QColor, QColor(55, 55, 55)));
 }
 
 static void ShowProgress(SplashScreen* splash, const std::string& title, int nProgress)
@@ -164,7 +168,7 @@ void SplashScreen::paintEvent(QPaintEvent* event)
     painter.drawPixmap(0, 0, pixmap);
     QRect r = rect().adjusted(5, 5, -5, -5);
     painter.setPen(curColor);
-    //painter.drawText(r, curAlignment, curMessage);
+    painter.drawText(r, curAlignment, curMessage);
 }
 
 void SplashScreen::closeEvent(QCloseEvent* event)
