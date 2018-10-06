@@ -55,7 +55,7 @@ public:
         READWRITE(nNonce);
 
         //zerocoin active, header changes to include accumulator checksum
-        if(nVersion > 3)
+        if(nVersion > 5)
             READWRITE(nAccumulatorCheckpoint);
     }
 
