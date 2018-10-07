@@ -3,6 +3,7 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
 // Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2018 The Xuma developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -4140,7 +4141,7 @@ void CWallet::AutoCombineDust()
 
             // Around 180 bytes per input. We use 190 to be certain
             txSizeEstimate += 190;
-            iif (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200) {
+            if (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200) {
                 maxSize = true;
                 break;
             }
