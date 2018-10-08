@@ -1,7 +1,8 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1798,14 +1799,22 @@ UniValue walletpassphrase(const UniValue& params, bool fHelp)
     if (!pwalletMain->IsLocked() && pwalletMain->fWalletUnlockAnonymizeOnly && anonymizeOnly)
         throw JSONRPCError(RPC_WALLET_ALREADY_UNLOCKED, "Error: Wallet is already unlocked.");
 
+	// Get the timeout
+    int64_t nSleepTime = params[1].get_int64();
+    // Timeout cannot be negative, otherwise it will relock immediately
+    if (nSleepTime < 0) {
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Timeout cannot be negative.");
+    }
+    // Clamp timeout
+    constexpr int64_t MAX_SLEEP_TIME = 100000000; // larger values trigger a macos/libevent bug?
+    if (nSleepTime > MAX_SLEEP_TIME) {
+        nSleepTime = MAX_SLEEP_TIME;
+    }
+
     if (!pwalletMain->Unlock(strWalletPass, anonymizeOnly))
         throw JSONRPCError(RPC_WALLET_PASSPHRASE_INCORRECT, "Error: The wallet passphrase entered was incorrect.");
 
     pwalletMain->TopUpKeyPool();
-
-    int64_t nSleepTime = params[1].get_int64();
-    LOCK(cs_nWalletUnlockTime);
-    nWalletUnlockTime = GetTime() + nSleepTime;
 
     if (nSleepTime > 0) {
         nWalletUnlockTime = GetTime () + nSleepTime;
@@ -3047,7 +3056,7 @@ UniValue getarchivedzerocoin(const UniValue& params, bool fHelp)
     list<CDeterministicMint> listDMints = walletdb.ListArchivedDeterministicMints();
 
     UniValue arrRet(UniValue::VARR);
-    for (const CZerocoinMint mint : listMints) {
+    for (const CZerocoinMint& mint : listMints) {
         UniValue objMint(UniValue::VOBJ);
         objMint.push_back(Pair("txid", mint.GetTxHash().GetHex()));
         objMint.push_back(Pair("denomination", ValueFromAmount(mint.GetDenominationAsAmount())));
@@ -3057,7 +3066,7 @@ UniValue getarchivedzerocoin(const UniValue& params, bool fHelp)
         arrRet.push_back(objMint);
     }
 
-    for (const CDeterministicMint dMint : listDMints) {
+    for (const CDeterministicMint& dMint : listDMints) {
         UniValue objDMint(UniValue::VOBJ);
         objDMint.push_back(Pair("txid", dMint.GetTxHash().GetHex()));
         objDMint.push_back(Pair("denomination", ValueFromAmount(libzerocoin::ZerocoinDenominationToAmount(dMint.GetDenomination()))));
@@ -3135,7 +3144,11 @@ UniValue exportzerocoins(const UniValue& params, bool fHelp)
         objMint.push_back(Pair("u", mint.IsUsed()));
         objMint.push_back(Pair("v", mint.GetVersion()));
         if (mint.GetVersion() >= 2) {
-            objMint.push_back(Pair("k", HexStr(mint.GetPrivKey())));
+            CKey key;
+            key.SetPrivKey(mint.GetPrivKey(), true);
+            CBitcoinSecret cBitcoinSecret;
+            cBitcoinSecret.SetKey(key);
+            objMint.push_back(Pair("k", cBitcoinSecret.ToString()));
         }
         jsonList.push_back(objMint);
     }
@@ -3213,10 +3226,10 @@ UniValue importzerocoins(const UniValue& params, bool fHelp)
         CPrivKey privkey;
         if (nVersion >= libzerocoin::PrivateCoin::PUBKEY_VERSION) {
             std::string strPrivkey = find_value(o, "k").get_str();
-            CKey key;
-            uint256 nPrivKey(strPrivkey);
-            key.Set(nPrivKey.begin(), nPrivKey.end(), true);
-            if (!key.IsValid())
+            CBitcoinSecret vchSecret;
+            bool fGood = vchSecret.SetString(strPrivkey);
+            CKey key = vchSecret.GetKey();
+            if (!key.IsValid() && fGood)
                 return JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "privkey is not valid");
             privkey = key.GetPrivKey();
         }
@@ -3266,7 +3279,7 @@ UniValue reconsiderzerocoins(const UniValue& params, bool fHelp)
     pwalletMain->ReconsiderZerocoins(listMints, listDMints);
 
     UniValue arrRet(UniValue::VARR);
-    for (const CZerocoinMint mint : listMints) {
+    for (const CZerocoinMint& mint : listMints) {
         UniValue objMint(UniValue::VOBJ);
         objMint.push_back(Pair("txid", mint.GetTxHash().GetHex()));
         objMint.push_back(Pair("denomination", ValueFromAmount(mint.GetDenominationAsAmount())));
@@ -3274,7 +3287,7 @@ UniValue reconsiderzerocoins(const UniValue& params, bool fHelp)
         objMint.push_back(Pair("height", mint.GetHeight()));
         arrRet.push_back(objMint);
     }
-    for (const CDeterministicMint dMint : listDMints) {
+    for (const CDeterministicMint& dMint : listDMints) {
         UniValue objMint(UniValue::VOBJ);
         objMint.push_back(Pair("txid", dMint.GetTxHash().GetHex()));
         objMint.push_back(Pair("denomination", FormatMoney(libzerocoin::ZerocoinDenominationToAmount(dMint.GetDenomination()))));
