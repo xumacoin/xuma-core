@@ -81,12 +81,6 @@ after_success:
 #    - if [ "$REASON" = "Linux32" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
     - if [ "$REASON" = "Linux64" ]; then cd $OUTDIR && cp -a bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
     - if [ "$REASON" = "MacOSX" ]; then pwd && find . -name '*.dmg' && echo $OUTDIR && mkdir -p $OUTDIR && cp *.dmg $OUTDIR/XUMA-$VERSION.dmg && ls; fi
-    - cd $OUTDIR
-    - git init
-    - git add --force --all
-    - git commit -m "Latest Build"
-    - git remote add origin https://github.com/flyinghuman/xuma-builds.git
-    - git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$REASON
 deploy:
   provider: releases
   api_key: 
