@@ -88,7 +88,7 @@ template<typename... Args> std::string FormatStringFromLogArgs(const char *fmt, 
             _log_msg_ = tfm::format(format, TINYFORMAT_PASSARGS(n));                            \
         } catch (std::runtime_error &e) {                                                       \
         /* Original format string will have newline so don't add one here */                    \
-        _log_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message: " + FormatStringFromLogArgs(TINYFORMAT_VARARGS(n)); \
+        _log_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message!";    \
         }                                                                                       \
         return LogPrintStr(_log_msg_);                                                          \
     }                                                                                           \
