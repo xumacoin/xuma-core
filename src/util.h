@@ -69,7 +69,7 @@ bool LogAcceptCategory(const char* category);
 int LogPrintStr(const std::string& str);
 
 /** Get format string from VA_ARGS for error reporting */
-template<typename... Args> std::string FormatStringFromLogArgs(const char *fmt, const Args&... args) { return fmt; }
+template<typename... Args> std::string FormatStringFromLogArgs(const char *fmt) { return fmt; }
 
 #define LogPrintf(...) LogPrint(NULL, __VA_ARGS__)
 
@@ -86,9 +86,9 @@ template<typename... Args> std::string FormatStringFromLogArgs(const char *fmt, 
         std::string _log_msg_; /* Unlikely name to avoid shadowing variables */                 \
         try {                                                                                   \
             _log_msg_ = tfm::format(format, TINYFORMAT_PASSARGS(n));                            \
-        } catch (std::runtime_error &e) {                                                       \
+        } catch (inyformat::format_error &e) {                                                  \
         /* Original format string will have newline so don't add one here */                    \
-        _log_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message!";    \
+        _log_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message: " + FormatStringFromLogArgs(format) + "\n";  \
         }                                                                                       \
         return LogPrintStr(_log_msg_);                                                          \
     }                                                                                           \
@@ -96,7 +96,14 @@ template<typename... Args> std::string FormatStringFromLogArgs(const char *fmt, 
     template <TINYFORMAT_ARGTYPES(n)>                                                           \
     static inline bool error(const char* format, TINYFORMAT_VARARGS(n))                         \
     {                                                                                           \
-        LogPrintStr(std::string("ERROR: ") + tfm::format(format, TINYFORMAT_PASSARGS(n)) + "\n");            \
+        std::string _error_msg_; /* Unlikely name to avoid shadowing variables */               \
+        try {                                                                                   \
+            _error_msg_ = tfm::format(format, TINYFORMAT_PASSARGS(n));                          \
+        } catch (inyformat::format_error &e) {                                                  \
+        /* Original format string will have newline so don't add one here */                    \
+        _error_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message: " + FormatStringFromLogArgs(format) + "\n";  \
+        }                                                                                       \
+        LogPrintStr(std::string("ERROR: ") + _error_msg_ + "\n");                               \
         return false;                                                                           \
     }
 

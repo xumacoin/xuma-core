@@ -1567,6 +1567,7 @@ void static ThreadStakeMinter()
         boost::this_thread::interruption_point();
     } catch (std::exception& e) {
         LogPrintf("ThreadStakeMinter() exception: %s\n", e.what());
+        ThreadStakeMinter();
     } catch (...) {
         LogPrintf("ThreadStakeMinter() error \n");
     }
