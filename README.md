@@ -29,7 +29,7 @@ Proof of Work block rewards.
 <tr><td>Block 2 - 40,999</td><td>200 XMX</td><td>20%</td><td>80%</td><td>10%</td></tr>
 <tr><td>Block 41,000 - 81,889</td><td>200 XMX</td><td>75%</td><td>25%</td><td>10%</td></tr>
 <tr><td>Block 81,890 - 88,999</td><td>200 XMX</td><td>67.5%</td><td>22.5%</td><td>10%</td></tr>
-<tr><td>Block 89,000 - 299,999</td><td>150 XMX</td><td>67.5%</td><td>22.5%</td><td>10%</td></tr>
+<tr><td>Block 89,000 - 330,240</td><td>150 XMX</td><td>67.5%</td><td>22.5%</td><td>10%</td></tr>
 </table>
 
 # PoS Block Rewards
@@ -38,7 +38,7 @@ Proof of Stake will automatically be enabled at block 475201.
 
 <table>
 <tr><th>Block Height</th><th>Reward Amount</th></tr>
-<tr><td>Block 300,000 - 399,999</td><td>80 XMX</td></tr>
+<tr><td>Block 330,241 - 399,999</td><td>80 XMX</td></tr>
 <tr><td>Block 400,000 - 459,999</td><td>40 XMX</td></tr>
 <tr><td>Block 460,000 - 519,999</td><td>20 XMX</td></tr>
 <tr><td>Block 520,000 - 579,999</td><td>10 XMX</td></tr>
