@@ -2179,11 +2179,11 @@ bool CObfuScationSigner::VerifyMessage(CPubKey pubkey, vector<unsigned char>& vc
 
 	if (pubkey2.GetID() != pubkey.GetID()) {
         if (fDebug){
-			LogPrintf("CObfuScationSigner::VerifyMessage -- keys don't match - input: %s, recovered: %s, message: %s, sig: %s\n",
-                pubkey.GetID().ToString(),
-				pubkey2.GetID().ToString(),
-				strMessage,
-			EncodeBase64(&vchSig[0], vchSig.size()));
+			LogPrintf("CObfuScationSigner::VerifyMessage -- keys don't match - input: %s, recovered: %s, sig: %s\n",
+                pubkey.GetID().ToString(), 
+				pubkey2.GetID().ToString(), 
+				EncodeBase64(&vchSig[0], 
+				vchSig.size()));
 		}
         return false;
     }
