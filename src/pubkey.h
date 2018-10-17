@@ -1,6 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -202,12 +203,6 @@ public:
     std::vector<unsigned char> Raw() const
     {
         return std::vector<unsigned char>(vch, vch + size());
-    }
-
-    std::string GetHex()
-    {
-        std::string my_std_string(reinterpret_cast<const char*>(vch), 65);
-        return my_std_string;
     }
 };
 

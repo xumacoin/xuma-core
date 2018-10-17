@@ -1,5 +1,6 @@
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,8 +15,6 @@
 #include "util.h"
 #include "utilmoneystr.h"
 #include <boost/filesystem.hpp>
-#include <boost/lexical_cast.hpp>
-
 
 #define DEV_FEE_BLOCK_ACTIVATION 81988
 
@@ -466,7 +465,7 @@ bool CMasternodePaymentWinner::Sign(CKey& keyMasternode, CPubKey& pubKeyMasterno
     std::string strMasterNodeSignMessage;
 
     std::string strMessage = vinMasternode.prevout.ToStringShort() +
-                             boost::lexical_cast<std::string>(nBlockHeight) +
+                             std::to_string(nBlockHeight) +
                              payee.ToString();
 
     if (!obfuScationSigner.SignMessage(strMessage, errorMessage, vchSig, keyMasternode)) {
@@ -596,14 +595,15 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
 		}
 	}
 	
-	bool foundMasternodePayment = false;
+	
     BOOST_FOREACH (CMasternodePayee& payee, vecPayments) {
+		bool foundMasternodePayment = false;
         BOOST_FOREACH (CTxOut out, txNew.vout) {
             if (payee.scriptPubKey == out.scriptPubKey) {
                 if(out.nValue >= requiredMasternodePayment)
                     foundMasternodePayment = true;
                 else
-                    LogPrint("masternode","Masternode payment is out of drift range. Paid=%s Min=%s\n", FormatMoney(out.nValue).c_str(), FormatMoney(requiredMasternodePayment).c_str());
+                    LogPrintf("Masternode payment is out of drift range. Paid=%s Min=%s\n", FormatMoney(out.nValue).c_str(), FormatMoney(requiredMasternodePayment).c_str());
             }
         }
 
@@ -623,9 +623,9 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
     }
 
 	if(foundDeveloperPayment)
-		LogPrintf("masternode", "CMasternodePayments::IsTransactionValid - Missing required masternode payment of %s to %s\n", FormatMoney(requiredMasternodePayment).c_str(), strPayeesPossible.c_str());
+		LogPrintf("CMasternodePayments::IsTransactionValid - Missing required masternode payment of %s to %s\n", FormatMoney(requiredMasternodePayment).c_str(), strPayeesPossible.c_str());
 	else
-		LogPrintf("masternode", "CMasternodePayments::IsTransactionValid - Missing required developerfee payment of %s\n", FormatMoney(requiredDeveloperPayment).c_str());
+		LogPrintf("CMasternodePayments::IsTransactionValid - Missing required developerfee payment of %s\n", FormatMoney(requiredDeveloperPayment).c_str());
 
     return false;
 }
@@ -642,9 +642,9 @@ std::string CMasternodeBlockPayees::GetRequiredPaymentsString()
         CBitcoinAddress address2(address1);
 
         if (ret != "Unknown") {
-            ret += ", " + address2.ToString() + ":" + boost::lexical_cast<std::string>(payee.nVotes);
+            ret += ", " + address2.ToString() + ":" + std::to_string(payee.nVotes);
         } else {
-            ret = address2.ToString() + ":" + boost::lexical_cast<std::string>(payee.nVotes);
+            ret = address2.ToString() + ":" + std::to_string(payee.nVotes);
         }
     }
 
@@ -819,7 +819,7 @@ bool CMasternodePaymentWinner::SignatureValid()
 
     if (pmn != NULL) {
         std::string strMessage = vinMasternode.prevout.ToStringShort() +
-                                 boost::lexical_cast<std::string>(nBlockHeight) +
+                                 std::to_string(nBlockHeight) +
                                  payee.ToString();
 
         std::string errorMessage = "";
