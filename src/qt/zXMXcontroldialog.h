@@ -58,6 +58,7 @@ private:
         COLUMN_CONFIRMATIONS,
         COLUMN_ISSPENDABLE
     };
+	friend class CZXmxControlWidgetItem;
 
 private slots:
     void updateSelection(QTreeWidgetItem* item, int column);
