@@ -1,7 +1,8 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -246,22 +247,20 @@ public:
     UniValue operator()(const CScriptID &scriptID) const {
         UniValue obj(UniValue::VOBJ);
         obj.push_back(Pair("isscript", true));
-        if (mine != ISMINE_NO) {
-            CScript subscript;
-            pwalletMain->GetCScript(scriptID, subscript);
-            std::vector<CTxDestination> addresses;
-            txnouttype whichType;
-            int nRequired;
-            ExtractDestinations(subscript, whichType, addresses, nRequired);
-            obj.push_back(Pair("script", GetTxnOutputType(whichType)));
-            obj.push_back(Pair("hex", HexStr(subscript.begin(), subscript.end())));
-            UniValue a(UniValue::VARR);
-            BOOST_FOREACH (const CTxDestination& addr, addresses)
-                a.push_back(CBitcoinAddress(addr).ToString());
-            obj.push_back(Pair("addresses", a));
-            if (whichType == TX_MULTISIG)
-                obj.push_back(Pair("sigsrequired", nRequired));
-        }
+        CScript subscript;
+        pwalletMain->GetCScript(scriptID, subscript);
+        std::vector<CTxDestination> addresses;
+        txnouttype whichType;
+        int nRequired;
+        ExtractDestinations(subscript, whichType, addresses, nRequired);
+        obj.push_back(Pair("script", GetTxnOutputType(whichType)));
+        obj.push_back(Pair("hex", HexStr(subscript.begin(), subscript.end())));
+        UniValue a(UniValue::VARR);
+        BOOST_FOREACH (const CTxDestination& addr, addresses)
+            a.push_back(CBitcoinAddress(addr).ToString());
+        obj.push_back(Pair("addresses", a));
+        if (whichType == TX_MULTISIG)
+            obj.push_back(Pair("sigsrequired", nRequired));
         return obj;
     }
 };
@@ -370,14 +369,15 @@ UniValue validateaddress(const UniValue& params, bool fHelp)
         CTxDestination dest = address.Get();
         string currentAddress = address.ToString();
         ret.push_back(Pair("address", currentAddress));
+		CScript scriptPubKey = GetScriptForDestination(dest);
+        ret.push_back(Pair("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end())));
+
 #ifdef ENABLE_WALLET
         isminetype mine = pwalletMain ? IsMine(*pwalletMain, dest) : ISMINE_NO;
-        ret.push_back(Pair("ismine", (mine & ISMINE_SPENDABLE) ? true : false));
-        if (mine != ISMINE_NO) {
-            ret.push_back(Pair("iswatchonly", (mine & ISMINE_WATCH_ONLY) ? true : false));
-            UniValue detail = boost::apply_visitor(DescribeAddressVisitor(mine), dest);
-            ret.pushKVs(detail);
-        }
+        ret.push_back(Pair("ismine", bool(mine & ISMINE_SPENDABLE)));
+        ret.push_back(Pair("iswatchonly", bool(mine & ISMINE_WATCH_ONLY)));
+        UniValue detail = boost::apply_visitor(DescribeAddressVisitor(mine), dest);
+        ret.pushKVs(detail);
         if (pwalletMain && pwalletMain->mapAddressBook.count(dest))
             ret.push_back(Pair("account", pwalletMain->mapAddressBook[dest].name));
 #endif
