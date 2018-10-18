@@ -1,5 +1,6 @@
 // Copyright (c) 2011-2013 The Bitcoin developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -114,27 +115,18 @@ OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet) : QDialog(paren
         QLocale locale(langStr);
 
         /** check if the locale name consists of 2 parts (language_country) */
-        if (langStr.contains("_")) {
-#if QT_VERSION >= 0x040800
+        if(langStr.contains("_"))
+		{
             /** display language strings as "native language - native country (locale name)", e.g. "Deutsch - Deutschland (de)" */
             ui->lang->addItem(locale.nativeLanguageName() + QString(" - ") + locale.nativeCountryName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
-#else
-            /** display language strings as "language - country (locale name)", e.g. "German - Germany (de)" */
-            ui->lang->addItem(QLocale::languageToString(locale.language()) + QString(" - ") + QLocale::countryToString(locale.country()) + QString(" (") + langStr + QString(")"), QVariant(langStr));
-#endif
-        } else {
-#if QT_VERSION >= 0x040800
+        }
+		else
+		{
             /** display language strings as "native language (locale name)", e.g. "Deutsch (de)" */
             ui->lang->addItem(locale.nativeLanguageName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
-#else
-            /** display language strings as "language (locale name)", e.g. "German (de)" */
-            ui->lang->addItem(QLocale::languageToString(locale.language()) + QString(" (") + langStr + QString(")"), QVariant(langStr));
-#endif
         }
     }
-#if QT_VERSION >= 0x040700
     ui->thirdPartyTxUrls->setPlaceholderText("https://example.com/tx/%s");
-#endif
 
     ui->unit->setModel(new BitcoinUnits(this));
 
@@ -230,6 +222,7 @@ void OptionsDialog::setMapper()
     mapper->addMapping(ui->unit, OptionsModel::DisplayUnit);
     mapper->addMapping(ui->thirdPartyTxUrls, OptionsModel::ThirdPartyTxUrls);
     mapper->addMapping(ui->checkBoxHideZeroBalances, OptionsModel::HideZeroBalances);
+	mapper->addMapping(ui->checkBoxHideOrphans, OptionsModel::HideOrphans);
 
     /* Masternode Tab */
     mapper->addMapping(ui->showMasternodesTab, OptionsModel::ShowMasternodesTab);

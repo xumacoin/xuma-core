@@ -1,5 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -52,9 +53,7 @@ public:
         CNode::GetBanned(banMap);
 
         cachedBanlist.clear();
-#if QT_VERSION >= 0x040700
         cachedBanlist.reserve(banMap.size());
-#endif
         for (banmap_t::iterator it = banMap.begin(); it != banMap.end(); it++)
         {
             CCombinedBan banEntry;

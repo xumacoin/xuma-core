@@ -1,6 +1,7 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -38,10 +39,6 @@
 #include <QTime>
 #include <QTimer>
 #include <QStringList>
-
-#if QT_VERSION < 0x050000
-#include <QUrl>
-#endif
 
 // TODO: add a scrollback limit, as there is currently none
 // TODO: make it possible to filter out categories (esp debug messages when implemented)
@@ -323,7 +320,9 @@ RPCConsole::RPCConsole(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHi
 #endif
     // Register RPC timer interface
     rpcTimerInterface = new QtRPCTimerInterface();
-    RPCRegisterTimerInterface(rpcTimerInterface);
+    // avoid accidentally overwriting an existing, non QTThread
+    // based timer interface
+    RPCSetTimerInterfaceIfUnset(rpcTimerInterface);
 
     startExecutor();
     setTrafficGraphRange(INITIAL_TRAFFIC_GRAPH_MINS);
@@ -337,7 +336,7 @@ RPCConsole::~RPCConsole()
 {
     GUIUtil::saveWindowGeometry("nRPCConsoleWindow", this);
     emit stopExecutor();
-    RPCUnregisterTimerInterface(rpcTimerInterface);
+    RPCUnsetTimerInterface(rpcTimerInterface);
     delete rpcTimerInterface;
     delete ui;
 }

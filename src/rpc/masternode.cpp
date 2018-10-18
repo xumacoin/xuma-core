@@ -1,6 +1,7 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -207,6 +208,7 @@ UniValue listmasternodes(const UniValue& params, bool fHelp)
             "    \"rank\": n,           (numeric) Masternode Rank (or 0 if not enabled)\n"
             "    \"txhash\": \"hash\",  (string) Collateral transaction hash\n"
             "    \"outidx\": n,         (numeric) Collateral transaction output index\n"
+			"    \"pubkey\": \"key\",   (string) Masternode public key used for message broadcasting\n"
             "    \"status\": s,         (string) Status (ENABLED/EXPIRED/REMOVE/etc)\n"
             "    \"ip\": \"ip\",        (string) Masternode IP address\n"
             "    \"addr\": \"addr\",    (string) Masternode XUMA address\n"
@@ -254,6 +256,7 @@ UniValue listmasternodes(const UniValue& params, bool fHelp)
             obj.push_back(Pair("network", strNetwork));
             obj.push_back(Pair("txhash", strTxHash));
             obj.push_back(Pair("outidx", (uint64_t)oIdx));
+			obj.push_back(Pair("pubkey", HexStr(mn->pubKeyMasternode)));
             obj.push_back(Pair("status", strStatus));
             obj.push_back(Pair("ip", strHost));
             obj.push_back(Pair("addr", CBitcoinAddress(mn->pubKeyCollateralAddress.GetID()).ToString()));
@@ -843,7 +846,7 @@ UniValue getmasternodescores (const UniValue& params, bool fHelp)
     if (params.size() == 1) {
         try {
             nLast = std::stoi(params[0].get_str());
-        } catch (const boost::bad_lexical_cast &) {
+        } catch (const std::invalid_argument&) {
             throw runtime_error("Exception on param 2");
         }
     }

@@ -1,6 +1,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -429,8 +430,7 @@ UniValue getnetworkinfo(const UniValue& params, bool fHelp)
 
     UniValue obj(UniValue::VOBJ);
     obj.push_back(Pair("version", CLIENT_VERSION));
-    obj.push_back(Pair("subversion",
-        FormatSubVersion(CLIENT_NAME, CLIENT_VERSION, std::vector<string>())));
+    obj.push_back(Pair("subversion",    strSubVersion));
     obj.push_back(Pair("protocolversion", PROTOCOL_VERSION));
     obj.push_back(Pair("localservices", strprintf("%016x", nLocalServices)));
     obj.push_back(Pair("timeoffset", GetTimeOffset()));
