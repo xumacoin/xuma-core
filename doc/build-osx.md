@@ -44,8 +44,8 @@ Instructions: Homebrew
 
 1. Clone the github tree to get the source code and go into the directory.
 
-        git clone https://github.com/XUMA-Project/XUMA.git
-        cd XUMA
+        git clone https://github.com/xumacoin/xuma.git xuma
+        cd xuma
 
 2.  Make the Homebrew OpenSSL headers visible to the configure script  (do ```brew info openssl``` to find out why this is necessary, or if you use Homebrew with installation folders different from the default).
 
@@ -57,6 +57,7 @@ Instructions: Homebrew
         ./autogen.sh
         ./configure --with-gui=qt5
         make
+        make deploy
 
 4.  It is also a good idea to build and run the unit tests:
 
