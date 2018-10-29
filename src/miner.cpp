@@ -127,10 +127,6 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     txNew.vin[0].prevout.SetNull();
     txNew.vout.resize(1);
     txNew.vout[0].scriptPubKey = scriptPubKeyIn;
-	
-	CBlockIndex* prev = chainActive.Tip(); 
-	txNew.vout[0].nValue = GetBlockValue(prev->nHeight);
-	
     pblock->vtx.push_back(txNew);
     pblocktemplate->vTxFees.push_back(-1);   // updated at end
     pblocktemplate->vTxSigOps.push_back(-1); // updated at end
@@ -427,10 +423,10 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
             }
         }
 
-        if (!fProofOfStake) {
-            //Masternode and general budget payments
-            FillBlockPayee(txNew, nFees, fProofOfStake, false);
+		//Masternode and general budget payments
+        FillBlockPayee(txNew, nFees, fProofOfStake, false);
 
+        if (!fProofOfStake) {
             //Make payee
             if (txNew.vout.size() > 1) {
                 pblock->payee = txNew.vout[1].scriptPubKey;
@@ -478,19 +474,13 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
 
         pblock->nAccumulatorCheckpoint = pCheckpointCache.second.second;
         pblocktemplate->vTxSigOps[0] = GetLegacySigOpCount(pblock->vtx[0]);
-		
-		
-        LogPrintf("CreateNewBlock(): %s\n", pblock->ToString());
-		
-		if (fProofOfStake) {
-			CValidationState state;
-			if (!TestBlockValidity(state, *pblock, pindexPrev, false, false)) {
-				LogPrintf("CreateNewBlock() : TestBlockValidity failed\n");
-				mempool.clear();
-				return NULL;
-			}
-		}
 
+        CValidationState state;
+        if (!TestBlockValidity(state, *pblock, pindexPrev, false, false)) {
+            LogPrintf("CreateNewBlock() : TestBlockValidity failed\n");
+            mempool.clear();
+            return NULL;
+        }
 
 //        if (pblock->IsZerocoinStake()) {
 //            CWalletTx wtx(pwalletMain, pblock->vtx[1]);

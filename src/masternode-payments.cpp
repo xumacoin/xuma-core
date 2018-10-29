@@ -334,13 +334,13 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, int64_t nFe
             txNew.vout[i].nValue = masternodePayment;
 
 			txNew.vout[i+1].scriptPubKey = developerfeescriptpubkey;
-            txNew.vout[i+1].nValue = developerfeePayment * 2;
-			LogPrintf("fProofOfStake: developerfee to pay value %u\n", developerfeePayment*2);
+            txNew.vout[i+1].nValue = developerfeePayment;
+			LogPrintf("fProofOfStake: developerfee to pay value %u\n", developerfeePayment);
 			
             //subtract mn payment from the stake reward
             if (!txNew.vout[1].IsZerocoinMint())
 			{
-				txNew.vout[i - 1].nValue -= developerfeePayment * 2;
+				txNew.vout[i - 1].nValue -= developerfeePayment;
                 txNew.vout[i - 1].nValue -= masternodePayment;
 			}
         } else {
@@ -464,9 +464,7 @@ bool CMasternodePaymentWinner::Sign(CKey& keyMasternode, CPubKey& pubKeyMasterno
     std::string errorMessage;
     std::string strMasterNodeSignMessage;
 
-    std::string strMessage = vinMasternode.prevout.ToStringShort() +
-                             std::to_string(nBlockHeight) +
-                             payee.ToString();
+    std::string strMessage = vinMasternode.prevout.ToStringShort() + std::to_string(nBlockHeight) + payee.ToString();
 
     if (!obfuScationSigner.SignMessage(strMessage, errorMessage, vchSig, keyMasternode)) {
         LogPrint("masternode","CMasternodePing::Sign() - Error: %s\n", errorMessage.c_str());
@@ -595,9 +593,8 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
 		}
 	}
 	
-	
+	bool foundMasternodePayment = false;
     BOOST_FOREACH (CMasternodePayee& payee, vecPayments) {
-		bool foundMasternodePayment = false;
         BOOST_FOREACH (CTxOut out, txNew.vout) {
             if (payee.scriptPubKey == out.scriptPubKey) {
                 if(out.nValue >= requiredMasternodePayment)
@@ -818,9 +815,7 @@ bool CMasternodePaymentWinner::SignatureValid()
     CMasternode* pmn = mnodeman.Find(vinMasternode);
 
     if (pmn != NULL) {
-        std::string strMessage = vinMasternode.prevout.ToStringShort() +
-                                 std::to_string(nBlockHeight) +
-                                 payee.ToString();
+        std::string strMessage = vinMasternode.prevout.ToStringShort() + std::to_string(nBlockHeight) + payee.ToString();
 
         std::string errorMessage = "";
         if (!obfuScationSigner.VerifyMessage(pmn->pubKeyMasternode, vchSig, strMessage, errorMessage)) {
