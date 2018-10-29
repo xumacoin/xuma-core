@@ -446,7 +446,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     if (!lpval.isNull()) {
         // Wait to respond until either the best block changes, OR a minute has passed and there are more transactions
         uint256 hashWatchedChain;
-        std::chrono::steady_clock::time_point checktxtime;
+        boost::system_time checktxtime;
         unsigned int nTransactionsUpdatedLastLP;
 
         if (lpval.isStr()) {
@@ -464,16 +464,15 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
         // Release the wallet and main lock while waiting
         LEAVE_CRITICAL_SECTION(cs_main);
         {
-            checktxtime = std::chrono::steady_clock::now() + std::chrono::minutes(1);
+            checktxtime = boost::get_system_time() + boost::posix_time::minutes(1);
 
-            WaitableLock lock(csBestBlock);
+            boost::unique_lock<boost::mutex> lock(csBestBlock);
             while (chainActive.Tip()->GetBlockHash() == hashWatchedChain && IsRPCRunning()) {
-                if (cvBlockChange.wait_until(lock, checktxtime) == std::cv_status::timeout)
-				{
+                if (!cvBlockChange.timed_wait(lock, checktxtime)) {
                     // Timeout: Check transactions for update
                     if (mempool.GetTransactionsUpdated() != nTransactionsUpdatedLastLP)
                         break;
-                    checktxtime += std::chrono::seconds(10);
+                    checktxtime += boost::posix_time::seconds(10);
                 }
             }
         }
