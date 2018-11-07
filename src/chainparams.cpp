@@ -55,17 +55,20 @@ static void convertSeed6(std::vector<CAddress>& vSeedsOut, const SeedSpec6* data
 // + Contains no strange transactions
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
-    (0, uint256("0x0000005fb5bc70df5d3f470497fbf5ec34606df0ca5ca6157424a441cfaa9329"));
-/*	(58002, uint256("0x000000000000dc7f47bc05af3bf8960edfbe177bb1ff30a72403e3d3f1c7e4d7"))
-	(105008, uint256("0x000000000002490b5cfafaf285275f804e2a3ea78d6389910e0e850cc319b390"))
-	(159004, uint256("0x00000000000122b92c35ebec450ba3fe3e7689f284d47b6c376905fc049796be"))
-	(259005, uint256("0000000000044b11c9d398fd1a6152c39dceb5c00bd81c905a62bb2a17420f21"))
-	(288914, uint256("000000000002052dbb098992d680a34cdce474683bd170c28bac45aeafeac550"));*/
+    (0, uint256("0x0000005fb5bc70df5d3f470497fbf5ec34606df0ca5ca6157424a441cfaa9329"))
+    (58002, uint256("0x000000000000dc7f47bc05af3bf8960edfbe177bb1ff30a72403e3d3f1c7e4d7"))
+    (105008, uint256("0x000000000002490b5cfafaf285275f804e2a3ea78d6389910e0e850cc319b390"))
+    (159004, uint256("0x00000000000122b92c35ebec450ba3fe3e7689f284d47b6c376905fc049796be"))
+    (259005, uint256("0x0000000000044b11c9d398fd1a6152c39dceb5c00bd81c905a62bb2a17420f21"))
+    (288914, uint256("0x000000000002052dbb098992d680a34cdce474683bd170c28bac45aeafeac550"))
+    (305054, uint256("0x00000000004e77b9787b447b981adcde1084e3b34c74fcdb4960bb4955abb41f"))
+    (335070, uint256("0xed320ff7f7a4465738df0858e3e188b51869b08314ad0e4000c08c1e3ae80fa1"))
+    (344399, uint256("0xcccd5d843803cb997060648cc8a27f0cd0c833e466c24de0fb99c03f28c4987ec")); // split chain / this is the correct one
 	
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1519010250, // * UNIX timestamp of last checkpoint block
-    0,    // * total number of transactions between genesis and last checkpoint
+    1541572374, // * UNIX timestamp of last checkpoint block
+    413682,          // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000        // * estimated number of transactions per day after checkpoint
 };
@@ -120,8 +123,7 @@ public:
         pchMessageStart[1] = 0x04;
         pchMessageStart[2] = 0x15;
         pchMessageStart[3] = 0x14;
-        vAlertPubKey = ParseHex("04b6ea4c1ebb14bf0fab53ea8bb3b18e63c5e0a8b62f8da33438ca282332d83df456bb277642705b1c823003b9cf4a2a5edfcb4964901f693b848ad611f8661975");
-        //vAlertPubKey = ParseHex("0497dfcea626dca270cfe2eebf1160733b07352af966926e30058ca53dae05bbc71d64dbaa0c66e373211e324a23b361fc33e1e2dece1fb90afcefc707643a28f5");
+        vAlertPubKey = ParseHex("04dd1d4e6f541394d923c18b45cbb889ed3fde8e3abc41432b4c8621a1939816d9f8fcbf30a83779eaae234b20ed91007afeb1fa88ac94ef29c4c740950e3c8698");
 	nDefaultPort = 19777;
         bnProofOfWorkLimit = ~uint256(0) >> 20; // XUMA starting difficulty is 1 / 2^12
         nSubsidyHalvingInterval = 210000;
@@ -172,8 +174,12 @@ public:
         assert(hashGenesisBlock == uint256("0x0000005fb5bc70df5d3f470497fbf5ec34606df0ca5ca6157424a441cfaa9329"));
         assert(genesis.hashMerkleRoot == uint256("0x03c8762ec4b0597a4437f8fafb7046a718f9f1089aabf9b06ba9560d105febfc"));
 
-        vSeeds.push_back(CDNSSeedData("mainnet.xumacoin.org", "mainnet.xumacoin.org"));
 	vSeeds.push_back(CDNSSeedData("62.113.206.204", "62.113.206.204"));
+        vSeeds.push_back(CDNSSeedData("212.237.29.88", "212.237.29.88"));
+        vSeeds.push_back(CDNSSeedData("93.186.253.211", "93.186.253.211"));
+        vSeeds.push_back(CDNSSeedData("194.182.80.175", "194.182.80.175"));
+        vSeeds.push_back(CDNSSeedData("95.174.101.14", "95.174.101.14"));
+        vSeeds.push_back(CDNSSeedData("93.178.98.224", "93.178.98.224"));
 		
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 75);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 16);
@@ -195,8 +201,7 @@ public:
         fHeadersFirstSyncingActive = false;
 
         nPoolMaxTransactions = 3;
-        strSporkKey = "0457d3905baa74fab8c8502e4b2a6059e2715afc9380b4df6b04ba2d876192f6979d662e48560ecc6d38197de286df91d72ddbac6b7b5bf1053c6c2ffeb6f6df84";
-        //strSporkKey = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
+        strSporkKey = "0452de5742e730acab3feba258f6888a0459905eeb1c0da48f2b6a7241fa7af82580aa6d8ac670144cec2f6368616ee52527f93bf31de563a4cfb7420ecd2ed1ce";
         strSporkKeyOld = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
         strObfuscationPoolDummyAddress = "XGjLuh8mFrXwLGJjGJZfPK4rVQpahP4FP1";
         nStartMasternodePayments = 1519010250;
@@ -240,7 +245,7 @@ public:
         pchMessageStart[1] = 0x44;
         pchMessageStart[2] = 0x65;
         pchMessageStart[3] = 0x54;
-        vAlertPubKey = ParseHex("04b6ea4c1ebb14bf0fab53ea8bb3b18e63c5e0a8b62f8da33438ca282332d83df456bb277642705b1c823003b9cf4a2a5edfcb4964901f693b848ad611f8661975");
+        vAlertPubKey = ParseHex("04dd1d4e6f541394d923c18b45cbb889ed3fde8e3abc41432b4c8621a1939816d9f8fcbf30a83779eaae234b20ed91007afeb1fa88ac94ef29c4c740950e3c8698");
         nDefaultPort = 20777;
         nEnforceBlockUpgradeMajority = 51;
         nRejectBlockOutdatedMajority = 75;
@@ -297,7 +302,7 @@ public:
         fTestnetToBeDeprecatedFieldRPC = true;
 
         nPoolMaxTransactions = 2;
-        strSporkKey = "0457d3905baa74fab8c8502e4b2a6059e2715afc9380b4df6b04ba2d876192f6979d662e48560ecc6d38197de286df91d72ddbac6b7b5bf1053c6c2ffeb6f6df84";
+        strSporkKey = "0452de5742e730acab3feba258f6888a0459905eeb1c0da48f2b6a7241fa7af82580aa6d8ac670144cec2f6368616ee52527f93bf31de563a4cfb7420ecd2ed1ce";
         strSporkKeyOld = "049e53e687fdafd78fd42d730fad0e7ea1819396176a2cb85d7a76fa4559cdbd2c2f05330a6f5cbadb44a6c1d324f167e679e9f3e95d9d5649761a3e7f59bf4500";
         strObfuscationPoolDummyAddress = "";
         nStartMasternodePayments = 1519010250;
