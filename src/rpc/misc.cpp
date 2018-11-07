@@ -292,7 +292,7 @@ UniValue makekeypair(const UniValue& params, bool fHelp)
     } while (nCount < 10000 && strPrefix != pubkeyhex.substr(0, strPrefix.size()));
     
     if (strPrefix != pubkeyhex.substr(0, strPrefix.size()))
-        return UniValue::null;
+        return NullUniValue;
     
     UniValue ret(UniValue::VOBJ);
     ret.push_back(Pair("PublicKey", pubkeyhex));
