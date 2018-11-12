@@ -22,9 +22,9 @@ Build-Depends: debhelper,
  libqrencode-dev,
  libprotobuf-dev, protobuf-compiler
 Standards-Version: 3.9.2
-Homepage: http://www.xuma.org
-Vcs-Git: git://github.com/XUMA-Project/XUMA.git
-Vcs-Browser: http://github.com/XUMA-Project/XUMA
+Homepage: http://www.xumacoin.org
+Vcs-Git: git://github.com/xumacoin/XUMA.git
+Vcs-Browser: http://github.com/xumacoin/XUMA
 
 Package: xumad
 Architecture: any

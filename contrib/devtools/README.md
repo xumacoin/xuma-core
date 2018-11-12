@@ -18,7 +18,7 @@ For example:
   ./github-merge.py 3077
 
 (in any git repository) will help you merge pull request #3077 for the
-XUMA-Project/XUMA repository.
+xumacoin/XUMA repository.
 
 What it does:
 * Fetch master and the pull request.
@@ -38,7 +38,7 @@ Setup
 ---------
 Configuring the github-merge tool for the XUMA repository is done in the following way:
 
-    git config githubmerge.repository XUMA-Project/XUMA
+    git config githubmerge.repository xumacoin/XUMA
     git config githubmerge.testcmd "make -j4 check" (adapt to whatever you want to use for testing)
     git config --global user.signingkey mykeyid (if you want to GPG sign)
 
