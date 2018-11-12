@@ -32,7 +32,7 @@ packages:
 - "ca-certificates"
 - "python"
 remotes:
-- "url": "https://github.com/xumacoin/xuma.git"
+- "url": "https://github.com/xumacoin/xuma-core.git"
   "dir": "xuma"
 files: []
 script: |

@@ -28,7 +28,7 @@ packages:
 - "python-setuptools"
 - "fonts-tuffy"
 remotes:
-- "url": "https://github.com/xumacoin/xuma.git"
+- "url": "https://github.com/xumacoin/xuma-core.git"
   "dir": "xuma"
 files:
 - "MacOSX10.11.sdk.tar.gz"
