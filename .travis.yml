@@ -39,16 +39,16 @@ script:
 after_script:
     - echo $TRAVIS_COMMIT_RANGE
     - echo $TRAVIS_COMMIT_LOG
-after_success:
-    - find $OUTDIR
-    - export VERSION=$HOST-$TRAVIS_BRANCH
-    - cd $OUTDIR && zip -r XUMA-$VERSION.zip *; fi
-    - cd $OUTDIR
-    - git init
-    - git add --force --all
-    - git commit -m "Latest Build"
-    - git remote add origin https://github.com/flyinghuman/xuma-builds.git
-    - git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$HOST
+#after_success:
+#    - find $OUTDIR
+#    - export VERSION=$HOST-$TRAVIS_BRANCH
+#    - cd $OUTDIR && zip -r XUMA-$VERSION.zip *; fi
+#    - cd $OUTDIR
+#    - git init
+#    - git add --force --all
+#    - git commit -m "Latest Build"
+#    - git remote add origin https://github.com/flyinghuman/xuma-builds.git
+#    - git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$HOST
 jobs:
   include:
 # lint stage
