@@ -14,13 +14,6 @@ stages:
 env:
   global:
     - MAKEJOBS=-j3
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-	- NoGUI=true
->>>>>>> parent of 4033265... Update .travis.yml
-=======
->>>>>>> parent of 4c0e181... disable gui build to built up travis cache first
     - RUN_TESTS=false
     - RUN_UNIT_TESTS=false
     - RUN_FUNCTIONAL_TESTS=false # Not Yet Implemented
@@ -69,35 +62,7 @@ jobs:
         REASON=ARM
         HOST=arm-linux-gnueabihf
         PACKAGES="python3 g++-arm-linux-gnueabihf"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        DEP_OPTS="NO_QT=1"
-#		DEP_OPTS=""
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS=""; fi
->>>>>>> parent of 64bc278... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
->>>>>>> parent of 14e2d95... Update .travis.yml
-=======
-        if [ "$NoGUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
->>>>>>> parent of 4033265... Update .travis.yml
-=======
         DEP_OPTS=""
->>>>>>> parent of 4c0e181... disable gui build to built up travis cache first
         RUN_UNIT_TESTS=false
         RUN_FUNCTIONAL_TESTS=false
         GOAL="install"
@@ -110,35 +75,7 @@ jobs:
         REASON=AArch64
         HOST=aarch64-linux-gnu
         PACKAGES="python3 g++-aarch64-linux-gnu"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        DEP_OPTS="NO_QT=1"
-#		DEP_OPTS=""
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS=""; fi
->>>>>>> parent of 64bc278... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
->>>>>>> parent of 14e2d95... Update .travis.yml
-=======
-        if [ "$NoGUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
->>>>>>> parent of 4033265... Update .travis.yml
-=======
         DEP_OPTS=""
->>>>>>> parent of 4c0e181... disable gui build to built up travis cache first
         RUN_UNIT_TESTS=false
         RUN_FUNCTIONAL_TESTS=false
         GOAL="install"
@@ -149,154 +86,26 @@ jobs:
         REASON=Win32
         HOST=i686-w64-mingw32
         DPKG_ADD_ARCH="i386"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        DEP_OPTS="NO_QT=1"
-#       DEP_OPTS=""
-        PACKAGES="python3 nsis g++-mingw-w64-i686 wine-binfmt wine32"
-        GOAL="install"
-		BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"
-#		BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
-        PACKAGES="python3 nsis g++-mingw-w64-i686 wine-binfmt wine32"
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --disable-tests" fi
-		if [ "$NO_GUI" = "false" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
-        PACKAGES="python3 nsis g++-mingw-w64-i686 wine-binfmt wine32"
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --disable-tests" fi
-		if [ "$NO_GUI" = "false" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS=""; fi
-        PACKAGES="python3 nsis g++-mingw-w64-i686 wine-binfmt wine32"
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"; fi
-		if [ "$NO_GUI" = "false" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"; fi
->>>>>>> parent of 64bc278... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
-        PACKAGES="python3 nsis g++-mingw-w64-i686 wine-binfmt wine32"
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"; else BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"; fi
->>>>>>> parent of 14e2d95... Update .travis.yml
-=======
-        if [ "$NoGUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
-        PACKAGES="python3 nsis g++-mingw-w64-i686 wine-binfmt wine32"
-        GOAL="install"
-		if [ "$NoGUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"; else BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"; fi
->>>>>>> parent of 4033265... Update .travis.yml
-=======
         DEP_OPTS=""
         PACKAGES="python3 nsis g++-mingw-w64-i686 wine-binfmt wine32"
         GOAL="install"
         BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"
->>>>>>> parent of 4c0e181... disable gui build to built up travis cache first
 # Win64
     - stage: test
       env: >-
         REASON=Win64
         HOST=x86_64-w64-mingw32
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        DEP_OPTS="NO_QT=1"
-#		DEP_OPTS=""
-        PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
-        GOAL="install"
-		BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"
-#       BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
-        PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --disable-tests" fi
-        if [ "$NO_GUI" = "false" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
-        PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --disable-tests" fi
-        if [ "$NO_GUI" = "false" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS=""; fi
-        PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --disable-tests";
-        if [ "$NO_GUI" = "false" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"; fi
->>>>>>> parent of 64bc278... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
-        PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
-        GOAL="install"
-        if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"; else BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"; fi
->>>>>>> parent of 14e2d95... Update .travis.yml
-=======
-        if [ "$NoGUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
-        PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
-        GOAL="install"
-        if [ "$NoGUI" = "true" ]; then BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"; else BITCOIN_CONFIG="--enable-reduce-exports --disable-tests"; fi
->>>>>>> parent of 4033265... Update .travis.yml
-=======
         DEP_OPTS=""
         PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
         GOAL="install"
         BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5 --disable-tests"
->>>>>>> parent of 4c0e181... disable gui build to built up travis cache first
 # 32-bit + dash
     - stage: test
       env: >-
         REASON=Linux32
         HOST=i686-pc-linux-gnu
         PACKAGES="g++-multilib python3-zmq"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        DEP_OPTS="NO_QT=1"
-#		DEP_OPTS=""
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="" fi
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS=""; fi
->>>>>>> parent of 64bc278... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
->>>>>>> parent of 14e2d95... Update .travis.yml
-=======
-        if [ "$NoGUI" = "true" ]; then DEP_OPTS="NO_QT=1"; else DEP_OPTS=""; fi
->>>>>>> parent of 4033265... Update .travis.yml
-=======
         DEP_OPTS=""
->>>>>>> parent of 4c0e181... disable gui build to built up travis cache first
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++"
         CONFIG_SHELL="/bin/dash"
@@ -306,51 +115,9 @@ jobs:
         REASON=Linux64
         HOST=x86_64-unknown-linux-gnu
         PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"
-#		DEP_OPTS="NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"
-        GOAL="install"
-		BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests"
-#		BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests"
-=======
-=======
->>>>>>> parent of 81e42ea... Update .travis.yml
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1" fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1" fi
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests" fi
-		if [ "$NO_GUI" = "false" ]; then BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests" fi
-<<<<<<< HEAD
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
->>>>>>> parent of 81e42ea... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"; fi
-		if [ "$NO_GUI" = "false" ]; then DEP_OPTS="NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"; fi
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests"; fi
-		if [ "$NO_GUI" = "false" ]; then BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests"; fi
->>>>>>> parent of 64bc278... Update .travis.yml
-=======
-        if [ "$NO_GUI" = "true" ]; then DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"; else DEP_OPTS="NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"; fi
-        GOAL="install"
-		if [ "$NO_GUI" = "true" ]; then BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests"; else BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests"; fi
->>>>>>> parent of 14e2d95... Update .travis.yml
-=======
-        if [ "$NoGUI" = "true" ]; then DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"; else DEP_OPTS="NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"; fi
-        GOAL="install"
-		if [ "$NoGUI" = "true" ]; then BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests"; else BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests"; fi
->>>>>>> parent of 4033265... Update .travis.yml
-=======
         DEP_OPTS="NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests"
->>>>>>> parent of 4c0e181... disable gui build to built up travis cache first
 # x86_64 Linux (no depends, only system libs)
 #    - stage: test
 #      env: >-
