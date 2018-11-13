@@ -68,7 +68,7 @@ fi
 
 #deploy test builds
 export VERSION=$REASON-$TRAVIS_BRANCH
-cd $OUTDIR && zip -r XUMA-$VERSION.zip *; fi
+cd $OUTDIR && zip -r XUMA-$VERSION.zip *
 git init
 git add --force --all
 git commit -m "Latest Build"
