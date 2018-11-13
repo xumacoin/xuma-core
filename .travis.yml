@@ -71,16 +71,16 @@ jobs:
         # This could be removed once the ABI change warning does not show up by default
         BITCOIN_CONFIG="--enable-glibc-back-compat --enable-reduce-exports CXXFLAGS=-Wno-psabi --disable-tests"
 # AArch64
-    - stage: test
-      env: >-
-        REASON=AArch64
-        HOST=aarch64-linux-gnu
-        PACKAGES="python3 g++-aarch64-linux-gnu"
-        DEP_OPTS=""
-        RUN_UNIT_TESTS=false
-        RUN_FUNCTIONAL_TESTS=false
-        GOAL="install"
-        BITCOIN_CONFIG="--enable-glibc-back-compat --enable-reduce-exports --disable-tests"
+#    - stage: test
+#      env: >-
+#        REASON=AArch64
+#        HOST=aarch64-linux-gnu
+#        PACKAGES="python3 g++-aarch64-linux-gnu"
+#        DEP_OPTS=""
+#        RUN_UNIT_TESTS=false
+#        RUN_FUNCTIONAL_TESTS=false
+#        GOAL="install"
+#        BITCOIN_CONFIG="--enable-glibc-back-compat --enable-reduce-exports --disable-tests"
 # Win32
     - stage: test
       env: >-
