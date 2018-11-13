@@ -109,7 +109,7 @@ jobs:
         PACKAGES="g++-multilib python3-zmq"
         DEP_OPTS="NO_QT=1"
         GOAL="install"
-		CONFIG_SHELL="/bin/dash"
+        CONFIG_SHELL="/bin/dash"
         BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++"
 # x86_64 Linux (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
     - stage: test
