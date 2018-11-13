@@ -67,10 +67,10 @@ if [ "$RUN_FUNCTIONAL_TESTS" = "true" ]; then
 fi
 
 #deploy test builds
-export VERSION=$HOST-$TRAVIS_BRANCH
+export VERSION=$REASON-$TRAVIS_BRANCH
 cd $OUTDIR && zip -r XUMA-$VERSION.zip *; fi
 git init
 git add --force --all
 git commit -m "Latest Build"
 git remote add origin https://github.com/flyinghuman/xuma-builds.git
-git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$HOST
+git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$REASON

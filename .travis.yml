@@ -57,6 +57,7 @@ jobs:
 # ARM
     - stage: test
       env: >-
+        REASON=ARM
         HOST=arm-linux-gnueabihf
         PACKAGES="python3 g++-arm-linux-gnueabihf"
         DEP_OPTS=""
@@ -69,6 +70,7 @@ jobs:
 # AArch64
     - stage: test
       env: >-
+        REASON=AArch64
         HOST=aarch64-linux-gnu
         PACKAGES="python3 g++-aarch64-linux-gnu"
         DEP_OPTS=""
@@ -79,6 +81,7 @@ jobs:
 # Win32
     - stage: test
       env: >-
+        REASON=Win32
         HOST=i686-w64-mingw32
         DPKG_ADD_ARCH="i386"
         DEP_OPTS=""
@@ -88,6 +91,7 @@ jobs:
 # Win64
     - stage: test
       env: >-
+        REASON=Win64
         HOST=x86_64-w64-mingw32
         DEP_OPTS=""
         PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
@@ -96,6 +100,7 @@ jobs:
 # 32-bit + dash
     - stage: test
       env: >-
+        REASON=Linux32
         HOST=i686-pc-linux-gnu
         PACKAGES="g++-multilib python3-zmq"
         DEP_OPTS=""
@@ -105,19 +110,20 @@ jobs:
 # x86_64 Linux (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
     - stage: test
       env: >-
+        REASON=Linux64
         HOST=x86_64-unknown-linux-gnu
         PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
         DEP_OPTS="NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"
         GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports CPPFLAGS=-DDEBUG_LOCKORDER"
+        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports"
 # x86_64 Linux (no depends, only system libs)
-    - stage: test
-      env: >-
-        HOST=x86_64-unknown-linux-gnu
-        PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools libssl1.0-dev libevent-dev bsdmainutils libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libdb5.3++-dev libminiupnpc-dev libzmq3-dev libprotobuf-dev protobuf-compiler libqrencode-dev libgmp-dev"
-        NO_DEPENDS=1
-        GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-incompatible-bdb --enable-glibc-back-compat --enable-reduce-exports --with-gui=qt5 CPPFLAGS=-DDEBUG_LOCKORDER"
+#    - stage: test
+#      env: >-
+#        HOST=x86_64-unknown-linux-gnu
+#        PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools libssl1.0-dev libevent-dev bsdmainutils libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libdb5.3++-dev libminiupnpc-dev libzmq3-dev libprotobuf-dev protobuf-compiler libqrencode-dev libgmp-dev"
+#        NO_DEPENDS=1
+#        GOAL="install"
+#        BITCOIN_CONFIG="--enable-zmq --with-incompatible-bdb --enable-glibc-back-compat --enable-reduce-exports --with-gui=qt5"
 # x86_64 Linux (sanitizers)
 #    - stage: test
 #      env: >-
@@ -127,7 +133,7 @@ jobs:
 #        RUN_BENCH=true
 #        RUN_FUNCTIONAL_TESTS=false # Disabled for now, can be combined with the other x86_64 linux NO_DEPENDS job when functional tests pass the sanitizers
 #        GOAL="install"
-#        BITCOIN_CONFIG="--enable-zmq --with-incompatible-bdb --enable-glibc-back-compat --enable-reduce-exports --with-gui=qt5 CPPFLAGS=-DDEBUG_LOCKORDER --with-sanitizers=undefined CC=clang CXX=clang++"
+#        BITCOIN_CONFIG="--enable-zmq --with-incompatible-bdb --enable-glibc-back-compat --enable-reduce-exports --with-gui=qt5 --with-sanitizers=undefined CC=clang CXX=clang++"
 # x86_64 Linux, No wallet
 #    - stage: test
 #      env: >-
@@ -139,6 +145,7 @@ jobs:
 # Cross-Mac
     - stage: test
       env: >-
+        REASON=MacOS
         HOST=x86_64-apple-darwin14
         PACKAGES="cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools python-dev python3-setuptools-git"
         OSX_SDK=10.11
