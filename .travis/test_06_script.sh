@@ -70,10 +70,12 @@ if [ "$RUN_FUNCTIONAL_TESTS" = "true" ]; then
   END_FOLD
 fi
 
+if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
 cd "$OUTDIR"
+fi
 
 #deploy test builds
-if [ "$DEPLOY_TEST_BUILDS" = "true" ]; then
+if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
   BEGIN_FOLD deploytests
   DOCKER_EXEC export VERSION="$REASON-$TRAVIS_BRANCH"
   DOCKER_EXEC cd $OUTDIR
