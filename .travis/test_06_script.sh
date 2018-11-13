@@ -66,11 +66,18 @@ if [ "$RUN_FUNCTIONAL_TESTS" = "true" ]; then
   END_FOLD
 fi
 
+cd "$OUTDIR"
+
 #deploy test builds
-export VERSION=$REASON-$TRAVIS_BRANCH
-cd $OUTDIR && zip -r XUMA-$VERSION.zip *
-git init
-git add --force --all
-git commit -m "Latest Build"
-git remote add origin https://github.com/flyinghuman/xuma-builds.git
-git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$REASON
+if [ "$DEPLOY_TEST_BUILDS" = "true" ]; then
+  BEGIN_FOLD deploytests
+  DOCKER_EXEC export VERSION="$REASON-$TRAVIS_BRANCH"
+  DOCKER_EXEC cd $OUTDIR
+  DOCKER_EXEC zip -r XUMA-$VERSION.zip *
+  DOCKER_EXEC git init
+  DOCKER_EXEC git add --force --all
+  DOCKER_EXEC git commit -m "Latest Build"
+  DOCKER_EXEC git remote add origin https://github.com/flyinghuman/xuma-builds.git
+  DOCKER_EXEC git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$REASON
+  END_FOLD
+fi
