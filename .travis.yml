@@ -14,6 +14,7 @@ stages:
 env:
   global:
     - MAKEJOBS=-j3
+    - BUILD_ONLY_DEPENDS=true
     - RUN_TESTS=false
     - RUN_UNIT_TESTS=false
     - RUN_FUNCTIONAL_TESTS=false # Not Yet Implemented

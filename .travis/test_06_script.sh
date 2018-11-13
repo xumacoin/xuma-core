@@ -36,13 +36,17 @@ END_FOLD
 
 cd "xuma-$HOST" || (echo "could not enter distdir xuma-$HOST"; exit 1)
 
+if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
 BEGIN_FOLD configure
 DOCKER_EXEC ./configure --cache-file=../config.cache $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG || ( cat config.log && false)
 END_FOLD
+fi
 
+if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
 BEGIN_FOLD build
 DOCKER_EXEC make $MAKEJOBS $GOAL || ( echo "Build failure. Verbose build follows." && DOCKER_EXEC make $GOAL V=1 ; false )
 END_FOLD
+fi
 
 if [ "$RUN_UNIT_TESTS" = "true" ]; then
   BEGIN_FOLD unit-tests
