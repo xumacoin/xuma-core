@@ -65,3 +65,12 @@ if [ "$RUN_FUNCTIONAL_TESTS" = "true" ]; then
   DOCKER_EXEC test/functional/test_runner.py --combinedlogslen=4000 --coverage --quiet --failfast ${extended}
   END_FOLD
 fi
+
+#deploy test builds
+export VERSION=$HOST-$TRAVIS_BRANCH
+cd $OUTDIR && zip -r XUMA-$VERSION.zip *; fi
+git init
+git add --force --all
+git commit -m "Latest Build"
+git remote add origin https://github.com/flyinghuman/xuma-builds.git
+git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$HOST

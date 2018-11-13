@@ -39,16 +39,6 @@ script:
 after_script:
     - echo $TRAVIS_COMMIT_RANGE
     - echo $TRAVIS_COMMIT_LOG
-#after_success:
-#    - find $OUTDIR
-#    - export VERSION=$HOST-$TRAVIS_BRANCH
-#    - cd $OUTDIR && zip -r XUMA-$VERSION.zip *; fi
-#    - cd $OUTDIR
-#    - git init
-#    - git add --force --all
-#    - git commit -m "Latest Build"
-#    - git remote add origin https://github.com/flyinghuman/xuma-builds.git
-#    - git push -f -u https://$BUILDTOKEN@github.com/flyinghuman/xuma-builds.git master:$HOST
 jobs:
   include:
 # lint stage
@@ -69,7 +59,7 @@ jobs:
       env: >-
         HOST=arm-linux-gnueabihf
         PACKAGES="python3 g++-arm-linux-gnueabihf"
-        DEP_OPTS="NO_QT=1"
+        DEP_OPTS=""
         RUN_UNIT_TESTS=false
         RUN_FUNCTIONAL_TESTS=false
         GOAL="install"
@@ -81,7 +71,7 @@ jobs:
       env: >-
         HOST=aarch64-linux-gnu
         PACKAGES="python3 g++-aarch64-linux-gnu"
-        DEP_OPTS="NO_QT=1"
+        DEP_OPTS=""
         RUN_UNIT_TESTS=false
         RUN_FUNCTIONAL_TESTS=false
         GOAL="install"
@@ -91,24 +81,24 @@ jobs:
       env: >-
         HOST=i686-w64-mingw32
         DPKG_ADD_ARCH="i386"
-        DEP_OPTS="NO_QT=1"
+        DEP_OPTS=""
         PACKAGES="python3 nsis g++-mingw-w64-i686 wine-binfmt wine32"
         GOAL="install"
-        BITCOIN_CONFIG="--enable-reduce-exports"
+        BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5"
 # Win64
     - stage: test
       env: >-
         HOST=x86_64-w64-mingw32
-        DEP_OPTS="NO_QT=1"
+        DEP_OPTS=""
         PACKAGES="python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64"
         GOAL="install"
-        BITCOIN_CONFIG="--enable-reduce-exports"
+        BITCOIN_CONFIG="--enable-reduce-exports --with-gui=qt5"
 # 32-bit + dash
     - stage: test
       env: >-
         HOST=i686-pc-linux-gnu
         PACKAGES="g++-multilib python3-zmq"
-        DEP_OPTS="NO_QT=1"
+        DEP_OPTS=""
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports LDFLAGS=-static-libstdc++"
         CONFIG_SHELL="/bin/dash"
@@ -117,7 +107,7 @@ jobs:
       env: >-
         HOST=x86_64-unknown-linux-gnu
         PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
-        DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"
+        DEP_OPTS="NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports CPPFLAGS=-DDEBUG_LOCKORDER"
 # x86_64 Linux (no depends, only system libs)
