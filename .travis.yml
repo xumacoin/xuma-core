@@ -30,6 +30,7 @@ env:
     - WINEDEBUG=fixme-all
     - DOCKER_PACKAGES="build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git ca-certificates ccache zip"
     - DEPLOY_TEST_BUILDS=true
+    - OUTDIR=$BASE_OUTDIR/$TRAVIS_PULL_REQUEST/$TRAVIS_JOB_NUMBER-$HOST
 
 before_install:
   - set -o errexit; source .travis/test_03_before_install.sh

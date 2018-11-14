@@ -72,7 +72,7 @@ fi
 
 if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
 pwd
-find "OUTDIR"
+find "$OUTDIR"
 cd "$OUTDIR"
 fi
 
@@ -83,7 +83,7 @@ if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; th
   DOCKER_EXEC ls -l
   DOCKER_EXEC export VERSION="$REASON-$TRAVIS_BRANCH"
   DOCKER_EXEC find "$OUTDIR"
-  DOCKER_EXEC cd $OUTDIR
+  DOCKER_EXEC cd "$OUTDIR"
   DOCKER_EXEC ls -l
   DOCKER_EXEC zip -r XUMA-$VERSION.zip *
   DOCKER_EXEC git init
