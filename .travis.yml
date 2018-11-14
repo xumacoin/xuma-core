@@ -38,7 +38,7 @@ install:
 before_script:
   - set -o errexit; source .travis/test_05_before_script.sh
 script:
-  - set -o errexit; source .travis/test_06_script.sh
+  - if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then set -o errexit; source .travis/test_06_script.sh; fi
 after_script:
     - echo $TRAVIS_COMMIT_RANGE
     - echo $TRAVIS_COMMIT_LOG
@@ -56,7 +56,7 @@ jobs:
       before_script:
         - set -o errexit; source .travis/lint_05_before_script.sh
       script:
-        - if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then set -o errexit; source .travis/lint_06_script.sh; fi
+        - set -o errexit; source .travis/lint_06_script.sh;
 # ARM
 #    - stage: test
 #      env: >-
