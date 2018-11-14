@@ -85,7 +85,7 @@ if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; th
   DOCKER_EXEC find "$OUTDIR"
   DOCKER_EXEC cd "$OUTDIR"
   DOCKER_EXEC mkdir "$TRAVIS_BUILD_DIR/../release"
-  DOCKER_EXEC cp * "$TRAVIS_BUILD_DIR/../release"
+  DOCKER_EXEC cp -a * "$TRAVIS_BUILD_DIR/../release"
   DOCKER_EXEC find "$TRAVIS_BUILD_DIR/../release"
   DOCKER_EXEC cd "$TRAVIS_BUILD_DIR/../release"
   DOCKER_EXEC ls -l
