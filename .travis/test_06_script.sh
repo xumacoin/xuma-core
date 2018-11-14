@@ -71,7 +71,9 @@ if [ "$RUN_FUNCTIONAL_TESTS" = "true" ]; then
 fi
 
 if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
-cd "$BASE_OUTDIR"
+pwd
+find "OUTDIR"
+cd "$OUTDIR"
 fi
 
 #deploy test builds
@@ -80,7 +82,8 @@ if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; th
   DOCKER_EXEC pwd
   DOCKER_EXEC ls -l
   DOCKER_EXEC export VERSION="$REASON-$TRAVIS_BRANCH"
-  DOCKER_EXEC cd $BASE_OUTDIR
+  DOCKER_EXEC find "$OUTDIR"
+  DOCKER_EXEC cd $OUTDIR
   DOCKER_EXEC ls -l
   DOCKER_EXEC zip -r XUMA-$VERSION.zip *
   DOCKER_EXEC git init
