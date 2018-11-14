@@ -5,7 +5,8 @@ $(package)_suffix=opensource-src-$($(package)_version).tar.xz
 $(package)_file_name=qtbase-$($(package)_suffix)
 $(package)_sha256_hash=eed620cb268b199bd83b3fc6a471c51d51e1dc2dbb5374fc97a0cc75facbe36f
 $(package)_dependencies=openssl zlib
-$(package)_linux_dependencies=freetype fontconfig libxcb libX11 xproto libXext
+#$(package)_linux_dependencies=freetype fontconfig libxcb libX11 xproto libXext
+$(package)_linux_dependencies=fontconfig libxcb libX11 xproto libXext
 $(package)_build_subdir=qtbase
 $(package)_qt_libs=corelib network widgets gui plugins testlib
 $(package)_patches=fix_qt_pkgconfig.patch mac-qmake.conf fix_configure_mac.patch fix_no_printer.patch fix_rcc_determinism.patch fix_riscv64_arch.patch xkb-default.patch
@@ -30,7 +31,7 @@ $(package)_config_opts += -hostprefix $(build_prefix)
 $(package)_config_opts += -no-cups
 $(package)_config_opts += -no-egl
 $(package)_config_opts += -no-eglfs
-$(package)_config_opts += -no-freetype
+#$(package)_config_opts += -no-freetype
 $(package)_config_opts += -no-gif
 $(package)_config_opts += -no-glib
 $(package)_config_opts += -no-icu
@@ -86,7 +87,7 @@ endif
 
 $(package)_config_opts_linux  = -qt-xkbcommon-x11
 $(package)_config_opts_linux += -qt-xcb
-$(package)_config_opts_linux += -system-freetype
+#$(package)_config_opts_linux += -system-freetype
 $(package)_config_opts_linux += -no-feature-sessionmanager
 $(package)_config_opts_linux += -fontconfig
 $(package)_config_opts_linux += -no-opengl
