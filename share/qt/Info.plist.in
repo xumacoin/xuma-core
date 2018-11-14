@@ -3,7 +3,7 @@
 <plist version="0.9">
 <dict>
   <key>LSMinimumSystemVersion</key>
-  <string>10.8.0</string>
+  <string>10.10.0</string>
 
   <key>LSArchitecturePriority</key>
   <array>
@@ -17,7 +17,7 @@
   <string>APPL</string>
 
   <key>CFBundleGetInfoString</key>
-  <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@, Copyright © 2009-@COPYRIGHT_YEAR@ The Bitcoin Core developers, 2014-@COPYRIGHT_YEAR@ The Dash Core developers, 2015-@COPYRIGHT_YEAR@ The XUMA Core developers</string>
+  <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@, Copyright © 2009-@COPYRIGHT_YEAR@ The Bitcoin Core developers, 2014-@COPYRIGHT_YEAR@ The Dash Core developers, 2018-@COPYRIGHT_YEAR@ The XUMA Community</string>
 
   <key>CFBundleShortVersionString</key>
   <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@</string>
@@ -38,7 +38,7 @@
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>io.xuma.XUMA-Qt</string>
+  <string>org.xumacoin.XUMA-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -46,7 +46,7 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>io.xuma.XUMAPayment</string>
+      <string>org.xumacoin.XUMAPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
         <string>xuma</string>
@@ -58,7 +58,7 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>io.xuma.paymentrequest</string>
+      <string>org.xumacoin..paymentrequest</string>
       <key>UTTypeDescription</key>
       <string>XUMA payment request</string>
       <key>UTTypeConformsTo</key>
@@ -84,7 +84,7 @@
       <string>Editor</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>io.xuma.paymentrequest</string>
+        <string>org.xumacoin.paymentrequest</string>
       </array>
       <key>LSHandlerRank</key>
       <string>Owner</string>
@@ -97,9 +97,9 @@
   <key>NSHighResolutionCapable</key>
     <string>True</string>
 
-  <key>LSAppNapIsDisabled</key>
+  <key>NSRequiresAquaSystemAppearance</key>
     <string>True</string>
-
+  
   <key>LSApplicationCategoryType</key>
     <string>public.app-category.finance</string>
 </dict>
