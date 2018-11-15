@@ -83,11 +83,7 @@ if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; th
   DOCKER_EXEC export VERSION="$REASON-$TRAVIS_BRANCH"
   DOCKER_EXEC find "$OUTDIR"
   DOCKER_EXEC cd "$OUTDIR"
-#  DOCKER_EXEC mkdir "$TRAVIS_BUILD_DIR/release"
-#  DOCKER_EXEC cp -a * "$TRAVIS_BUILD_DIR/release"
-#  DOCKER_EXEC find "$TRAVIS_BUILD_DIR/release"
-#  DOCKER_EXEC cd "$TRAVIS_BUILD_DIR/release"
-  DOCKER_EXEC strip bin/*
+  DOCKER_EXEC if [ "$REASON" != "MacOS"]; then strip bin/*; fi
   DOCKER_EXEC zip -r XUMA-$VERSION.zip *
   DOCKER_EXEC git init
   DOCKER_EXEC git config --global user.email "3713548+flyinghuman@users.noreply.github.com"
