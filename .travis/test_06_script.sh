@@ -70,12 +70,11 @@ if [ "$RUN_FUNCTIONAL_TESTS" = "true" ]; then
   END_FOLD
 fi
 
-if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
-pwd
-
-find "$OUTDIR"
-cd "$OUTDIR"
-fi
+#if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
+#pwd
+#find "$OUTDIR"
+#cd "$OUTDIR"
+#fi
 
 #deploy test builds
 if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
