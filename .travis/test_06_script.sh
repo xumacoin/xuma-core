@@ -70,25 +70,23 @@ if [ "$RUN_FUNCTIONAL_TESTS" = "true" ]; then
   END_FOLD
 fi
 
-if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
-pwd
-find "$OUTDIR"
-cd "$OUTDIR"
-fi
+#if [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
+#pwd
+#find "$OUTDIR"
+#cd "$OUTDIR"
+#fi
 
 #deploy test builds
 if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
   BEGIN_FOLD deploytests
   DOCKER_EXEC pwd
-  DOCKER_EXEC ls -l
   DOCKER_EXEC export VERSION="$REASON-$TRAVIS_BRANCH"
   DOCKER_EXEC find "$OUTDIR"
   DOCKER_EXEC cd "$OUTDIR"
-  DOCKER_EXEC mkdir "$TRAVIS_BUILD_DIR/../release"
-  DOCKER_EXEC cp -a * "$TRAVIS_BUILD_DIR/../release"
-  DOCKER_EXEC find "$TRAVIS_BUILD_DIR/../release"
-  DOCKER_EXEC cd "$TRAVIS_BUILD_DIR/../release"
-  DOCKER_EXEC ls -l
+#  DOCKER_EXEC mkdir "$TRAVIS_BUILD_DIR/release"
+#  DOCKER_EXEC cp -a * "$TRAVIS_BUILD_DIR/release"
+#  DOCKER_EXEC find "$TRAVIS_BUILD_DIR/release"
+#  DOCKER_EXEC cd "$TRAVIS_BUILD_DIR/release"
   DOCKER_EXEC zip -r XUMA-$VERSION.zip *
   DOCKER_EXEC git init
   DOCKER_EXEC git add --force --all
