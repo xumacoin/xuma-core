@@ -80,7 +80,7 @@ fi
 if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
   BEGIN_FOLD deploytests
   DOCKER_EXEC export VERSION="$REASON-$TRAVIS_BRANCH"
-  if [ "$REASON" = "MacOS" ]; then DOCKER_EXEC pwd && find . -name '*.dmg' && echo $OUTDIR && mkdir -p $OUTDIR && cp *.dmg $OUTDIR/XUMA-$REASON-$VERSION.dmg && ls; fi
+  if [ "$REASON" = "MacOS" ]; then DOCKER_EXEC pwd && find . -name '*.dmg' && echo $OUTDIR && mkdir -p $OUTDIR && cp *.dmg $OUTDIR/XUMA-$REASON-$VERSION.dmg && cd $OUTDIR && ls; fi
   if [ "$REASON" != "MacOS" ]; then DOCKER_EXEC pwd && find $OUTDIR && cd $OUTDIR && pwd && strip bin/* && cp bin XUMA-$VERSION && ls XUMA-$VERSION/ && zip -r XUMA-$VERSION.zip XUMA-$VERSION && ls; fi
   DOCKER_EXEC git init
   DOCKER_EXEC git config --global user.email "3713548+flyinghuman@users.noreply.github.com"
