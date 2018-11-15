@@ -90,7 +90,7 @@ if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; th
   DOCKER_EXEC zip -r XUMA-$VERSION.zip *
   DOCKER_EXEC git init
   DOCKER_EXEC git config --global user.email "3713548+flyinghuman@users.noreply.github.com"
-  DOCKER_EXEC git config --global user.name "Travis User"
+  DOCKER_EXEC git config --global user.name "Travis-User"
   DOCKER_EXEC git add --force --all
   DOCKER_EXEC git commit -m "Latest-Build"
   DOCKER_EXEC git remote add origin https://github.com/flyinghuman/xuma-builds.git
