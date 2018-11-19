@@ -23,7 +23,7 @@ WalletFrame {
 border-image: url(':/images/walletFrame_bg') 0 0 0 0 stretch stretch;
 */
 background-image: url(':/images/walletFrame_bg');
-background-size: 100%;
+background-size: 100% 100%;
 background-position: bottom right;
 background-repeat: no-repeat;
 background-attachment: fixed;
