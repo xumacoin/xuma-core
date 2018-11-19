@@ -19,7 +19,15 @@ Color Reference for Xuma Skin v2
 ****************************************************************************************/
 
 WalletFrame {
+/*
 border-image: url(':/images/walletFrame_bg') 0 0 0 0 stretch stretch;
+*/
+background-image: url(':/images/walletFrame_bg');
+background-size: 100% 100%;
+background-position: bottom right;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
 border-top:0px solid #000;
 margin:0;
 padding:0;
@@ -363,7 +371,7 @@ color:#fff;
 }
 
 QTableWidget { /* Table Background */
-background-color:red; /*#fcfcfc;*/
+background-color:transparent; /*#fcfcfc;*/
 border:1px solid #333;
 }
 

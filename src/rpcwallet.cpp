@@ -1,8 +1,7 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017-2018 The ALQO & Bitfineon developers
+// Copyright (c) 2015-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -784,7 +783,7 @@ UniValue getunconfirmedbalance(const UniValue &params, bool fHelp)
 UniValue movecmd(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 3 || params.size() > 5)
-        throw runtime_error(
+        throw std::runtime_error(
             "move \"fromaccount\" \"toaccount\" amount ( minconf \"comment\" )\n"
             "\nMove a specified amount from one account in your wallet to another.\n"
 
@@ -1800,7 +1799,7 @@ UniValue walletpassphrase(const UniValue& params, bool fHelp)
     if (!pwalletMain->IsLocked() && pwalletMain->fWalletUnlockAnonymizeOnly && anonymizeOnly)
         throw JSONRPCError(RPC_WALLET_ALREADY_UNLOCKED, "Error: Wallet is already unlocked.");
 
-	// Get the timeout
+    // Get the timeout
     int64_t nSleepTime = params[1].get_int64();
     // Timeout cannot be negative, otherwise it will relock immediately
     if (nSleepTime < 0) {
@@ -2145,7 +2144,7 @@ UniValue getwalletinfo(const UniValue& params, bool fHelp)
     obj.push_back(Pair("keypoolsize", (int)pwalletMain->GetKeyPoolSize()));
     if (pwalletMain->IsCrypted())
         obj.push_back(Pair("unlocked_until", nWalletUnlockTime));
-	obj.push_back(Pair("paytxfee",      ValueFromAmount(payTxFee.GetFeePerK())));
+    obj.push_back(Pair("paytxfee",      ValueFromAmount(payTxFee.GetFeePerK())));
     return obj;
 }
 
@@ -2591,6 +2590,7 @@ UniValue listmintedzerocoins(const UniValue& params, bool fHelp)
             "  }\n"
             "  ,..."
             "]\n"
+
             "\nExamples:\n" +
             HelpExampleCli("listmintedzerocoins", "") + HelpExampleRpc("listmintedzerocoins", "") +
             HelpExampleCli("listmintedzerocoins", "true") + HelpExampleRpc("listmintedzerocoins", "true") +
@@ -2877,7 +2877,7 @@ UniValue spendzerocoin(const UniValue& params, bool fHelp)
     bool fMintChange = params[1].get_bool();        // Mint change to zXMX
     bool fMinimizeChange = params[2].get_bool();    // Minimize change
     int nSecurityLevel = params[3].get_int();       // Security level
-std::string address_str = params.size() > 4 ? params[4].get_str() : "";
+    std::string address_str = params.size() > 4 ? params[4].get_str() : "";
 
     vector<CZerocoinMint> vMintsSelected;
 
@@ -3029,6 +3029,7 @@ extern UniValue DoZxmxSpend(const CAmount nAmount, bool fMintChange, bool fMinim
 
     return ret;
 }
+
 
 UniValue resetmintzerocoin(const UniValue& params, bool fHelp)
 {

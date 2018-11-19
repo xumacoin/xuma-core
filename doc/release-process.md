@@ -27,7 +27,7 @@ Check out the source code in the following directory hierarchy.
     git clone https://github.com/xuma-project/gitian.sigs.git
     git clone https://github.com/xuma-project/xuma-detached-sigs.git
     git clone https://github.com/devrandom/gitian-builder.git
-    git clone https://github.com/xuma-project/xuma.git
+    git clone https://github.com/xumacoin/xuma-core.git
 
 ### XUMA maintainers/release engineers, suggestion for writing release notes
 
