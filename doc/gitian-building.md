@@ -281,7 +281,7 @@ Clone the git repositories for xuma and gitian and then checkout the xuma versio
 
 ```bash
 git clone https://github.com/devrandom/gitian-builder.git
-git clone https://github.com/xuma-crypto/xuma.git
+git clone https://github.com/xuma-crypto/xuma-core.git
 cd xuma
 git checkout v${VERSION}
 cd ..
@@ -377,7 +377,7 @@ and inputs.
 
 For example:
 ```bash
-URL=https://github.com/crowning-/xuma.git
+URL=https://github.com/crowning-/xuma-core.git
 COMMIT=b616fb8ef0d49a919b72b0388b091aaec5849b96
 ./bin/gbuild --commit xuma=${COMMIT} --url xuma=${URL} ../xuma/contrib/gitian-descriptors/gitian-linux.yml
 ./bin/gbuild --commit xuma=${COMMIT} --url xuma=${URL} ../xuma/contrib/gitian-descriptors/gitian-win.yml
