@@ -38,14 +38,14 @@ Instructions: Homebrew
 
 #### Install dependencies using Homebrew
 
-        brew install autoconf automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf qt5 zmq libevent
+        brew install autoconf automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf qt5 zmq libevent gmp
 
 ### Building `xumad`
 
 1. Clone the github tree to get the source code and go into the directory.
 
-        git clone https://github.com/XUMA-Project/xuma-core.git
-        cd XUMA
+        git clone https://github.com/xumacoin/xuma-core.git xuma
+        cd xuma-core
 
 2.  Make the Homebrew OpenSSL headers visible to the configure script  (do ```brew info openssl``` to find out why this is necessary, or if you use Homebrew with installation folders different from the default).
 
@@ -57,6 +57,7 @@ Instructions: Homebrew
         ./autogen.sh
         ./configure --with-gui=qt5
         make
+        make deploy
 
 4.  It is also a good idea to build and run the unit tests:
 
