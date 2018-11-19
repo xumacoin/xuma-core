@@ -19,7 +19,13 @@ Color Reference for Xuma Skin v2
 ****************************************************************************************/
 
 WalletFrame {
+/*
 border-image: url(':/images/walletFrame_bg') 0 0 0 0 stretch stretch;
+*/
+background-image: url(':/images/walletFrame_bg');
+background-size: contain;
+background-repeat: no-repeat;
+}
 border-top:0px solid #000;
 margin:0;
 padding:0;
