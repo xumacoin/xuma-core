@@ -371,7 +371,7 @@ color:#fff;
 }
 
 QTableWidget { /* Table Background */
-background-color:red; /*#fcfcfc;*/
+background-color:transparent; /*#fcfcfc;*/
 border:1px solid #333;
 }
 

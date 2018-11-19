@@ -161,8 +161,8 @@ deploy:
     secure: "ZxHTA6TRKPLgnoLV61seOmjy+rQxcOuRPckXTRQpEGnUTmTTOYonyFu7hYewYo0e6QS9NA/q1iJmA97TlfNIQF+Ai5sTifT4CKWPoV4sySZm1OCLpcmEu/Z5gDdccUeRObpOWSZsmOmNioaPfTlYDlQ4DqCzzIum0DVQ5zT+s4sqtnNkGDulgYImWvSq/5pd/R1cpVdFIP9BhQKLYRUaMGY6F3n499dJna0FFmIXu74i6+6Z3XfXwPK3V2w+4Vug3427HoUe2XJKmCG1fUZAuKnR3h2tY/yPw8r95NpD8KMfA69W90qf/6wH/sNwJyRLWnkJq2FzZmbhZdo03YltFTgRpcVzzVdOwv6H3k5GVoVAg7U73VqlMHWVgv+U06di/Ys+Rz2Lnr7E6RXsX/LWyC7HmnZ1y6SGVd1eEV0QZnTkagcflmUNHWac0l9VFfdntDEo3hlKBV/WraTfySc8DETNzxgGdrOrOSBe+MoAK/EmOESowvNelJNGhLqw2Znkygl7rMSJuttrxE4GQlD15EfS3v8S3nBBRUob/Z+YK868C1Wjm0xUm+0QGRXF1TyANEt5KLOKyin2n4heHCPbo+No568ykWpFk5gh5pAs0P31l5s/3W+mqA5WLDY4Y2NLTejxc0kv4PTf8Ql1P3joLAdNyylmlauRJbn60coD07c="
   file_glob: true
   file:
-    - $OUTDIR/*.dmg
-    - $OUTDIR/*.zip
+    - $TRAVIS_BUILD_DIR/release/*.dmg
+    - $TRAVIS_BUILD_DIR/release/*.zip
   skip_cleanup: true
   on:
     tags: true
