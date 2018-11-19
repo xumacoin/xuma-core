@@ -74,7 +74,7 @@ fi
 if [ "$DEPLOY_TEST_BUILDS" = "true" ] && [ "$BUILD_ONLY_DEPENDS" = "false" ]; then
   BEGIN_FOLD deploytests
 #  DOCKER_EXEC export VERSION="$REASON-$TRAVIS_BRANCH"
-  if [ "$REASON" = "MacOS" ]; then DOCKER_EXEC pwd && find . -name '*.dmg' && echo $OUTDIR && mkdir -p "$TRAVIS_BUILD_DIR/release" && cp *.dmg "$TRAVIS_BUILD_DIR/release/XUMA-$REASON-$REASON-$TRAVIS_BRANCH.dmg" && cd "$TRAVIS_BUILD_DIR/release" && ls; fi
+  if [ "$REASON" = "MacOS" ]; then DOCKER_EXEC pwd && find . -name '*.dmg' && echo $OUTDIR && mkdir -p "$TRAVIS_BUILD_DIR/release" && cp *.dmg "$TRAVIS_BUILD_DIR/release/XUMA-$REASON-$TRAVIS_BRANCH.dmg" && cd "$TRAVIS_BUILD_DIR/release" && ls; fi
   if [ "$REASON" != "MacOS" ]; then DOCKER_EXEC pwd && mkdir -p "$TRAVIS_BUILD_DIR/release/XUMA-$REASON-$TRAVIS_BRANCH" && find $OUTDIR && cd $OUTDIR && pwd && cp -a bin/* "$TRAVIS_BUILD_DIR/release/XUMA-$REASON-$TRAVIS_BRANCH/" && cd "$TRAVIS_BUILD_DIR/release" && strip XUMA-$REASON-$TRAVIS_BRANCH/* && ls XUMA-$REASON-$TRAVIS_BRANCH/* && zip -r XUMA-$REASON-$TRAVIS_BRANCH.zip * && ls; fi
   DOCKER_EXEC git init
   DOCKER_EXEC git config --global user.email "3713548+flyinghuman@users.noreply.github.com"
