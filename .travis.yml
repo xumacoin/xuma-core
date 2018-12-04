@@ -133,7 +133,7 @@ jobs:
         REASON=Ubuntu-18.04-64bit-sQT
         HOST=x86_64-unknown-linux-gnu
         PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
-        DEP_OPTS="NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
+        DEP_OPTS="NO_QT=1 NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++"
 # Ubuntu 16.04 Linux (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
@@ -143,29 +143,10 @@ jobs:
         DOCKER_NAME_TAG=ubuntu:16.04
         HOST=x86_64-unknown-linux-gnu
         PACKAGES="bc python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
-        DEP_OPTS="NO_QT=1 NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1"
+        DEP_OPTS="NO_QT=1 NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests --disable-hardening"
 #BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests CFLAGS=-fPIC"
-# Ubuntu-18.04-64bit
-    - stage: test
-      env: >-
-        REASON=Ubuntu-18.04-64bit
-        HOST=x86_64-unknown-linux-gnu
-        PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
-        DEP_OPTS="NO_UPNP=1"
-        GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++"
-# Ubuntu-16.04-64bit
-    - stage: test
-      env: >-
-        REASON=Ubuntu-16.04-64bit
-        DOCKER_NAME_TAG=ubuntu:16.04
-        HOST=x86_64-unknown-linux-gnu
-        PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
-        DEP_OPTS="NO_UPNP=1"
-        GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++"
 # Ubuntu-18.04-64bit-ND (no depends, only system libs)
     - stage: test
       env: >-
