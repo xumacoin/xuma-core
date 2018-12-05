@@ -150,21 +150,21 @@ jobs:
 # Linux-64bit (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
     - stage: test
       env: >-
-        REASON=Linux-64bit-withdynQT
+        REASON=Linux-64bit-QT
         HOST=x86_64-unknown-linux-gnu
         PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
         DEP_OPTS="NO_QT=1 NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
-# Linux-64bit Full QT
-    - stage: test
-      env: >-
-        REASON=Linux-64bit-QT
-        HOST=x86_64-unknown-linux-gnu
-        PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev libfreetype6-dev libfontconfig1-dev"
-        DEP_OPTS="NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
-        GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
+# Linux-64bit Full QT # actually buggy
+#    - stage: test
+#      env: >-
+#        REASON=Linux-64bit-FullQT
+#        HOST=x86_64-unknown-linux-gnu
+#        PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev libfreetype6-dev libfontconfig1-dev"
+#        DEP_OPTS="NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
+#        GOAL="install"
+#        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu 16.04 Linux (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
 #    - stage: test
 #      env: >-
