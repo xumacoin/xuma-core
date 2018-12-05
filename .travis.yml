@@ -115,7 +115,7 @@ jobs:
         DEP_OPTS="NO_QT=1"
         GOAL="install"
         CONFIG_SHELL="/bin/dash"
-        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++"
+        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu 16.04 32-bit + dash NO QT
     - stage: test
       env: >-
@@ -126,7 +126,7 @@ jobs:
         DEP_OPTS="NO_QT=1"
         GOAL="install"
         CONFIG_SHELL="/bin/dash"
-        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++"
+        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu-18.04-64bit NO QT (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
     - stage: test
       env: >-
@@ -135,7 +135,7 @@ jobs:
         PACKAGES="g++-multilib python3-zmq"
         DEP_OPTS="NO_QT=1 NO_UPNP=1"
         GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests"
+        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu 16.04 Linux NO QT (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
     - stage: test
       env: >-
@@ -145,7 +145,7 @@ jobs:
         PACKAGES="bc python3-zmq g++-multilib"
         DEP_OPTS="NO_QT=1 NO_UPNP=1"
         GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests"
+        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu-18.04-64bit (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
     - stage: test
       env: >-
@@ -154,18 +154,17 @@ jobs:
         PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
         DEP_OPTS="NO_QT=1 NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
         GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS=-static-libstdc++"
+        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu 16.04 Linux (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
     - stage: test
       env: >-
         REASON=Ubuntu-16.04-64bit-QT
         DOCKER_NAME_TAG=ubuntu:16.04
         HOST=x86_64-unknown-linux-gnu
-        PACKAGES="bc python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev"
-        DEP_OPTS="NO_QT=1 NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
+        PACKAGES="bc python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev libproxy-dev python-gobject-2-dev libpng12-dev libicu-dev"
+        DEP_OPTS="NO_QT=1"
         GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests --disable-hardening CFLAGS=-fPIC"
-#BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests CFLAGS=-fPIC"
+        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu-18.04-64bit-ND (no depends, only system libs)
     - stage: test
       env: >-
@@ -174,7 +173,7 @@ jobs:
         PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools libssl1.0-dev libevent-dev bsdmainutils libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libdb5.3++-dev libminiupnpc-dev libzmq3-dev libprotobuf-dev protobuf-compiler libqrencode-dev libgmp-dev"
         NO_DEPENDS=1
         GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-incompatible-bdb --enable-glibc-back-compat --enable-reduce-exports --with-gui=qt5 --disable-tests"
+        BITCOIN_CONFIG="--enable-zmq --with-incompatible-bdb --enable-glibc-back-compat --enable-reduce-exports --with-gui=qt5 --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu-16.04-64bit-ND (no depends, only system libs)
     - stage: test
       env: >-
@@ -184,7 +183,7 @@ jobs:
         PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools libssl-dev libevent-dev bsdmainutils libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libdb5.3++-dev libminiupnpc-dev libzmq3-dev libprotobuf-dev protobuf-compiler libqrencode-dev libgmp-dev"
         NO_DEPENDS=1
         GOAL="install"
-        BITCOIN_CONFIG="--enable-zmq --with-incompatible-bdb --enable-glibc-back-compat --enable-reduce-exports --with-gui=qt5 --disable-tests CFLAGS=-fPIC"
+        BITCOIN_CONFIG="--enable-zmq --with-incompatible-bdb --enable-glibc-back-compat --enable-reduce-exports --with-gui=qt5 --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # x86_64 Linux (sanitizers)
 #    - stage: test
 #      env: >-
