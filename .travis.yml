@@ -118,16 +118,16 @@ jobs:
         CONFIG_SHELL="/bin/dash"
         BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu 16.04 32-bit + dash - NO QT
-#    - stage: test
-#      env: >-
-#        REASON=Ubuntu-16.04-32bit
-#        DOCKER_NAME_TAG=ubuntu:16.04
-#        HOST=i686-pc-linux-gnu
-#        PACKAGES="g++-multilib bc python3-zmq"
-#        DEP_OPTS="NO_QT=1"
-#        GOAL="install"
-#        CONFIG_SHELL="/bin/dash"
-#        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
+    - stage: test
+      env: >-
+        REASON=Ubuntu-16.04-32bit
+        DOCKER_NAME_TAG=ubuntu:16.04
+        HOST=i686-pc-linux-gnu
+        PACKAGES="g++-multilib bc python3-zmq"
+        DEP_OPTS="NO_QT=1"
+        GOAL="install"
+        CONFIG_SHELL="/bin/dash"
+        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Linux-64bit - NO QT
     - stage: test
       env: >-
@@ -138,15 +138,15 @@ jobs:
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu 16.04 Linux NO QT
-#    - stage: test
-#      env: >-
-#        REASON=Ubuntu-16.04-64bit-noQT
-#        DOCKER_NAME_TAG=ubuntu:16.04
-#        HOST=x86_64-unknown-linux-gnu
-#        PACKAGES="bc python3-zmq g++-multilib"
-#        DEP_OPTS="NO_QT=1 NO_UPNP=1"
-#        GOAL="install"
-#        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
+    - stage: test
+      env: >-
+        REASON=Ubuntu-16.04-64bit-noQT
+        DOCKER_NAME_TAG=ubuntu:16.04
+        HOST=x86_64-unknown-linux-gnu
+        PACKAGES="bc python3-zmq g++-multilib"
+        DEP_OPTS="NO_QT=1 NO_UPNP=1"
+        GOAL="install"
+        BITCOIN_CONFIG="--enable-zmq --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Linux-64bit (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
     - stage: test
       env: >-
@@ -156,25 +156,25 @@ jobs:
         DEP_OPTS="NO_QT=1 NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
         GOAL="install"
         BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
-# Linux-64bit Full QT # actually buggy
-#    - stage: test
-#      env: >-
-#        REASON=Linux-64bit-FullQT
-#        HOST=x86_64-unknown-linux-gnu
-#        PACKAGES="python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev libfreetype6-dev libfontconfig1-dev"
-#        DEP_OPTS="NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
-#        GOAL="install"
-#        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
+# Linux-64bit Full QT
+    - stage: test
+      env: >-
+        REASON=Linux-64bit-FullQT
+        HOST=x86_64-unknown-linux-gnu
+        PACKAGES="python3-zmq protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev libfreetype6-dev libfontconfig1-dev"
+        DEP_OPTS="NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
+        GOAL="install"
+        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu 16.04 Linux (uses qt5 dev package instead of depends Qt to speed up build and avoid timeout)
-#    - stage: test
-#      env: >-
-#        REASON=Ubuntu-16.04-64bit-withdynQT
-#        DOCKER_NAME_TAG=ubuntu:16.04
-#        HOST=x86_64-unknown-linux-gnu
-#        PACKAGES="bc python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev libproxy-dev python-gobject-2-dev libpng12-dev libicu-dev"
-#        DEP_OPTS="NO_QT=1"
-#        GOAL="install"
-#        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
+    - stage: test
+      env: >-
+        REASON=Ubuntu-16.04-64bit-withQT
+        DOCKER_NAME_TAG=ubuntu:16.04
+        HOST=x86_64-unknown-linux-gnu
+        PACKAGES="bc python3-zmq qtbase5-dev qttools5-dev-tools protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev libproxy-dev python-gobject-2-dev libpng12-dev libicu-dev"
+        DEP_OPTS="NO_QT=1 NO_UPNP=1 ALLOW_HOST_PACKAGES=1"
+        GOAL="install"
+        BITCOIN_CONFIG="--enable-zmq --with-gui=qt5 --enable-glibc-back-compat --enable-reduce-exports --disable-tests LDFLAGS='-static-libstdc++ -static-libgcc' CFLAGS=-fPIC"
 # Ubuntu-18.04-64bit-ND (no depends, only system libs)
 #    - stage: test
 #      env: >-
