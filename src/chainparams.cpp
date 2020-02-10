@@ -145,15 +145,15 @@ public:
         /** Height or Time Based Activations **/
         nLastPOWBlock = 330240;
         nModifierUpdateBlock = 1;  // we use the version 2 for dmd
-        nZerocoinStartHeight = 1000000;
+	nZerocoinStartTime = 1577836800;
         nZerocoinStartTime = 1577836800;
         nBlockEnforceSerialRange = 1000000; //Enforce serial range starting this block
-        nBlockRecalculateAccumulators = 1000000; //Trigger a recalculation of accumulators
+	nBlockRecalculateAccumulators = 10000000;
         nBlockFirstFraudulent = 1000000; //First block that bad serials emerged
         nBlockLastGoodCheckpoint = 1000000; //Last valid accumulator checkpoint
         nBlockEnforceInvalidUTXO = 1000000; //Start enforcing the invalid UTXO's
         nInvalidAmountFiltered = 0*COIN; //Amount of invalid coins filtered through exchanges, that should be considered valid
-        nBlockZerocoinV2 = 1000000;
+	nBlockZerocoinV2 = 100000000;
 		
         nEnforceNewSporkKey = 1538189913; //!> Sporks signed after (GMT): 29th Sep 2018 04:58:33 AM GMT must use the new spork key
         nRejectOldSporkKey = 1543463913; //!> Fully reject old spork key after (GMT): 29th Nov 2018 04:58:33
